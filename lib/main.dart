@@ -1,15 +1,24 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/login_screen.dart';
+import 'screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isRemembered = prefs.getBool('isRemembered') ?? false;
+
+  runApp(MyApp(isRemembered: isRemembered));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isRemembered;
+
+  const MyApp({super.key, required this.isRemembered});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      home: isRemembered ? HomeScreen() : LoginScreen(),
     );
   }
 }

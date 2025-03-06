@@ -1,64 +1,56 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:luggo/screens/home_screen.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _passwordVisible = false;
+  final _confirmPasswordController = TextEditingController();
   String _errorMessage = "";
 
-  void _savePreferences(bool isRemembered) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isRemembered', isRemembered);
-  }
-
-  void _login() async {
+  void _register() async {
     String email = _emailController.text;
     String password = _passwordController.text;
+    String confirmPassword = _confirmPasswordController.text;
 
-    if (email.isEmpty || password.isEmpty) {
+    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
       setState(() {
-        _errorMessage = "Please enter both email and password.";
+        _errorMessage = "Please fill in all fields.";
       });
       return;
     }
 
-    if (!EmailValidator.validate(email)) {
+    if (password != confirmPassword) {
       setState(() {
-        _errorMessage = "Please enter a valid email address.";
+        _errorMessage = "Passwords do not match.";
       });
       return;
     }
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
       if (userCredential.user != null) {
-        _savePreferences(true);
-      
-
-        Navigator.pushAndRemoveUntil(
+        print("Registration successful!");
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),
-          (Route<dynamic> route) => false,
         );
       }
     } catch (e) {
       setState(() {
-        _errorMessage = "Login failed: ${e.toString()}";
+        //_errorMessage = "Registration failed: ${e.toString()}"; Llevar el [whatever]
+        _errorMessage = e.toString().substring(29);
       });
     }
   }
@@ -67,16 +59,16 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(title: const Text('Register')),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 const Text(
-                  'Welcome to Luggo!',
+                  'Create an account',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
@@ -91,24 +83,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 16),
                 TextField(
                   controller: _passwordController,
-                  obscureText: !_passwordVisible,
-                  decoration: InputDecoration(
+                  obscureText: true,
+                  decoration: const InputDecoration(
                     labelText: 'Password',
                     hintText: 'Enter your password',
-                    border: const OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _passwordVisible = !_passwordVisible;
-                        });
-                      },
-                    ),
+                    border: OutlineInputBorder(),
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _confirmPasswordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Confirm Password',
+                    hintText: 'Confirm your password',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 10),
                 if (_errorMessage.isNotEmpty)
                   Text(
                     _errorMessage,
@@ -116,13 +108,26 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: _login,
+                  onPressed: _register,
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),
                   ),
-                  child: const Text('Login'),
+                  child: const Text('Register'),
                 ),
                 const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text('Already have an account? '),
+                    TextButton(
+                      onPressed: () {
+                        // Go to Login screen
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Login'),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

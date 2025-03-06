@@ -16,7 +16,9 @@ dependencies:
   firebase_auth: ^5.0.0    # Keep this version as it's compatible with firebase_core ^3.12.1
   cloud_firestore: ^5.6.5  # Cloud Firestore (if you're using Firestore)
   firebase_storage: ^12.4.4 # Firebase Storage (if you're using storage)
-
+  email_validator: ^2.0.1
+  shared_preferences: ^2.0.6 
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
