@@ -41,7 +41,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       if (userCredential.user != null) {
-        print("Registration successful!");
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -49,8 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
     } catch (e) {
       setState(() {
-        //_errorMessage = "Registration failed: ${e.toString()}"; Llevar el [whatever]
-        _errorMessage = e.toString().substring(29);
+        _errorMessage = "Registration failed: ${e.toString()}";
       });
     }
   }
@@ -121,7 +119,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const Text('Already have an account? '),
                     TextButton(
                       onPressed: () {
-                        // Go to Login screen
                         Navigator.pop(context);
                       },
                       child: const Text('Login'),

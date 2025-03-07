@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:luggo/screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
-  // Log the user out of the app
+  
   void _logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.pushReplacementNamed(context, '/');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isRemembered', false);
+    
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
+      (Route<dynamic> route) => false,
+    );
   }
 
   @override
@@ -13,25 +22,25 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, 
-        title: Text('Home Screen'),  // Title of the app bar
+        title: Text('Home Screen'),
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
-            onPressed: () => _logout(context),  // Log out the user when button is pressed
+            onPressed: () => _logout(context),
           ),
         ],
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,  // Center the content vertically
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Welcome to the Home Screen!',  // Greeting text
+              'Welcome to the Home Screen!',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => _logout(context),  // Call _logout when button is pressed
+              onPressed: () => _logout(context),
               child: Text('Log Out'),
             ),
           ],

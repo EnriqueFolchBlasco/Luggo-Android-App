@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:luggo/screens/home_screen.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:luggo/screens/forgotPassword_Screen.dart';
+import 'package:luggo/screens/home_screen.dart';
+import 'package:luggo/screens/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,9 +19,11 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _passwordVisible = false;
   String _errorMessage = "";
 
+
   void _savePreferences(bool isRemembered) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isRemembered', isRemembered);
+    
   }
 
   void _login() async {
@@ -48,12 +52,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (userCredential.user != null) {
         _savePreferences(true);
-      
-
-        Navigator.pushAndRemoveUntil(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),
-          (Route<dynamic> route) => false,
         );
       }
     } catch (e) {
@@ -109,6 +110,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        print('Forgot password clicked');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ForgotPasswordScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text('Forgot password?'),
+                    ),
+                  ],
+                ),
                 if (_errorMessage.isNotEmpty)
                   Text(
                     _errorMessage,
@@ -123,6 +141,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: const Text('Login'),
                 ),
                 const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text('Don\'t have an account? '),
+                    TextButton(
+                      onPressed: () {
+                        print('Register clicked');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegisterScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text('Register'),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
