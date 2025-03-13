@@ -17,8 +17,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _passwordVisible = false;
-  String _errorMessage = "";
-
+  String _errorMensatge = "";
+  
+  void _saveUserUID(String uid) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userUID', uid);
+  }
 
   void _savePreferences(bool isRemembered) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -32,14 +36,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (email.isEmpty || password.isEmpty) {
       setState(() {
-        _errorMessage = "Please enter both email and password.";
+        _errorMensatge = "Please enter both email and password.";
       });
       return;
     }
 
     if (!EmailValidator.validate(email)) {
       setState(() {
-        _errorMessage = "Please enter a valid email address.";
+        _errorMensatge = "Please enter a valid email address.";
       });
       return;
     }
@@ -52,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (userCredential.user != null) {
         _savePreferences(true);
+        _saveUserUID(userCredential.user!.uid);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -59,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (e) {
       setState(() {
-        _errorMessage = "Login failed: ${e.toString()}";
+        _errorMensatge = "Login failed: ${e.toString()}";
       });
     }
   }
@@ -127,9 +132,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                if (_errorMessage.isNotEmpty)
+                if (_errorMensatge.isNotEmpty)
                   Text(
-                    _errorMessage,
+                    _errorMensatge,
                     style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
                   ),
                 const SizedBox(height: 20),
