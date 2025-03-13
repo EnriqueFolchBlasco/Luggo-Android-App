@@ -7,9 +7,9 @@ class FirebaseEndpoints {
 
 // Colors
 class AppColors {
-  static const primaryColor = Color(0xFF0A74DA);
+  static const primaryColor = Color.fromRGBO(41, 116, 241, 1);
   static const secondaryColor = Color(0xFFDAA520);
-  static const backgroundColor = Color(0xFFF1F1F1);
+  static const backgroundColor = Color.fromRGBO(186, 208, 241, 0.41);
 }
 
 // Strings

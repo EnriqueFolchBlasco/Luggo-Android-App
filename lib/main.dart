@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 import 'firebase_options.dart';
-//0.5
+//0.7
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

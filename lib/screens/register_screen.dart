@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:luggo/screens/home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -41,10 +40,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       if (userCredential.user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
-        );
+        // Send email verification
+        await userCredential.user!.sendEmailVerification();
+        
+        setState(() {
+          _errorMessage = "Registration successful! Please verify your email.";
+        });
+
+        
       }
     } catch (e) {
       setState(() {

@@ -18,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _passwordVisible = false;
   String _errorMensatge = "";
-  
+
   void _saveUserUID(String uid) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('userUID', uid);
@@ -27,7 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
   void _savePreferences(bool isRemembered) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isRemembered', isRemembered);
-    
   }
 
   void _login() async {
@@ -55,12 +54,19 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (userCredential.user != null) {
-        _savePreferences(true);
-        _saveUserUID(userCredential.user!.uid);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
-        );
+        
+        if (userCredential.user!.emailVerified) {
+          _savePreferences(true);
+          _saveUserUID(userCredential.user!.uid);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
+        } else {
+          setState(() {
+            _errorMensatge = "Please verify your email before logging in.";
+          });
+        }
       }
     } catch (e) {
       setState(() {
@@ -79,7 +85,6 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 const Text(
                   'Welcome to Luggo!',
