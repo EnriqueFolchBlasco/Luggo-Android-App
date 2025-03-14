@@ -96,31 +96,52 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
 
-      bottomNavigationBar: _hideBottomNav ? null : BottomNavigationBar(
-              currentIndex: _selectedIndex,
-              onTap: _onItemTapped,
-              backgroundColor: AppColors.primaryColor,
-              selectedItemColor: AppColors.primaryColor,
-              unselectedItemColor: const Color.fromARGB(255, 133, 155, 192),
-              showUnselectedLabels: true,
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.business),
-                  label: 'Services',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.chat),
-                  label: 'Chats',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.settings),
-                  label: 'Settings',
-                ),
-              ],
+      bottomNavigationBar: _hideBottomNav
+          ? null
+          : ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+              child: BottomNavigationBar(
+                currentIndex: _selectedIndex,
+                onTap: _onItemTapped,
+                backgroundColor: AppColors.primaryColor,
+                selectedItemColor: Colors.white,
+                unselectedItemColor: const Color.fromARGB(255, 133, 155, 192),
+                showUnselectedLabels: true,
+                type: BottomNavigationBarType.fixed,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: Icon(Icons.home),
+                    ),
+                    label: 'Home',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: Icon(Icons.business),
+                    ),
+                    label: 'Services',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: Icon(Icons.chat),
+                    ),
+                    label: 'Chats',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: Icon(Icons.settings),
+                    ),
+                    label: 'Settings',
+                  ),
+                ],
+              ),
             ),
     );
   }
