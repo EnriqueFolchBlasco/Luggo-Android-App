@@ -67,51 +67,49 @@ class _HomeScreenState extends State<HomeScreen> {
     final position = renderBox.localToGlobal(Offset.zero);
 
     _notificacionOverlay = OverlayEntry(
-      builder:
-          (context) => Stack(
-            children: [
-              GestureDetector(
-                onTap: _cerrarOverlayNotificaciones,
-                child: Container(color: Colors.transparent),
-              ),
-              Positioned(
-                top: position.dy + 45,
-                right: 16,
-                child: Material(
-                  color: Colors.transparent,
-                  child: Container(
-                    width: 280,
-                    constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.5,
-                    ),
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(color: Colors.black26, blurRadius: 10),
-                      ],
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children:
-                            NotificationManager.notificaciones
-                                .map(
-                                  (texto) => construirNotificacion(
-                                    texto,
-                                    _cerrarOverlayNotificaciones,
-                                    () => setState(() {}),
-                                  ),
-                                )
-                                .toList(),
-                      ),
-                    ),
+      builder: (context) => Stack(
+        children: [
+          GestureDetector(
+            onTap: _cerrarOverlayNotificaciones,
+            child: Container(color: Colors.transparent),
+          ),
+          Positioned(
+            top: position.dy + 45,
+            right: 16,
+            child: Material(
+              color: Colors.transparent,
+              child: Container(
+                width: 280,
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.5,
+                ),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(color: Colors.black26, blurRadius: 10),
+                  ],
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: NotificationManager.notificaciones
+                        .map(
+                          (texto) => construirNotificacion(
+                            texto,
+                            _cerrarOverlayNotificaciones,
+                            () => setState(() {}),
+                          ),
+                        )
+                        .toList(),
                   ),
                 ),
               ),
-            ],
+            ),
           ),
+        ],
+      ),
     );
 
     Overlay.of(context).insert(_notificacionOverlay!);
@@ -129,6 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
@@ -146,7 +145,15 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
-        title: Center(child: Image.asset('assets/LuggoColor.png', height: 150)),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Spacer(),
+            Spacer(),
+            Image.asset('assets/LuggoColor2.png', height: 30),
+            Spacer(),
+          ],
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -171,10 +178,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 12,
                     height: 12,
                     decoration: BoxDecoration(
-                      color:
-                          NotificationManager.notificaciones.isEmpty
-                              ? Colors.transparent
-                              : Colors.orange,
+                      color: NotificationManager.notificaciones.isEmpty
+                          ? Colors.transparent
+                          : Colors.orange,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -215,54 +221,68 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-      bottomNavigationBar:
-          _ocultarBottomNav
-              ? null
-              : ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
-                child: BottomNavigationBar(
-                  currentIndex: _selectedIndex,
-                  onTap: _onItemTapped,
-                  backgroundColor: AppColors.primaryColor,
-                  selectedItemColor: Colors.white,
-                  unselectedItemColor: const Color.fromARGB(255, 133, 155, 192),
-                  showUnselectedLabels: true,
-                  type: BottomNavigationBarType.fixed,
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                        child: Icon(Icons.home),
-                      ),
-                      label: 'Inicio',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                        child: Icon(Icons.business),
-                      ),
-                      label: 'Servicios',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                        child: Icon(Icons.chat),
-                      ),
-                      label: 'Chats',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                        child: Icon(Icons.settings),
-                      ),
-                      label: 'Ajustes',
+      bottomNavigationBar: _ocultarBottomNav
+          ? null
+          : Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      offset: Offset(0, 4),
                     ),
                   ],
                 ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: BottomNavigationBar(
+                    currentIndex: _selectedIndex,
+                    onTap: _onItemTapped,
+                    backgroundColor: AppColors.primaryColor,
+                    selectedItemColor: Colors.white,
+                    unselectedItemColor:
+                        const Color.fromARGB(255, 133, 155, 192),
+                    showUnselectedLabels: true,
+                    type: BottomNavigationBarType.fixed,
+                    items: [
+                      BottomNavigationBarItem(
+                        icon: Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Icon(Icons.home),
+                        ),
+                        label: 'Inicio',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Icon(Icons.business),
+                        ),
+                        label: 'Servicios',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Icon(Icons.chat),
+                        ),
+                        label: 'Chats',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Icon(Icons.settings),
+                        ),
+                        label: 'Ajustes',
+                      ),
+                    ],
+                  ),
+                ),
               ),
+            ),
     );
   }
 }
