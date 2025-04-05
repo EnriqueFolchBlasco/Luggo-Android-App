@@ -1,5 +1,5 @@
 name: luggo
-description: "A new Flutter project."
+description: "You're favourite movings app."
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -26,3 +26,15 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/Luggo BN.png
+    - assets/LuggoColor.png
+    - assets/Luggo Icono BN.png
+    - assets/Luggo Icono Color.png
+    - assets/Luggo_Baseline BN 1.png
+    - assets/Luggo_Baseline BN.png
+    - assets/Luggo_Baseline Color 1.png
+    - assets/Luggo_Baseline Color 1_2.png
+    - assets/Luggo_Baseline Color.png
+    - assets/Luggo_Baseline2.PNG
