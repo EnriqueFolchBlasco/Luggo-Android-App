@@ -40,6 +40,25 @@ flutter:
     - assets/Luggo_Baseline Color.png
     - assets/Luggo_Baseline2.PNG
 
+  fonts:
+    - family: ClashDisplay
+      fonts:
+        - asset: assets/fonts/ClashDisplay-Extralight.otf
+          weight: 200
+        - asset: assets/fonts/ClashDisplay-Light.otf
+          weight: 300
+        - asset: assets/fonts/ClashDisplay-Regular.otf
+          weight: 400
+        - asset: assets/fonts/ClashDisplay-Medium.otf
+          weight: 500
+        - asset: assets/fonts/ClashDisplay-Semibold.otf
+          weight: 600
+        - asset: assets/fonts/ClashDisplay-Bold.otf
+          weight: 700
+
+
+
+
 flutter_launcher_icons:
   android: true
   ios: true
