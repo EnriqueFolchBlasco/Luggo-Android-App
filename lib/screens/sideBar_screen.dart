@@ -74,7 +74,7 @@ class SideBarScreen extends StatelessWidget {
               title: Text(
                 'Preferencias',
                 style: TextStyle(
-                  fontFamily: 'ClashDisplay',
+                  fontFamily: 'Helvetica',
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                   color: AppColors.primaryColor,
@@ -93,7 +93,7 @@ class SideBarScreen extends StatelessWidget {
               title: Text(
                 'Opciones',
                 style: TextStyle(
-                  fontFamily: 'ClashDisplay',
+                  fontFamily: 'Helvetica',
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                   color: AppColors.primaryColor,
@@ -112,7 +112,7 @@ class SideBarScreen extends StatelessWidget {
               title: Text(
                 'Privacidad',
                 style: TextStyle(
-                  fontFamily: 'ClashDisplay',
+                  fontFamily: 'Helvetica',
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                   color: AppColors.primaryColor,
@@ -128,7 +128,7 @@ class SideBarScreen extends StatelessWidget {
               title: Text(
                 'Ayuda',
                 style: TextStyle(
-                  fontFamily: 'ClashDisplay',
+                  fontFamily: 'Helvetica',
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                   color: AppColors.primaryColor,
@@ -144,7 +144,7 @@ class SideBarScreen extends StatelessWidget {
               title: Text(
                 'Sobre nosotros',
                 style: TextStyle(
-                  fontFamily: 'ClashDisplay',
+                  fontFamily: 'Helvetica',
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                   color: AppColors.primaryColor,
@@ -160,7 +160,7 @@ class SideBarScreen extends StatelessWidget {
               title: Text(
                 'Log out',
                 style: TextStyle(
-                  fontFamily: 'ClashDisplay',
+                  fontFamily: 'Helvetica-Light',
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                   color: AppColors.primaryColor,

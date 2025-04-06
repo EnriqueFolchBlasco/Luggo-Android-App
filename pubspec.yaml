@@ -43,18 +43,34 @@ flutter:
   fonts:
     - family: ClashDisplay
       fonts:
-        - asset: assets/fonts/ClashDisplay-Extralight.otf
+        - asset: assets/fonts/clashDisplay/ClashDisplay-Extralight.otf
           weight: 200
-        - asset: assets/fonts/ClashDisplay-Light.otf
+        - asset: assets/fonts/clashDisplay/ClashDisplay-Light.otf
           weight: 300
-        - asset: assets/fonts/ClashDisplay-Regular.otf
+        - asset: assets/fonts/clashDisplay/ClashDisplay-Regular.otf
           weight: 400
-        - asset: assets/fonts/ClashDisplay-Medium.otf
+        - asset: assets/fonts/clashDisplay/ClashDisplay-Medium.otf
           weight: 500
-        - asset: assets/fonts/ClashDisplay-Semibold.otf
+        - asset: assets/fonts/clashDisplay/ClashDisplay-Semibold.otf
           weight: 600
-        - asset: assets/fonts/ClashDisplay-Bold.otf
+        - asset: assets/fonts/clashDisplay/ClashDisplay-Bold.otf
           weight: 700
+
+    - family: Helvetica
+      fonts:
+        - asset: assets/fonts/helvetica/Helvetica.ttf
+          weight: 400
+        - asset: assets/fonts/helvetica/Helvetica-Light.ttf
+          weight: 300
+        - asset: assets/fonts/helvetica/Helvetica-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/helvetica/Helvetica-Oblique.ttf
+          style: italic
+          weight: 400
+        - asset: assets/fonts/helvetica/Helvetica-BoldOblique.ttf
+          style: italic
+          weight: 700
+
 
 
 

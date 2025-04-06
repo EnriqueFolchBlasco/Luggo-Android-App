@@ -280,6 +280,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         155,
                         192,
                       ),
+
+                      selectedLabelStyle: TextStyle(
+                        fontFamily: 'Helvetica',
+                        fontWeight: FontWeight.w400,
+                      ),
+
+                      unselectedLabelStyle: TextStyle(
+                        fontFamily: 'Helvetica',
+                        fontWeight: FontWeight.w300,
+                      ),
+                      
                       showUnselectedLabels: true,
                       type: BottomNavigationBarType.fixed,
                       items: [
