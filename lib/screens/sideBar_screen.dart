@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:luggo/screens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:luggo/utils/constants.dart';
 
 class SideBarScreen extends StatelessWidget {
   const SideBarScreen({super.key});
@@ -26,12 +27,10 @@ class SideBarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       //************************************************************
       // COPIA DE LA UPBAR (Efecte)
       //************************************************************
-
-      backgroundColor: Color.fromRGBO(230, 235, 242, 1),
+      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
@@ -68,64 +67,109 @@ class SideBarScreen extends StatelessWidget {
           children: [
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.room_preferences_outlined),
-              title: Text('Preferencias',
-              style: TextStyle(fontFamily: 'ClashDisplay', fontSize: 18, fontWeight: FontWeight.w400),
+              leading: Icon(
+                Icons.room_preferences_outlined,
+                color: AppColors.primaryColor,
               ),
-              onTap: () {
-
-              },
+              title: Text(
+                'Preferencias',
+                style: TextStyle(
+                  fontFamily: 'ClashDisplay',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+              onTap: () {},
             ),
             Divider(),
 
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.settings),
-              title: Text('Opciones',
-              style: TextStyle(fontFamily: 'ClashDisplay', fontSize: 18, fontWeight: FontWeight.w400),
+              leading: Icon(
+                Icons.settings_outlined,
+                color: AppColors.primaryColor,
               ),
-              onTap: () {
-
-              },
+              title: Text(
+                'Opciones',
+                style: TextStyle(
+                  fontFamily: 'ClashDisplay',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+              onTap: () {},
             ),
             Divider(),
 
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.privacy_tip),
-              title: Text('Privacidad',
-              style: TextStyle(fontFamily: 'ClashDisplay', fontSize: 18, fontWeight: FontWeight.w400),
+              leading: Icon(
+                Icons.privacy_tip_outlined,
+                color: AppColors.primaryColor,
               ),
-              onTap: () {
-
-              },
+              title: Text(
+                'Privacidad',
+                style: TextStyle(
+                  fontFamily: 'ClashDisplay',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+              onTap: () {},
             ),
             Divider(),
 
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.help),
-              title: Text('Ayuda',
-              style: TextStyle(fontFamily: 'ClashDisplay', fontSize: 18, fontWeight: FontWeight.w400),
+              leading: Icon(Icons.help_outline, color: AppColors.primaryColor),
+              title: Text(
+                'Ayuda',
+                style: TextStyle(
+                  fontFamily: 'ClashDisplay',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.primaryColor,
+                ),
               ),
-              onTap: () {
-
-              },
+              onTap: () {},
             ),
             Divider(),
 
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.logout),
+              leading: Icon(Icons.info_outline, color: AppColors.primaryColor),
+              title: Text(
+                'Sobre nosotros',
+                style: TextStyle(
+                  fontFamily: 'ClashDisplay',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+              onTap: () {},
+            ),
+            Divider(),
+
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(Icons.logout, color: AppColors.primaryColor),
               title: Text(
                 'Log out',
-                style: TextStyle(fontFamily: 'ClashDisplay', fontSize: 18, fontWeight: FontWeight.w400),
+                style: TextStyle(
+                  fontFamily: 'ClashDisplay',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.primaryColor,
+                ),
               ),
               onTap: () {
                 _logout(context);
               },
             ),
-
             Divider(),
           ],
         ),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:luggo/screens/login_screen.dart';
 import 'package:luggo/screens/services_screen.dart';
 import 'package:luggo/screens/chats_screen.dart';
 import 'package:luggo/screens/settings_screen.dart';
@@ -39,19 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
   //************************************************************
   // CONTROL DE UID
   //************************************************************
-
-  void _logout(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isRemembered', false);
-    prefs.setString("userUID", "none");
-
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => LoginScreen()),
-      (Route<dynamic> route) => false,
-    );
-  }
 
   Future<String?> _getUserUID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -148,6 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
       //************************************************************
       // UPPER BAR
       //************************************************************
+      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       extendBody: true,
       appBar: AppBar(
         automaticallyImplyLeading: false,
