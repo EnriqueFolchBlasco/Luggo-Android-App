@@ -17,6 +17,8 @@ dependencies:
   firebase_storage: ^12.4.4
   email_validator: ^2.0.1
   shared_preferences: ^2.0.6 
+  easy_localization: ^3.0.3
+
 
 dev_dependencies:
   flutter_test:
@@ -28,17 +30,19 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/Luggo BN.png
-    - assets/LuggoColor.png
-    - assets/Luggo Icono BN.png
-    - assets/LuggoIconoColor.png
-    - assets/LuggoColor2.png
-    - assets/Luggo_Baseline BN 1.png
-    - assets/Luggo_Baseline BN.png
-    - assets/Luggo_Baseline Color 1.png
-    - assets/Luggo_Baseline Color 1_2.png
-    - assets/Luggo_Baseline Color.png
-    - assets/Luggo_Baseline2.PNG
+    - assets/images/Luggo BN.png
+    - assets/images/LuggoColor.png
+    - assets/images/Luggo Icono BN.png
+    - assets/images/LuggoIconoColor.png
+    - assets/images/LuggoColor2.png
+    - assets/images/Luggo_Baseline BN 1.png
+    - assets/images/Luggo_Baseline BN.png
+    - assets/images/Luggo_Baseline Color 1.png
+    - assets/images/Luggo_Baseline Color 1_2.png
+    - assets/images/Luggo_Baseline Color.png
+    - assets/images/Luggo_Baseline2.PNG
+    - assets/translations/
+
 
   fonts:
     - family: ClashDisplay

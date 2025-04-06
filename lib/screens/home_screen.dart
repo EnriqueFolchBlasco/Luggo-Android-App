@@ -3,7 +3,7 @@ import 'package:luggo/screens/services_screen.dart';
 import 'package:luggo/screens/chats_screen.dart';
 import 'package:luggo/screens/settings_screen.dart';
 import 'package:luggo/screens/profile_screen.dart';
-import 'package:luggo/screens/sideBar_screen.dart';
+import 'package:luggo/screens/sidebar_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/notification_manager.dart';
@@ -169,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Spacer(),
             Spacer(),
-            Image.asset('assets/LuggoColor2.png', height: 30),
+            Image.asset('assets/images/LuggoColor2.png', height: 30),
             Spacer(),
           ],
         ),

@@ -1,15 +1,19 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:luggo/screens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:luggo/utils/constants.dart';
 
-class SideBarScreen extends StatelessWidget {
+class SideBarScreen extends StatefulWidget {
   const SideBarScreen({super.key});
 
-  //************************************************************
-  // CONTROL DE LOG OUT
-  //************************************************************
+  @override
+  State<SideBarScreen> createState() => _SideBarScreenState();
+}
+
+class _SideBarScreenState extends State<SideBarScreen> {
+  bool showLanguageMenu = false;
 
   void _logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
@@ -19,7 +23,7 @@ class SideBarScreen extends StatelessWidget {
 
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => LoginScreen()),
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
       (Route<dynamic> route) => false,
     );
   }
@@ -27,10 +31,7 @@ class SideBarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //************************************************************
-      // COPIA DE LA UPBAR (Efecte)
-      //************************************************************
-      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
@@ -40,7 +41,7 @@ class SideBarScreen extends StatelessWidget {
           child: IconButton(
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
-            icon: Icon(Icons.close, size: 40, color: Colors.black),
+            icon: const Icon(Icons.close, size: 40, color: Colors.black),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -49,50 +50,28 @@ class SideBarScreen extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
-            Image.asset('assets/LuggoColor2.png', height: 30),
-            Spacer(),
-            Spacer(),
+            const Spacer(),
+            Image.asset('assets/images/LuggoColor2.png', height: 30),
+            const Spacer(),
+            const Spacer(),
           ],
         ),
       ),
-
-      //************************************************************
-      // BODY DE L'APP (OPCIONS)
-      //************************************************************
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: Icon(
-                Icons.room_preferences_outlined,
-                color: AppColors.primaryColor,
-              ),
-              title: Text(
-                'Preferencias',
-                style: TextStyle(
-                  fontFamily: 'Helvetica',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.primaryColor,
-                ),
-              ),
-              onTap: () {},
-            ),
-            Divider(),
 
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(
+              leading: const Icon(
                 Icons.settings_outlined,
                 color: AppColors.primaryColor,
               ),
               title: Text(
-                'Opciones',
-                style: TextStyle(
+                'opciones'.tr(),
+                style: const TextStyle(
                   fontFamily: 'Helvetica',
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
@@ -101,17 +80,45 @@ class SideBarScreen extends StatelessWidget {
               ),
               onTap: () {},
             ),
-            Divider(),
+            const Divider(),
 
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(
+              leading: const Icon(
+                Icons.language_sharp,
+                color: AppColors.primaryColor,
+              ),
+              title: Text(
+                'idioma'.tr(),
+                style: const TextStyle(
+                  fontFamily: 'Helvetica',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+              trailing: Icon(
+                showLanguageMenu ? Icons.expand_less : Icons.expand_more,
+                color: AppColors.primaryColor,
+              ),
+              onTap: () {
+                setState(() {
+                  showLanguageMenu = !showLanguageMenu;
+                });
+              },
+            ),
+            if (showLanguageMenu) _languageDropdown(context),
+            const Divider(),
+
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(
                 Icons.privacy_tip_outlined,
                 color: AppColors.primaryColor,
               ),
               title: Text(
-                'Privacidad',
-                style: TextStyle(
+                'privacidad'.tr(),
+                style: const TextStyle(
                   fontFamily: 'Helvetica',
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
@@ -120,14 +127,17 @@ class SideBarScreen extends StatelessWidget {
               ),
               onTap: () {},
             ),
-            Divider(),
+            const Divider(),
 
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.help_outline, color: AppColors.primaryColor),
+              leading: const Icon(
+                Icons.help_outline,
+                color: AppColors.primaryColor,
+              ),
               title: Text(
-                'Ayuda',
-                style: TextStyle(
+                'ayuda'.tr(),
+                style: const TextStyle(
                   fontFamily: 'Helvetica',
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
@@ -136,14 +146,17 @@ class SideBarScreen extends StatelessWidget {
               ),
               onTap: () {},
             ),
-            Divider(),
+            const Divider(),
 
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.info_outline, color: AppColors.primaryColor),
+              leading: const Icon(
+                Icons.info_outline,
+                color: AppColors.primaryColor,
+              ),
               title: Text(
-                'Sobre nosotros',
-                style: TextStyle(
+                'sobreNosotros'.tr(),
+                style: const TextStyle(
                   fontFamily: 'Helvetica',
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
@@ -152,14 +165,14 @@ class SideBarScreen extends StatelessWidget {
               ),
               onTap: () {},
             ),
-            Divider(),
+            const Divider(),
 
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.logout, color: AppColors.primaryColor),
+              leading: const Icon(Icons.logout, color: AppColors.primaryColor),
               title: Text(
-                'Log out',
-                style: TextStyle(
+                'logOut'.tr(),
+                style: const TextStyle(
                   fontFamily: 'Helvetica-Light',
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
@@ -170,8 +183,81 @@ class SideBarScreen extends StatelessWidget {
                 _logout(context);
               },
             ),
-            Divider(),
+            const Divider(),
           ],
+        ),
+      ),
+    );
+  }
+
+  //*******************************************
+  // CREACIÓ DEL MENU DE IDOMES
+  //*******************************************
+
+  Widget _languageDropdown(BuildContext context) {
+    final idiomaActual = context.locale;
+
+    return Center(
+      child: Container(
+        margin: const EdgeInsets.only(top: 8, bottom: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.primaryColor.withOpacity(0.4)),
+        ),
+
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<Locale>(
+            value: idiomaActual,
+            isExpanded: true,
+            borderRadius: BorderRadius.circular(12),
+            icon: const Icon(Icons.arrow_drop_down),
+            style: const TextStyle(
+              fontFamily: 'Helvetica',
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
+
+            onChanged: (Locale? locale) {
+              if (locale != null) {
+                setState(() {
+                  context.setLocale(locale);
+                  showLanguageMenu = false;
+                });
+              }
+            },
+
+            items: [
+              DropdownMenuItem(
+                value: const Locale('es'),
+                child: Row(
+                  children: [
+                    const Text("🇪🇸 "),
+                    const SizedBox(width: 6),
+                    Text(
+                      'spanish'.tr(),
+                      style: TextStyle(color: AppColors.primaryColor),
+                    ),
+                  ],
+                ),
+              ),
+              DropdownMenuItem(
+                value: const Locale('en'),
+                child: Row(
+                  children: [
+                    const Text("🇬🇧 "),
+                    const SizedBox(width: 6),
+                    Text(
+                      'english'.tr(),
+                      style: TextStyle(color: AppColors.primaryColor),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
