@@ -2,9 +2,33 @@
   "idioma": "Language",
   "spanish": "Spanish",
   "english": "English",
-  "sobreNosotros": "About us",
+
+  "opciones": "Options",
+  "settings": "Settings",
   "logOut": "Log out",
+  "sobreNosotros": "About us",
   "ayuda": "Help",
   "privacidad": "Privacy",
-  "opciones": "Options"
+
+  "aboutUs": "About Us",
+  "whoWeAre": "Who We Are",
+  "whoWeAreText": "At Luggo, we believe moving should be easy, affordable, and eco-friendly.",
+  "whatWeOffer": "What We Offer",
+  "whatWeOfferText": "- Transport rentals\n- Labor-only moving help\n- Furniture assembly & recycling\n- Donations and eco-services",
+  "ourMission": "Our Mission",
+  "ourMissionText": "We aim to reduce the stress of moving while promoting sustainability and community connection.",
+  "thankYou": "Thank you for choosing Luggo 💙",
+
+  "help": "Help",
+  "needHelp": "Need assistance?",
+  "helpText": "If you're having trouble with Luggo, our support team is here to help you out.",
+  "contactUs": "Contact us",
+
+  "privacy": "Privacy",
+  "privacyTitle": "Your data matters",
+  "privacyText": "Luggo respects your privacy. We store your data securely and never share it without consent. Read our full privacy policy for more info.",
+
+  "settingsIntro": "Customize your Luggo experience below.",
+  "notificationSettings": "Notification Preferences",
+  "securitySettings": "Security & Login"
 }

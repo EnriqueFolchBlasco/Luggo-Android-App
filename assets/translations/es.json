@@ -2,9 +2,33 @@
   "idioma": "Idioma",
   "spanish": "Español",
   "english": "Inglés",
-  "sobreNosotros": "Sobre nosotros",
+
+  "opciones": "Opciones",
+  "settings": "Opciones",
   "logOut": "Cerrar sesión",
+  "sobreNosotros": "Sobre nosotros",
   "ayuda": "Ayuda",
   "privacidad": "Privacidad",
-  "opciones": "Opciones"
+
+  "aboutUs": "Sobre nosotros",
+  "whoWeAre": "Quiénes somos",
+  "whoWeAreText": "En Luggo, creemos que mudarse debería ser fácil, accesible y ecológico.",
+  "whatWeOffer": "Qué ofrecemos",
+  "whatWeOfferText": "- Alquileres de transporte\n- Ayuda solo con mano de obra\n- Montaje y reciclaje de muebles\n- Donaciones y servicios sostenibles",
+  "ourMission": "Nuestra misión",
+  "ourMissionText": "Queremos reducir el estrés de mudarse mientras promovemos la sostenibilidad y la conexión comunitaria.",
+  "thankYou": "Gracias por elegir Luggo 💙",
+
+  "help": "Ayuda",
+  "needHelp": "¿Necesitas asistencia?",
+  "helpText": "Si tienes problemas con Luggo, nuestro equipo de soporte está aquí para ayudarte.",
+  "contactUs": "Contáctanos",
+
+  "privacy": "Privacidad",
+  "privacyTitle": "Tus datos importan",
+  "privacyText": "Luggo respeta tu privacidad. Guardamos tus datos de forma segura y nunca los compartimos sin tu permiso. Consulta nuestra política de privacidad para más información.",
+
+  "settingsIntro": "Personaliza tu experiencia con Luggo a continuación.",
+  "notificationSettings": "Preferencias de notificación",
+  "securitySettings": "Seguridad e inicio de sesión"
 }

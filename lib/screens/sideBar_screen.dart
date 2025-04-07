@@ -2,6 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:luggo/screens/login_screen.dart';
+import 'package:luggo/screens/sideBar_screens/about_us_screen.dart';
+import 'package:luggo/screens/sideBar_screens/help_screen.dart';
+import 'package:luggo/screens/sideBar_screens/privacy_screen.dart';
+import 'package:luggo/screens/sideBar_screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:luggo/utils/constants.dart';
 
@@ -78,7 +82,11 @@ class _SideBarScreenState extends State<SideBarScreen> {
                   color: AppColors.primaryColor,
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                );
+              },
             ),
             const Divider(),
 
@@ -125,7 +133,11 @@ class _SideBarScreenState extends State<SideBarScreen> {
                   color: AppColors.primaryColor,
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const PrivacyScreen()),
+                );
+              },
             ),
             const Divider(),
 
@@ -144,7 +156,11 @@ class _SideBarScreenState extends State<SideBarScreen> {
                   color: AppColors.primaryColor,
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const HelpScreen()),
+                );
+              },
             ),
             const Divider(),
 
@@ -163,7 +179,11 @@ class _SideBarScreenState extends State<SideBarScreen> {
                   color: AppColors.primaryColor,
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const AboutUsScreen()),
+                );
+              },
             ),
             const Divider(),
 
@@ -204,7 +224,7 @@ class _SideBarScreenState extends State<SideBarScreen> {
         decoration: BoxDecoration(
           color: Colors.grey[100],
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.primaryColor.withOpacity(0.4)),
+          border: Border.all(color: AppColors.primaryColor.withAlpha(102)),
         ),
 
         child: DropdownButtonHideUnderline(

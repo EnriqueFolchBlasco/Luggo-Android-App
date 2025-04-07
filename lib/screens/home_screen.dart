@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luggo/screens/services_screen.dart';
 import 'package:luggo/screens/chats_screen.dart';
-import 'package:luggo/screens/settings_screen.dart';
 import 'package:luggo/screens/profile_screen.dart';
 import 'package:luggo/screens/sidebar_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   //Llista negra de pantalles sense el bottomMenu
-  List<Type> _screensSinBottomNav = [SettingsScreen];
+  List<Type> _screensSinBottomNav = [];
 
   void _onItemTapped(int index) {
     setState(() {
