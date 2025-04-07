@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:luggo/utils/constants.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -17,7 +19,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
     if (email.isEmpty) {
       setState(() {
-        _message = "Please enter your email.";
+        _message = "errorEmptyFields".tr();
       });
       return;
     }
@@ -25,64 +27,92 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       setState(() {
-        _message = "Password reset email sent! Check your inbox.";
+        _message = "resetSuccess".tr();
       });
     } catch (e) {
       setState(() {
-        _message = "Error: ${e.toString()}";
+        _message = "${'resetError'.tr()} ${e.toString()}";
       });
     }
+  }
+
+  InputDecoration _inputStyle(String hint, IconData icon) {
+    return InputDecoration(
+      hintText: hint.tr(),
+      prefixIcon: Icon(icon, color: AppColors.primaryColor),
+      filled: true,
+      fillColor: Colors.grey.shade100,
+      contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide.none,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: AppColors.primaryColor, width: 1),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text('Forgot Password')),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  'Forgot your password?',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 20),
-                TextField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    hintText: 'Enter your email',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                if (_message.isNotEmpty)
-                  Text(
-                    _message,
-                    style: TextStyle(color: _message.contains("sent") ? Colors.green : Colors.red, fontWeight: FontWeight.bold),
-                  ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _resetPassword,
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  child: const Text('Reset Password'),
-                ),
-                const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Back to Login'),
-                ),
-              ],
+      appBar: AppBar(title: Text('forgotPassword'.tr())),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          children: [
+            const SizedBox(height: 10),
+            Text(
+              'forgotTitle'.tr(),
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'ClashDisplay',
+                color: AppColors.primaryColor,
+              ),
             ),
-          ),
+            const SizedBox(height: 30),
+
+            TextField(
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: _inputStyle("email", Icons.email),
+            ),
+            const SizedBox(height: 10),
+
+            if (_message.isNotEmpty)
+              Text(
+                _message,
+                style: TextStyle(
+                  color: _message.contains("sent") || _message.contains("¡") ? Colors.green : Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            const SizedBox(height: 20),
+
+            ElevatedButton(
+              onPressed: _resetPassword,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primaryColor,
+                minimumSize: const Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              ),
+              child: Text(
+                'resetPassword'.tr(),
+                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'backLogin'.tr(),
+                style: const TextStyle(color: AppColors.primaryColor),
+              ),
+            )
+          ],
         ),
       ),
     );

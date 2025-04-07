@@ -36,6 +36,30 @@
   
     "settingsIntro": "Personalitza la teua experiència amb Luggo a continuació.",
     "notificationSettings": "Preferències de notificació",
-    "securitySettings": "Seguretat i inici de sessió"
+    "securitySettings": "Seguretat i inici de sessió",
+
+    "welcomeLuggo": "Benvingut a Luggo!",
+    "email": "Correu electrònic",
+    "password": "Contrasenya",
+    "forgotPassword": "Has oblidat la contrasenya?",
+    "login": "Inicia sessió",
+    "register": "Registra't",
+    "noAccount": "Encara no tens compte?",
+    "errorEmptyFields": "Per favor, escriu el correu i la contrasenya.",
+    "errorInvalidEmail": "Introdueix un correu vàlid.",
+    "errorEmailNotVerified": "Verifica el teu correu abans d'iniciar sessió.",
+    "errorLoginFailed": "Error d'inici de sessió: ",
+
+    "confirmPassword": "Confirmar contrasenya",
+    "registerTitle": "Crea un compte",
+    "errorPasswordMismatch": "Les contrasenyes no coincideixen.",
+    "registerSuccess": "Registre completat! Comprova el teu correu.",
+    "haveAccount": "Ja tens un compte?",
+
+    "forgotTitle": "Has oblidat la contrasenya?",
+    "resetSuccess": "Correu enviat! Revisa la teua bústia.",
+    "resetError": "Error en enviar el correu:",
+    "resetPassword": "Restablir contrasenya",
+    "backLogin": "Tornar a l'inici de sessió"
   }
   

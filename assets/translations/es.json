@@ -8,7 +8,7 @@
   "servicios": "Servicios",
   "chats": "Chats",
   "perfil": "Perfil",
-  
+
 
   "opciones": "Opciones",
   "settings": "Opciones",
@@ -37,5 +37,30 @@
 
   "settingsIntro": "Personaliza tu experiencia con Luggo a continuación.",
   "notificationSettings": "Preferencias de notificación",
-  "securitySettings": "Seguridad e inicio de sesión"
+  "securitySettings": "Seguridad e inicio de sesión",
+
+  
+  "welcomeLuggo": "¡Bienvenido a Luggo!",
+  "email": "Correo electrónico",
+  "password": "Contraseña",
+  "forgotPassword": "¿Olvidaste tu contraseña?",
+  "login": "Iniciar sesión",
+  "register": "Registrarse",
+  "noAccount": "¿No tienes una cuenta?",
+  "errorEmptyFields": "Por favor, introduce el correo y la contraseña.",
+  "errorInvalidEmail": "Introduce un correo válido.",
+  "errorEmailNotVerified": "Verifica tu correo antes de iniciar sesión.",
+  "errorLoginFailed": "Fallo al iniciar sesión: ",
+  
+  "confirmPassword": "Confirmar contraseña",
+  "registerTitle": "Crea una cuenta",
+  "errorPasswordMismatch": "Las contraseñas no coinciden.",
+  "registerSuccess": "¡Registro exitoso! Verifica tu correo.",
+  "haveAccount": "¿Ya tienes una cuenta?",
+
+  "forgotTitle": "¿Olvidaste tu contraseña?",
+  "resetSuccess": "¡Correo enviado! Revisa tu bandeja.",
+  "resetError": "Error al enviar el correo:",
+  "resetPassword": "Restablecer contraseña",
+  "backLogin": "Volver al inicio de sesión"
 }

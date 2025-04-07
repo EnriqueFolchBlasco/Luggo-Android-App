@@ -4,7 +4,9 @@ import 'package:email_validator/email_validator.dart';
 import 'package:luggo/screens/forgotPassword_Screen.dart';
 import 'package:luggo/screens/home_screen.dart';
 import 'package:luggo/screens/register_screen.dart';
+import 'package:luggo/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -35,14 +37,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (email.isEmpty || password.isEmpty) {
       setState(() {
-        _errorMensatge = "Please enter both email and password.";
+        _errorMensatge = ("errorEmptyFields").tr();
       });
       return;
     }
 
     if (!EmailValidator.validate(email)) {
       setState(() {
-        _errorMensatge = "Please enter a valid email address.";
+        _errorMensatge = ("errorInvalidEmail").tr();
       });
       return;
     }
@@ -54,7 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (userCredential.user != null) {
-        
         if (userCredential.user!.emailVerified) {
           _savePreferences(true);
           _saveUserUID(userCredential.user!.uid);
@@ -64,113 +65,157 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         } else {
           setState(() {
-            _errorMensatge = "Please verify your email before logging in.";
+            _errorMensatge = ("errorEmailNotVerified").tr();
           });
         }
       }
     } catch (e) {
       setState(() {
-        _errorMensatge = "Login failed: ${e.toString()}";
+        _errorMensatge = ("errorLoginFailed").tr() + e.toString();
       });
     }
+  }
+
+  InputDecoration customInputDecoration({required String hint, required IconData icon}) {
+    return InputDecoration(
+      hintText: hint,
+      prefixIcon: Icon(icon, color: AppColors.primaryColor),
+      filled: true,
+      fillColor: Colors.grey.shade100,
+      contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide.none,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: AppColors.primaryColor, width: 1),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: true,
       body: Center(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  'Welcome to Luggo!',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            children: [
+              Image.asset('assets/images/LuggoColor2.png', height: 50),
+              const SizedBox(height: 20),
+              Text(
+                ('welcomeLuggo').tr(),
+                style: const TextStyle(
+                  fontFamily: 'ClashDisplay',
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primaryColor,
                 ),
-                const SizedBox(height: 20),
-                TextField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    hintText: 'Enter your email',
-                    border: OutlineInputBorder(),
+              ),
+              const SizedBox(height: 30),
+
+              TextField(
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                style: const TextStyle(fontFamily: 'Helvetica'),
+                decoration: customInputDecoration(
+                  hint: ('email').tr(),
+                  icon: Icons.email,
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              TextField(
+                controller: _passwordController,
+                obscureText: !_passwordVisible,
+                style: const TextStyle(fontFamily: 'Helvetica'),
+                decoration: customInputDecoration(
+                  hint: ('password').tr(),
+                  icon: Icons.lock,
+                ).copyWith(
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      color: AppColors.primaryColor,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _passwordVisible = !_passwordVisible;
+                      });
+                    },
                   ),
                 ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: _passwordController,
-                  obscureText: !_passwordVisible,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    hintText: 'Enter your password',
-                    border: const OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _passwordVisible = !_passwordVisible;
-                        });
-                      },
+              ),
+              const SizedBox(height: 12),
+
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    _errorMensatge = "";
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => ForgotPasswordScreen()),
+                    );
+                  },
+                  child: Text(
+                    ('forgotPassword').tr(),
+                    style: const TextStyle(color: AppColors.primaryColor),
+                  ),
+                ),
+              ),
+
+              if (_errorMensatge.isNotEmpty)
+                Text(
+                  _errorMensatge,
+                  style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                ),
+
+              const SizedBox(height: 20),
+
+              ElevatedButton(
+                onPressed: _login,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primaryColor,
+                  minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: Text(
+                  ('login').tr(),
+                  style: const TextStyle(
+                    fontFamily: 'Helvetica',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(('noAccount').tr()),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => RegisterScreen()),
+                      );
+                    },
+                    child: Text(
+                      ('register').tr(),
+                      style: const TextStyle(color: AppColors.primaryColor),
                     ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        print('Forgot password clicked');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ForgotPasswordScreen(),
-                          ),
-                        );
-                      },
-                      child: const Text('Forgot password?'),
-                    ),
-                  ],
-                ),
-                if (_errorMensatge.isNotEmpty)
-                  Text(
-                    _errorMensatge,
-                    style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-                  ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _login,
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  child: const Text('Login'),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Text('Don\'t have an account? '),
-                    TextButton(
-                      onPressed: () {
-                        print('Register clicked');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RegisterScreen(),
-                          ),
-                        );
-                      },
-                      child: const Text('Register'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

@@ -36,5 +36,42 @@
 
   "settingsIntro": "Customize your Luggo experience below.",
   "notificationSettings": "Notification Preferences",
-  "securitySettings": "Security & Login"
+  "securitySettings": "Security & Login",
+
+  "welcomeLuggo": "Welcome to Luggo!",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot password?",
+  "login": "Login",
+  "register": "Register",
+  "noAccount": "Don't have an account?",
+  "errorEmptyFields": "Please enter both email and password.",
+  "errorInvalidEmail": "Please enter a valid email address.",
+  "errorEmailNotVerified": "Please verify your email before logging in.",
+  "errorLoginFailed": "Login failed: ",
+
+  "createAccount": "Create an account",
+  "alreadyHaveAccount": "Already have an account?",
+  "passwordsNotMatch": "Passwords do not match.",
+  "fillFields": "Please fill in all fields.",
+  "registrationSuccess": "Registration successful! Please verify your email.",
+  "registrationFailed": "Registration failed",
+
+  "forgotYourPassword": "Forgot your password?",
+  "resetPassword": "Reset Password",
+  "backToLogin": "Back to Login",
+  "fillEmail": "Please enter your email.",
+  "resetSent": "Password reset email sent! Check your inbox.",
+  "errorReset": "Error while resetting password",
+
+  "confirmPassword": "Confirm Password",
+  "registerTitle": "Create an account",
+  "errorPasswordMismatch": "Passwords do not match.",
+  "registerSuccess": "Registration successful! Please verify your email.",
+  "haveAccount": "Already have an account?",
+
+  "forgotTitle": "Forgot your password?",
+  "resetSuccess": "Password reset email sent! Check your inbox.",
+  "resetError": "Error sending email:",
+  "backLogin": "Back to Login"
 }
