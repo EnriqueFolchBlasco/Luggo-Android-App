@@ -47,7 +47,7 @@ class _SideBarScreenState extends State<SideBarScreen> {
             highlightColor: Colors.transparent,
             icon: const Icon(Icons.close, size: 40, color: Colors.black),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(true);
             },
           ),
         ),
@@ -66,7 +66,6 @@ class _SideBarScreenState extends State<SideBarScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: const Icon(
@@ -157,9 +156,9 @@ class _SideBarScreenState extends State<SideBarScreen> {
                 ),
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const HelpScreen()),
-                );
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => const HelpScreen()));
               },
             ),
             const Divider(),
@@ -263,6 +262,21 @@ class _SideBarScreenState extends State<SideBarScreen> {
                   ],
                 ),
               ),
+              
+              DropdownMenuItem(
+                value: const Locale('ca', 'valencia'),
+                child: Row(
+                  children: [
+                    Image.asset('assets/flags/valencian.png', height: 20),
+                    const SizedBox(width: 6),
+                    Text(
+                      'valencian'.tr(),
+                      style: TextStyle(color: AppColors.primaryColor),
+                    ),
+                  ],
+                ),
+              ),
+
               DropdownMenuItem(
                 value: const Locale('en'),
                 child: Row(

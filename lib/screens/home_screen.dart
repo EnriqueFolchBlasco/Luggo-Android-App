@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:luggo/screens/services_screen.dart';
 import 'package:luggo/screens/chats_screen.dart';
@@ -144,8 +145,8 @@ class _HomeScreenState extends State<HomeScreen> {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             icon: Icon(Icons.menu, size: 40, color: Colors.black),
-            onPressed: () {
-              Navigator.of(context).push(
+            onPressed: () async {
+              final result = await Navigator.of(context).push(
                 PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (_, __, ___) => const SideBarScreen(),
@@ -160,6 +161,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               );
+
+              // Condicio per a fer qe al cambiar idioma se cambie la bottombar en altres labels
+              if (result == true) {
+                setState(() {});
+              }
             },
           ),
         ),
@@ -289,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontFamily: 'Helvetica',
                         fontWeight: FontWeight.w300,
                       ),
-                      
+
                       showUnselectedLabels: true,
                       type: BottomNavigationBarType.fixed,
                       items: [
@@ -298,28 +304,28 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: EdgeInsets.only(top: 10.0),
                             child: Icon(Icons.home),
                           ),
-                          label: 'Inicio',
+                          label: 'inicio'.tr(),
                         ),
                         BottomNavigationBarItem(
                           icon: Padding(
                             padding: EdgeInsets.only(top: 10.0),
                             child: Icon(Icons.business),
                           ),
-                          label: 'Servicios',
+                          label: 'servicios'.tr(),
                         ),
                         BottomNavigationBarItem(
                           icon: Padding(
                             padding: EdgeInsets.only(top: 10.0),
                             child: Icon(Icons.chat),
                           ),
-                          label: 'Chats',
+                          label: 'chats'.tr(),
                         ),
                         BottomNavigationBarItem(
                           icon: Padding(
                             padding: EdgeInsets.only(top: 10.0),
                             child: Icon(Icons.person),
                           ),
-                          label: 'Perfil',
+                          label: 'perfil'.tr(),
                         ),
                       ],
                     ),

@@ -42,6 +42,8 @@ flutter:
     - assets/images/Luggo_Baseline Color.png
     - assets/images/Luggo_Baseline2.PNG
     - assets/translations/
+    - assets/flags/
+    - assets/flags/valencian.png
 
 
   fonts:

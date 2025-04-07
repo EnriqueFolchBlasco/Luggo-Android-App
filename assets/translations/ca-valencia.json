@@ -1,0 +1,41 @@
+{
+    "idioma": "Idioma",
+    "spanish": "Espanyol",
+    "english": "Anglés",
+    "valencian": "Valencià",
+
+    "inicio": "Inici",
+    "servicios": "Serveis",
+    "chats": "Xats",
+    "perfil": "Perfil",
+  
+    "opciones": "Opcions",
+    "settings": "Opcions",
+    "logOut": "Tancar sessió",
+    "sobreNosotros": "Sobre nosaltres",
+    "ayuda": "Ajuda",
+    "privacidad": "Privacitat",
+  
+    "aboutUs": "Sobre nosaltres",
+    "whoWeAre": "Qui som",
+    "whoWeAreText": "A Luggo, creiem que mudar-se hauria de ser fàcil, accessible i ecològic.",
+    "whatWeOffer": "Què oferim",
+    "whatWeOfferText": "- Lloguer de transports\n- Ajuda només amb mà d'obra\n- Muntatge i reciclatge de mobles\n- Donacions i serveis sostenibles",
+    "ourMission": "La nostra missió",
+    "ourMissionText": "Volem reduir l’estrés de les mudances mentre promovem la sostenibilitat i la connexió comunitària.",
+    "thankYou": "Gràcies per confiar en Luggo 💙",
+  
+    "help": "Ajuda",
+    "needHelp": "Necessites assistència?",
+    "helpText": "Si tens problemes amb Luggo, el nostre equip de suport està ací per a ajudar-te.",
+    "contactUs": "Contacta amb nosaltres",
+  
+    "privacy": "Privacitat",
+    "privacyTitle": "Les teues dades importen",
+    "privacyText": "Luggo respecta la teua privacitat. Guardem les teues dades de manera segura i mai les compartim sense el teu permís. Consulta la nostra política de privacitat per a més informació.",
+  
+    "settingsIntro": "Personalitza la teua experiència amb Luggo a continuació.",
+    "notificationSettings": "Preferències de notificació",
+    "securitySettings": "Seguretat i inici de sessió"
+  }
+  

@@ -2,6 +2,12 @@
   "idioma": "Language",
   "spanish": "Spanish",
   "english": "English",
+  "valencian": "Valencian",
+  
+  "inicio": "Home",
+  "servicios": "Services",
+  "chats": "Chats",
+  "perfil": "Profile",
 
   "opciones": "Options",
   "settings": "Settings",
