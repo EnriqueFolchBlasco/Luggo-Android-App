@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/utils/constants.dart';
 
+//************************************************************
+// TO DO fer la db local q almacena mudances (items count)
+//************************************************************
+
 class HomeScreenContent extends StatelessWidget {
 
   //CAMBAIR EL MENSATGE DE HOLA DEPENGUENT DEL DIA HGORA
@@ -141,6 +145,11 @@ class HomeScreenContent extends StatelessWidget {
       ),
     );
   }
+
+  //************************************************************
+  // CARTA ESTRUCTURA
+  // TODO FER EL PRESS/ON TAP
+  //************************************************************
 
   Widget _mudanzaCard(BuildContext context, String title, int items, double progress,) {
     return Container(
