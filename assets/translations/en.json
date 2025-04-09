@@ -9,8 +9,8 @@
   "chats": "Chats",
   "perfil": "Profile",
 
+  "user": "Username",
   "opciones": "Options",
-  "settings": "Settings",
   "logOut": "Log out",
   "sobreNosotros": "About us",
   "ayuda": "Help",
@@ -73,5 +73,17 @@
   "forgotTitle": "Forgot your password?",
   "resetSuccess": "Password reset email sent! Check your inbox.",
   "resetError": "Error sending email:",
-  "backLogin": "Back to Login"
+  "backLogin": "Back to Login",
+
+  "greeting1": "Good\nmorning,",
+  "greeting2": "Good\nafternoon,",
+  "greeting3": "Good\nnight,",
+
+
+
+  "userName": "Enrique F.",
+  "yourMoves": "Your moves",
+  "needMoveHelp": "Need help with your move?",
+  "moveHelpText": "Find the perfect service you need\nso your move runs smoothly.",
+  "progressLabel": "Progress"
 }

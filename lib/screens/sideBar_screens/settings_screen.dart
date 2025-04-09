@@ -15,7 +15,7 @@ class SettingsScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
-          'settings'.tr(),
+          'opciones'.tr(),
           style: const TextStyle(
             fontFamily: 'ClashDisplay',
             fontSize: 24,

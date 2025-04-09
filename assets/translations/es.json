@@ -9,9 +9,8 @@
   "chats": "Chats",
   "perfil": "Perfil",
 
-
+  "user": "Usuario",
   "opciones": "Opciones",
-  "settings": "Opciones",
   "logOut": "Cerrar sesión",
   "sobreNosotros": "Sobre nosotros",
   "ayuda": "Ayuda",
@@ -62,5 +61,21 @@
   "resetSuccess": "¡Correo enviado! Revisa tu bandeja.",
   "resetError": "Error al enviar el correo:",
   "resetPassword": "Restablecer contraseña",
-  "backLogin": "Volver al inicio de sesión"
+  "backLogin": "Volver al inicio de sesión",
+
+  "greeting1": "Buenos\ndías,",
+  "greeting2": "Buenas\ntardes,",
+  "greeting3": "Buenas\nnoches,",
+
+
+
+
+
+  "userName": "Enrique F.",
+  "yourMoves": "Tus mudanzas",
+  "needMoveHelp": "¿Ayuda en tu mudanza?",
+  "moveHelpText": "Encuentra el servicio perfecto que te hace falta\npara que tu mudanza vaya sobre ruedas.",
+  "progressLabel": "Progreso"
+
+
 }

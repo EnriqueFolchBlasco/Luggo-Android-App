@@ -56,24 +56,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  InputDecoration _inputStyle(String hint, IconData icon) {
-    return InputDecoration(
-      hintText: hint.tr(),
-      prefixIcon: Icon(icon, color: AppColors.primaryColor),
-      filled: true,
-      fillColor: Colors.grey.shade100,
-      contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide.none,
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(color: AppColors.primaryColor, width: 1),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,6 +75,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
             const SizedBox(height: 30),
+
+            TextField(
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: _inputStyle("user", Icons.person),
+            ),
+            const SizedBox(height: 16),
 
             TextField(
               controller: _emailController,
@@ -156,6 +145,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  //************************************************************
+  //( CUSTOM ) textfield en blau rounded etc
+  //************************************************************
+
+  InputDecoration _inputStyle(String hint, IconData icon) {
+    return InputDecoration(
+      hintText: hint.tr(),
+      prefixIcon: Icon(icon, color: AppColors.primaryColor),
+      filled: true,
+      fillColor: Colors.grey.shade100,
+      contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide.none,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: AppColors.primaryColor, width: 1),
       ),
     );
   }

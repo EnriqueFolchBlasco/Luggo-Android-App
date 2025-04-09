@@ -9,8 +9,8 @@
     "chats": "Xats",
     "perfil": "Perfil",
   
+    "user": "Usuari",
     "opciones": "Opcions",
-    "settings": "Opcions",
     "logOut": "Tancar sessió",
     "sobreNosotros": "Sobre nosaltres",
     "ayuda": "Ajuda",
@@ -60,6 +60,19 @@
     "resetSuccess": "Correu enviat! Revisa la teua bústia.",
     "resetError": "Error en enviar el correu:",
     "resetPassword": "Restablir contrasenya",
-    "backLogin": "Tornar a l'inici de sessió"
+    "backLogin": "Tornar a l'inici de sessió",
+
+    "greeting1": "Bon\ndia,",
+    "greeting2": "Bona\nvesprada,",
+    "greeting3": "Bona\nnit,",
+
+
+
+
+    "userName": "Enrique F.",
+    "yourMoves": "Les teues mudances",
+    "needMoveHelp": "Necessites ajuda amb la mudança?",
+    "moveHelpText": "Troba el servei perfecte que necessites\nperquè la teua mudança vaja sobre rodes.",
+    "progressLabel": "Progrés"
   }
   

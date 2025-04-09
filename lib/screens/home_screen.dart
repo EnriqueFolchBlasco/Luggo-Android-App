@@ -7,6 +7,7 @@ import 'package:luggo/screens/sidebar_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/notification_manager.dart';
+import 'package:luggo/screens/home_screen_content.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -219,36 +220,23 @@ class _HomeScreenState extends State<HomeScreen> {
       //************************************************************
       // CENTER DE LA APP (Sense bottom/upper bars)
       //************************************************************
-      body: Center(
-        child: FutureBuilder<String?>(
-          future: _getUserUID(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
-            }
+      body: FutureBuilder<String?>(
+        future: _getUserUID(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
 
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
 
-            if (snapshot.hasData) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    '¡Bienvenido a la pantalla de inicio!\nUID: ${snapshot.data}',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20),
-                  _screens[_selectedIndex],
-                ],
-              );
-            } else {
-              return Text('No se encontró el UID');
-            }
-          },
-        ),
+          if (snapshot.hasData) {
+            return _screens[_selectedIndex];
+          } else {
+            return Center(child: Text('No se encontró el UID'));
+          }
+        },
       ),
 
       //************************************************************
@@ -279,12 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: _onItemTapped,
                       backgroundColor: AppColors.primaryColor,
                       selectedItemColor: Colors.white,
-                      unselectedItemColor: const Color.fromARGB(
-                        255,
-                        133,
-                        155,
-                        192,
-                      ),
+                      unselectedItemColor: const Color.fromARGB(255,133,155,192,),
 
                       selectedLabelStyle: TextStyle(
                         fontFamily: 'Helvetica',
@@ -332,22 +315,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-    );
-  }
-}
-
-//************************************************************
-// TO DO: FER EL APARTAT MAIN DE DINS DE L'APP (moure algun altre lloc? tbc)
-//************************************************************
-
-class HomeScreenContent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Esta es la pantalla principal',
-        style: TextStyle(fontSize: 24),
-      ),
     );
   }
 }

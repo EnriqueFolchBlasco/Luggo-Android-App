@@ -19,7 +19,7 @@ class AboutUsScreen extends StatelessWidget {
           style: const TextStyle(
             fontFamily: 'ClashDisplay',
             fontSize: 24,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.bold,
             color: AppColors.primaryColor,
           ),
         ),
