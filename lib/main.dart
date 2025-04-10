@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'utils/firebase_options.dart';
-import 'screens/splash_screen.dart';
+import 'screens/login_screens/splash_screen.dart';
 //09042025_2023_1942
 
 void main() async {

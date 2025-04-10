@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:luggo/screens/forgotPassword_Screen.dart';
-import 'package:luggo/screens/home_screen.dart';
-import 'package:luggo/screens/register_screen.dart';
+import 'package:luggo/screens/login_screens/forgotPassword_Screen.dart';
+import 'package:luggo/screens/bottomMenu_screens/home_screen.dart';
+import 'package:luggo/screens/login_screens/register_screen.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';

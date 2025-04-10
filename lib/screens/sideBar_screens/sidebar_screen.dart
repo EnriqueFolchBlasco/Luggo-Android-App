@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:luggo/screens/login_screen.dart';
+import 'package:luggo/screens/login_screens/login_screen.dart';
 import 'package:luggo/screens/sideBar_screens/about_us_screen.dart';
 import 'package:luggo/screens/sideBar_screens/help_screen.dart';
 import 'package:luggo/screens/sideBar_screens/privacy_screen.dart';

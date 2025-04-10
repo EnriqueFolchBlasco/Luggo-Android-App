@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:luggo/screens/services_screen.dart';
-import 'package:luggo/screens/chats_screen.dart';
-import 'package:luggo/screens/profile_screen.dart';
-import 'package:luggo/screens/sidebar_screen.dart';
+import 'package:luggo/screens/bottomMenu_screens/services_screen.dart';
+import 'package:luggo/screens/bottomMenu_screens/chats_screen.dart';
+import 'package:luggo/screens/bottomMenu_screens/profile_screen.dart';
+import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/notification_manager.dart';
