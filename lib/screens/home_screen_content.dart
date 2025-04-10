@@ -47,17 +47,19 @@ class HomeScreenContent extends StatelessWidget {
                       _calcularMensatgeBenbinguda().tr(),
                       style: const TextStyle(
                         fontFamily: 'ClashDisplay',
+                        height: 1.1,
                         fontSize: 30,
                         fontWeight: FontWeight.w400,
                         color: Colors.black,
                         letterSpacing: 2,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    
                     Text(
                       'userName'.tr(),
                       style: const TextStyle(
                         fontFamily: 'ClashDisplay',
+                        height: 1.1,
                         fontSize: 30,
                         fontWeight: FontWeight.w500,
                         color: AppColors.primaryColor,
