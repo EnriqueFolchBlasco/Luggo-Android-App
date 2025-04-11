@@ -67,12 +67,27 @@
     "greeting3": "Bona\nnit,",
 
 
-
-
     "userName": "Enrique F.",
     "yourMoves": "Les teues mudances",
     "needMoveHelp": "Necessites ajuda amb la mudança?",
     "moveHelpText": "Troba el servei perfecte que necessites\nperquè la teua mudança vaja sobre rodes.",
-    "progressLabel": "Progrés"
+    "progressLabel": "Progrés",
+
+    "transport": "Transport",
+    "transportSubtitle": "Necessites ajuda amb alguna cosa?",
+    "laborOnly": "Mà d'obra",
+    "laborOnlySubtitle": "Sense furgoneta, només força",
+    "smallMove": "Mudança menuda",
+    "smallMoveSubtitle": "Només algunes coses",
+    "storePickup": "Recollida a botiga",
+    "storePickupSubtitle": "Has comprat alguna cosa? Te la portem",
+    "recycling": "Reciclatge",
+    "recyclingSubtitle": "Ens encarreguem de tirar-ho bé",
+    "donate": "Donar",
+    "donateSubtitle": "Dona-ho a qui ho necessita",
+    "copyrightNotice": "© 2025 Luggo. Tots els drets reservats.",
+
+    "yourMovesSubtitle": "Gestiona i consulta les teues mudances."
+
   }
   

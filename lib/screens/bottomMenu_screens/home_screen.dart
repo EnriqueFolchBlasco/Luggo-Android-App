@@ -7,7 +7,7 @@ import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/notification_manager.dart';
-import 'package:luggo/screens/home_screen_content.dart';
+import 'package:luggo/screens/content_screens/home_screen_content.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -175,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Spacer(),
             Spacer(),
-            Image.asset('assets/images/LuggoColor2.png', height: 30),
+            Image.asset('assets/images/LuggoColor_noBackground.png', height: 30),
             Spacer(),
           ],
         ),

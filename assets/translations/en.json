@@ -85,5 +85,21 @@
   "yourMoves": "Your moves",
   "needMoveHelp": "Need help with your move?",
   "moveHelpText": "Find the perfect service you need\nso your move runs smoothly.",
-  "progressLabel": "Progress"
+  "progressLabel": "Progress",
+
+  "transport": "Transport",
+  "transportSubtitle": "Need help moving something?",
+  "laborOnly": "Labor Only",
+  "laborOnlySubtitle": "No truck, just muscle",
+  "smallMove": "Small Move",
+  "smallMoveSubtitle": "Just a few items",
+  "storePickup": "Store Pickup",
+  "storePickupSubtitle": "Bought something? We'll bring it",
+  "recycling": "Recycling",
+  "recyclingSubtitle": "Let us get rid of it properly",
+  "donate": "Donate",
+  "donateSubtitle": "Give it to someone who needs it",
+  "copyrightNotice": "© 2025 Luggo. All rights reserved.",
+
+  "yourMovesSubtitle": "View and manage your recent moves."
 }

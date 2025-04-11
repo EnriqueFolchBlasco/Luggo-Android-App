@@ -30,6 +30,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/
     - assets/images/Luggo BN.png
     - assets/images/LuggoColor.png
     - assets/images/Luggo Icono BN.png
@@ -41,6 +42,7 @@ flutter:
     - assets/images/Luggo_Baseline Color 1_2.png
     - assets/images/Luggo_Baseline Color.png
     - assets/images/Luggo_Baseline2.PNG
+    - assets/images/LuggoColor_noBackground.png
     - assets/translations/
     - assets/flags/
     - assets/flags/valencian.png

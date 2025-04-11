@@ -67,15 +67,27 @@
   "greeting2": "Buenas\ntardes,",
   "greeting3": "Buenas\nnoches,",
 
-
-
-
-
   "userName": "Enrique F.",
   "yourMoves": "Tus mudanzas",
   "needMoveHelp": "¿Ayuda en tu mudanza?",
   "moveHelpText": "Encuentra el servicio perfecto que te hace falta\npara que tu mudanza vaya sobre ruedas.",
-  "progressLabel": "Progreso"
+  "progressLabel": "Progreso",
 
+
+  "transport": "Transporte",
+  "transportSubtitle": "¿Necesitas ayuda con algo?",
+  "laborOnly": "Mano de obra",
+  "laborOnlySubtitle": "Sin furgoneta, solo fuerza",
+  "smallMove": "Mudanza pequeña",
+  "smallMoveSubtitle": "Solo algunas cosas",
+  "storePickup": "Recogida en tienda",
+  "storePickupSubtitle": "¿Has comprado algo? Te lo llevamos",
+  "recycling": "Reciclaje",
+  "recyclingSubtitle": "Nos encargamos de tirarlo bien",
+  "donate": "Donar",
+  "donateSubtitle": "Dáselo a quien lo necesita",
+  "copyrightNotice": "© 2025 Luggo. Todos los derechos reservados.",
+
+  "yourMovesSubtitle": "Gestiona y consulta tus mudanzas recientes."
 
 }

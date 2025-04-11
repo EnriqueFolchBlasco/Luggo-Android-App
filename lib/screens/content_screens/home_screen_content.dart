@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:luggo/screens/content_screens/service_buttons.dart';
 import 'package:luggo/utils/constants.dart';
 
 //************************************************************
@@ -7,21 +8,19 @@ import 'package:luggo/utils/constants.dart';
 //************************************************************
 
 class HomeScreenContent extends StatelessWidget {
-
   //CAMBAIR EL MENSATGE DE HOLA DEPENGUENT DEL DIA HGORA
   String _calcularMensatgeBenbinguda() {
     final hora = DateTime.now().hour;
 
     if (hora >= 6 && hora < 13) {
       //print(hora.toString());
-      return 'greeting1';  //dia
-    } else if (hora >= 13 && hora < 21) { 
+      return 'greeting1'; //dia
+    } else if (hora >= 13 && hora < 21) {
       return 'greeting2'; //vesprada
     } else {
       return 'greeting3'; //nit
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,6 @@ class HomeScreenContent extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +52,7 @@ class HomeScreenContent extends StatelessWidget {
                         letterSpacing: 2,
                       ),
                     ),
-                    
+
                     Text(
                       'userName'.tr(),
                       style: const TextStyle(
@@ -104,6 +102,17 @@ class HomeScreenContent extends StatelessWidget {
               fontFamily: 'Helvetica',
             ),
           ),
+          const SizedBox(height: 4),
+          Text(
+            'yourMovesSubtitle'.tr(),
+            style: TextStyle(
+              fontSize: 14,
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Helvetica',
+              height: 1.4,
+            ),
+          ),
           const SizedBox(height: 16),
 
           SizedBox(
@@ -111,11 +120,12 @@ class HomeScreenContent extends StatelessWidget {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-
                 //TO DO CREAR ANTES QUE TOT TARGETA DE AÑADIR MUDANZA
                 _mudanzaCard(context, 'Mudanza Bilbao', 64, 0.75),
                 const SizedBox(width: 12),
                 _mudanzaCard(context, 'Mudanza Castellón', 32, 0.4),
+                const SizedBox(width: 12),
+                _mudanzaCardAnadir(context),
               ],
             ),
           ),
@@ -143,6 +153,9 @@ class HomeScreenContent extends StatelessWidget {
               height: 1.4,
             ),
           ),
+          const SizedBox(height: 16),
+          const ServiceButtonsGrid(),
+          
         ],
       ),
     );
@@ -187,7 +200,14 @@ class HomeScreenContent extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
+
+                  //*************************************************************
+                  // (!) DECIDIR COLOR CONTAINER ITEMS
+                  //*************************************************************
+
                   border: Border.all(color: Colors.grey.shade300),
+                  //border: Border.all(color: AppColors.primaryColor),
+
                 ),
                 child: Text(
                   '$items items',
@@ -198,7 +218,6 @@ class HomeScreenContent extends StatelessWidget {
               Text('progressLabel'.tr(), style: TextStyle(fontSize: 12)),
             ],
           ),
-
           const SizedBox(height: 6),
 
           //************************************************************
@@ -215,18 +234,42 @@ class HomeScreenContent extends StatelessWidget {
           const SizedBox(height: 4),
           Align(
             alignment: Alignment.centerRight,
-            child: Text('${(progress * 100).round()}%',
+            child: Text(
+              '${(progress * 100).round()}%',
               style: const TextStyle(fontSize: 12),
             ),
           ),
-
-          //************************************************************
-          // TODO FICAR BOTONS DE SERVEIS PER A PAGAR
-          //************************************************************
-
-
         ],
       ),
     );
   }
+
+Widget _mudanzaCardAnadir(BuildContext context) {
+  return GestureDetector(
+    onTap: () {
+      //TO DO AÑADIR MUDANZA NOVA
+      //Navigator.push(context, MaterialPageRoute(builder: (context) => const AddMoveScreen()));},
+    },  
+    child: Container(
+      width: 180,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.primaryColor.withAlpha((0.08 * 255).round()),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: AppColors.primaryColor.withAlpha(40)),
+      ),
+      child: const Center(
+        child: Icon(
+          Icons.add_outlined,
+          size: 50,
+          color: AppColors.primaryColor,
+        ),
+      ),
+    ),
+  );
+}
+
+
+
+
 }
