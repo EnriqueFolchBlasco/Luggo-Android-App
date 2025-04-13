@@ -96,16 +96,21 @@ class HomeScreenContent extends StatelessWidget {
                   builder: (context, snapshot) {
                     final file = snapshot.data;
 
-                    return CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      radius: 35,
-                      backgroundImage:
-                          (file != null && file.existsSync())
-                              ? FileImage(file)
-                              : const AssetImage(
-                                    'assets/images/LuggoIconoColor.png',
-                                  )
-                                  as ImageProvider,
+                    return GestureDetector(
+                      onTap: () {
+                          // TO DO REDIRIGIR A LA PANTALLA DE PERFIL
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        radius: 35,
+                        backgroundImage:
+                            (file != null && file.existsSync())
+                                ? FileImage(file)
+                                : const AssetImage(
+                                      'assets/images/LuggoIconoColor.png',
+                                    )
+                                    as ImageProvider,
+                      ),
                     );
                   },
                 ),
@@ -270,19 +275,18 @@ class HomeScreenContent extends StatelessWidget {
       ),
     );
   }
-  
+
   Future<File> _getLocalAvatarFile() async {
     final prefs = await SharedPreferences.getInstance();
     final imageUrl = prefs.getString('profileImageUrl');
     final dir = await getApplicationDocumentsDirectory();
     final localFile = File('${dir.path}/avatar.jpg');
-  
-    try {
 
+    try {
       if (imageUrl != null && imageUrl.isNotEmpty) {
         final response = await HttpClient().getUrl(Uri.parse(imageUrl));
         final result = await response.close();
-  
+
         if (result.statusCode == 200) {
           //200 = ok 400 error 500 = server error
           final bytes = await consolidateHttpClientResponseBytes(result);
@@ -290,12 +294,10 @@ class HomeScreenContent extends StatelessWidget {
           return localFile;
         }
       }
-    } catch (_) {
-    }
-  
+    } catch (_) {}
+
     return localFile;
   }
-  
 
   Widget _mudanzaCardAnadir(BuildContext context) {
     return GestureDetector(

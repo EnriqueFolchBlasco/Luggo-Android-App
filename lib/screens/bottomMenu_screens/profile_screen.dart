@@ -32,7 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void loadUserData() async {
-    final prefs = await SharedPreferences.getInstance();
+    //final prefs = await SharedPreferences.getInstance();
     final data = await _prefsService.getOfflineUserData();
 
     if (data != null) {
