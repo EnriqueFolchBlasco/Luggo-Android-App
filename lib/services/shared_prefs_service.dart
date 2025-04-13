@@ -13,26 +13,34 @@ class SharedPrefsService {
   }
   
 
-  Future<void> saveOfflineLoginData(String uid, String username) async {
+  Future<void> saveOfflineLoginData(String uid, String username, String email) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('loggedInBefore', true);
     await prefs.setString('userUID', uid);
     await prefs.setString('username', username);
+    await prefs.setString('email', email);
   }
+
 
   Future<Map<String, String>?> getOfflineUserData() async {
-  final prefs = await SharedPreferences.getInstance();
-  bool? loggedBefore = prefs.getBool('loggedInBefore');
+    final prefs = await SharedPreferences.getInstance();
+    bool? loggedBefore = prefs.getBool('loggedInBefore');
 
-  if (loggedBefore == true) {
-    final uid = prefs.getString('userUID');
-    final username = prefs.getString('username');
+    if (loggedBefore == true) {
+      final uid = prefs.getString('userUID');
+      final username = prefs.getString('username');
+      final email = prefs.getString('email');
 
-    if (uid != null && username != null) {
-      return {'uid': uid, 'username': username};
+      if (uid != null && username != null && email != null) {
+        return {
+          'uid': uid,
+          'username': username,
+          'email': email,
+        };
+      }
     }
+    return null;
   }
-  return null;
-}
+
 
 }

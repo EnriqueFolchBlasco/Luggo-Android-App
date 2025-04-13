@@ -1,15 +1,17 @@
+import 'package:flutter/foundation.dart';
+
 class NotificationManager {
-  static List<String> notificaciones = [];
+  static ValueNotifier<List<String>> notificaciones = ValueNotifier<List<String>>([]);
 
   static void agregar(String mensaje) {
-    notificaciones.insert(0, mensaje);
+    notificaciones.value = [mensaje, ...notificaciones.value];
   }
 
   static void eliminar(String mensaje) {
-    notificaciones.remove(mensaje);
+    notificaciones.value = List.from(notificaciones.value)..remove(mensaje);
   }
 
   static void limpiar() {
-    notificaciones.clear();
+    notificaciones.value = [];
   }
 }

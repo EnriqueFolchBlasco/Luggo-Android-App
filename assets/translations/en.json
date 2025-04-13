@@ -101,5 +101,13 @@
   "donateSubtitle": "Give it to someone who needs it",
   "copyrightNotice": "© 2025 Luggo. All rights reserved.",
 
-  "yourMovesSubtitle": "View and manage your recent moves."
+  "yourMovesSubtitle": "View and manage your recent moves.",
+
+  "noConnection": {
+    "title": "No connection",
+    "message": "Please connect to the internet to upload your photo.",
+    "ok": "OK",
+    "photoError": "❌ Error uploading photo",
+    "photoSuccess": "✅ Photo uploaded successfully"
+  }
 }

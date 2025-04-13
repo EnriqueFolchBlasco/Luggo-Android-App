@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         if (username != null) {
           final sharedPrefs = SharedPrefsService();
-          await sharedPrefs.saveOfflineLoginData(uid, username);
+          await sharedPrefs.saveOfflineLoginData(uid, username, email);
         }
 
         Navigator.pushReplacement(

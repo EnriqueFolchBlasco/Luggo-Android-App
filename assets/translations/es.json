@@ -88,6 +88,14 @@
   "donateSubtitle": "Dáselo a quien lo necesita",
   "copyrightNotice": "© 2025 Luggo. Todos los derechos reservados.",
 
-  "yourMovesSubtitle": "Gestiona y consulta tus mudanzas recientes."
+  "yourMovesSubtitle": "Gestiona y consulta tus mudanzas recientes.",
+  
+  "noConnection": {
+    "title": "Sin conexión",
+    "message": "Por favor, conéctate a Internet para subir tu foto.",
+    "ok": "Aceptar",
+    "photoError": "❌ Error al subir la foto",
+    "photoSuccess": "✅ Foto subida con éxito"
+}
 
 }

@@ -1,9 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/screens/content_screens/service_buttons.dart';
 import 'package:luggo/services/shared_prefs_service.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 //************************************************************
 // TO DO fer la db local q almacena mudances (items count)
@@ -60,7 +63,7 @@ class HomeScreenContent extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const Text("...",);
+                          return const Text("...");
                         } else if (snapshot.hasError) {
                           return const Text("Error");
                         } else {
@@ -88,16 +91,23 @@ class HomeScreenContent extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.black, width: 1.5),
                 ),
-                child: CircleAvatar(
-                  radius: 28,
-                  backgroundColor: Colors.black.withAlpha((0.05 * 255).round()),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      'assets/images/LuggoIconoColor.png',
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+                child: FutureBuilder<File>(
+                  future: _getLocalAvatarFile(),
+                  builder: (context, snapshot) {
+                    final file = snapshot.data;
+
+                    return CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      radius: 35,
+                      backgroundImage:
+                          (file != null && file.existsSync())
+                              ? FileImage(file)
+                              : const AssetImage(
+                                    'assets/images/LuggoIconoColor.png',
+                                  )
+                                  as ImageProvider,
+                    );
+                  },
                 ),
               ),
             ],
@@ -260,6 +270,32 @@ class HomeScreenContent extends StatelessWidget {
       ),
     );
   }
+  
+  Future<File> _getLocalAvatarFile() async {
+    final prefs = await SharedPreferences.getInstance();
+    final imageUrl = prefs.getString('profileImageUrl');
+    final dir = await getApplicationDocumentsDirectory();
+    final localFile = File('${dir.path}/avatar.jpg');
+  
+    try {
+
+      if (imageUrl != null && imageUrl.isNotEmpty) {
+        final response = await HttpClient().getUrl(Uri.parse(imageUrl));
+        final result = await response.close();
+  
+        if (result.statusCode == 200) {
+          //200 = ok 400 error 500 = server error
+          final bytes = await consolidateHttpClientResponseBytes(result);
+          await localFile.writeAsBytes(bytes, flush: true);
+          return localFile;
+        }
+      }
+    } catch (_) {
+    }
+  
+    return localFile;
+  }
+  
 
   Widget _mudanzaCardAnadir(BuildContext context) {
     return GestureDetector(

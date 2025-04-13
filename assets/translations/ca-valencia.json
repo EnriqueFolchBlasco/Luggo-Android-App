@@ -87,7 +87,16 @@
     "donateSubtitle": "Dona-ho a qui ho necessita",
     "copyrightNotice": "© 2025 Luggo. Tots els drets reservats.",
 
-    "yourMovesSubtitle": "Gestiona i consulta les teues mudances."
+    "yourMovesSubtitle": "Gestiona i consulta les teues mudances.",
+
+    "noConnection": {
+      "title": "Sense connexió",
+      "message": "Per favor, connecta't a Internet per pujar la teua foto.",
+      "ok": "D'acord",
+      "photoError": "❌ Error al pujar la foto",
+      "photoSuccess": "✅ Foto pujada correctament"
+    }
+
 
   }
   

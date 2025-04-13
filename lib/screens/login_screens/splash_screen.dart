@@ -37,11 +37,13 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 2));
 
     final prefs = await SharedPreferences.getInstance();
-    final isRemembered = prefs.getBool('isRemembered') ?? false;
+    final loggedInBefore = prefs.getBool('loggedInBefore') ?? false;
+    //final isRemembered = prefs.getBool('isRemembered') ?? false;
     final savedUID = prefs.getString('userUID');
 
     Widget nextScreen;
-    if (isRemembered && savedUID != null) {
+
+    if (loggedInBefore && savedUID != null) {
       nextScreen = HomeScreen();
     } else {
       nextScreen = LoginScreen();

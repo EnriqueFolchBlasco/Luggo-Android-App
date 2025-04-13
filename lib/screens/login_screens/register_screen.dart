@@ -55,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         await firebaseController.saveUserToFirestore(uid, email, username);
 
         final sharedPrefs = SharedPrefsService();
-        await sharedPrefs.saveOfflineLoginData(uid, username);
+        await sharedPrefs.saveOfflineLoginData(uid, username,email);
 
         setState(() {
           _errorMessage = "registerSuccess".tr();

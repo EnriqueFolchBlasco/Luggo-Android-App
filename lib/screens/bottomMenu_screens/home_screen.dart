@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _toggleNotificaciones() {
-    if (NotificationManager.notificaciones.isEmpty) return;
+    if (NotificationManager.notificaciones.value.isEmpty) return;
 
     if (_notificacionOverlay == null) {
       _mostrarOverlayNotificaciones();
@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children:
-                            NotificationManager.notificaciones
+                            NotificationManager.notificaciones.value
                                 .map(
                                   (texto) => construirNotificacion(
                                     texto,
@@ -175,7 +175,10 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Spacer(),
             Spacer(),
-            Image.asset('assets/images/LuggoColor_noBackground.png', height: 30),
+            Image.asset(
+              'assets/images/LuggoColor_noBackground.png',
+              height: 30,
+            ),
             Spacer(),
           ],
         ),
@@ -199,16 +202,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 Positioned(
                   top: 12,
                   right: 12,
-                  child: Container(
-                    width: 12,
-                    height: 12,
-                    decoration: BoxDecoration(
-                      color:
-                          NotificationManager.notificaciones.isEmpty
-                              ? Colors.transparent
-                              : Colors.orange,
-                      shape: BoxShape.circle,
-                    ),
+                  child: ValueListenableBuilder<List<String>>(
+                    valueListenable: NotificationManager.notificaciones,
+                    builder: (_, notificaciones, __) {
+                      return Container(
+                        width: 12,
+                        height: 12,
+                        decoration: BoxDecoration(
+                          color:
+                              notificaciones.isEmpty
+                                  ? Colors.transparent
+                                  : Colors.orange,
+                          shape: BoxShape.circle,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
@@ -267,7 +275,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: _onItemTapped,
                       backgroundColor: AppColors.primaryColor,
                       selectedItemColor: Colors.white,
-                      unselectedItemColor: const Color.fromARGB(255,133,155,192,),
+                      unselectedItemColor: const Color.fromARGB(
+                        255,
+                        133,
+                        155,
+                        192,
+                      ),
 
                       selectedLabelStyle: TextStyle(
                         fontFamily: 'Helvetica',

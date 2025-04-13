@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'utils/firebase_options.dart';
 import 'screens/login_screens/splash_screen.dart';
-//11042025_2023_1951
+//13042025_2023_1943
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
