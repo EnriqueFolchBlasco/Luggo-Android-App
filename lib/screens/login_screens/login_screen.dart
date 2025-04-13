@@ -4,9 +4,11 @@ import 'package:email_validator/email_validator.dart';
 import 'package:luggo/screens/login_screens/forgotPassword_Screen.dart';
 import 'package:luggo/screens/bottomMenu_screens/home_screen.dart';
 import 'package:luggo/screens/login_screens/register_screen.dart';
+import 'package:luggo/services/shared_prefs_service.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:luggo/controllers/firebase_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,15 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _passwordVisible = false;
   String _errorMensatge = "";
 
-  void _saveUserUID(String uid) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('userUID', uid);
-  }
 
-  void _savePreferences(bool isRemembered) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isRemembered', isRemembered);
-  }
 
   void _login() async {
     String email = _emailController.text;
@@ -55,26 +49,48 @@ class _LoginScreenState extends State<LoginScreen> {
         password: password,
       );
 
-      if (userCredential.user != null) {
-        if (userCredential.user!.emailVerified) {
-          _savePreferences(true);
-          _saveUserUID(userCredential.user!.uid);
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-          );
-        } else {
-          setState(() {
-            _errorMensatge = ("errorEmailNotVerified").tr();
-          });
+      if (userCredential.user != null && userCredential.user!.emailVerified) {
+        final uid = userCredential.user!.uid;
+        final firebaseController = FirebaseController();
+        final username = await firebaseController.fetchUsername(uid);
+
+        if (username != null) {
+          final sharedPrefs = SharedPrefsService();
+          await sharedPrefs.saveOfflineLoginData(uid, username);
         }
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => HomeScreen()),
+        );
+      } else {
+        setState(() {
+          _errorMensatge = ("errorEmailNotVerified").tr();
+        });
       }
     } catch (e) {
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool? loggedBefore = prefs.getBool('loggedInBefore');
+      if (loggedBefore == true) {
+        String? uid = prefs.getString('userUID');
+        String? username = prefs.getString('username');
+
+        if (uid != null && username != null) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => HomeScreen()),
+          );
+          return;
+        }
+      }
+
       setState(() {
         _errorMensatge = ("errorLoginFailed").tr() + e.toString();
       });
     }
-  }
+}
+
 
   InputDecoration customInputDecoration({required String hint, required IconData icon}) {
     return InputDecoration(

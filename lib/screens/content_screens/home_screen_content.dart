@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/screens/content_screens/service_buttons.dart';
+import 'package:luggo/services/shared_prefs_service.dart';
 import 'package:luggo/utils/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //************************************************************
 // TO DO fer la db local q almacena mudances (items count)
@@ -53,16 +55,28 @@ class HomeScreenContent extends StatelessWidget {
                       ),
                     ),
 
-                    Text(
-                      'userName'.tr(),
-                      style: const TextStyle(
-                        fontFamily: 'ClashDisplay',
-                        height: 1.1,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primaryColor,
-                        letterSpacing: 2,
-                      ),
+                    FutureBuilder<String?>(
+                      future: SharedPrefsService().getUsername(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Text("...",);
+                        } else if (snapshot.hasError) {
+                          return const Text("Error");
+                        } else {
+                          return Text(
+                            snapshot.data ?? 'userName',
+                            style: const TextStyle(
+                              fontFamily: 'ClashDisplay',
+                              height: 1.1,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.primaryColor,
+                              letterSpacing: 2,
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -155,7 +169,6 @@ class HomeScreenContent extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           const ServiceButtonsGrid(),
-          
         ],
       ),
     );
@@ -166,7 +179,12 @@ class HomeScreenContent extends StatelessWidget {
   // TODO FER EL PRESS/ON TAP
   //************************************************************
 
-  Widget _mudanzaCard(BuildContext context, String title, int items, double progress,) {
+  Widget _mudanzaCard(
+    BuildContext context,
+    String title,
+    int items,
+    double progress,
+  ) {
     return Container(
       width: 180,
       padding: const EdgeInsets.all(16),
@@ -204,10 +222,9 @@ class HomeScreenContent extends StatelessWidget {
                   //*************************************************************
                   // (!) DECIDIR COLOR CONTAINER ITEMS
                   //*************************************************************
-
                   border: Border.all(color: Colors.grey.shade300),
-                  //border: Border.all(color: AppColors.primaryColor),
 
+                  //border: Border.all(color: AppColors.primaryColor),
                 ),
                 child: Text(
                   '$items items',
@@ -244,32 +261,28 @@ class HomeScreenContent extends StatelessWidget {
     );
   }
 
-Widget _mudanzaCardAnadir(BuildContext context) {
-  return GestureDetector(
-    onTap: () {
-      //TO DO AÑADIR MUDANZA NOVA
-      //Navigator.push(context, MaterialPageRoute(builder: (context) => const AddMoveScreen()));},
-    },  
-    child: Container(
-      width: 180,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.primaryColor.withAlpha((0.08 * 255).round()),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.primaryColor.withAlpha(40)),
-      ),
-      child: const Center(
-        child: Icon(
-          Icons.add_outlined,
-          size: 50,
-          color: AppColors.primaryColor,
+  Widget _mudanzaCardAnadir(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        //TO DO AÑADIR MUDANZA NOVA
+        //Navigator.push(context, MaterialPageRoute(builder: (context) => const AddMoveScreen()));},
+      },
+      child: Container(
+        width: 180,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.primaryColor.withAlpha((0.08 * 255).round()),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: AppColors.primaryColor.withAlpha(40)),
+        ),
+        child: const Center(
+          child: Icon(
+            Icons.add_outlined,
+            size: 50,
+            color: AppColors.primaryColor,
+          ),
         ),
       ),
-    ),
-  );
-}
-
-
-
-
+    );
+  }
 }

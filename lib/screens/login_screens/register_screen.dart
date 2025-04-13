@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:luggo/screens/login_screens/login_screen.dart';
 import 'package:luggo/utils/constants.dart';
+import 'package:luggo/controllers/firebase_controller.dart';
+import 'package:luggo/services/shared_prefs_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -14,14 +17,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _usernameController = TextEditingController();
   String _errorMessage = "";
 
   void _register() async {
-    String email = _emailController.text;
+    String email = _emailController.text.trim();
     String password = _passwordController.text;
     String confirmPassword = _confirmPasswordController.text;
+    String username = _usernameController.text.trim();
 
-    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty || username.isEmpty) {
       setState(() {
         _errorMessage = "errorEmptyFields".tr();
       });
@@ -36,8 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
 
     try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -45,9 +49,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (userCredential.user != null) {
         await userCredential.user!.sendEmailVerification();
 
+        final uid = userCredential.user!.uid;
+
+        final firebaseController = FirebaseController();
+        await firebaseController.saveUserToFirestore(uid, email, username);
+
+        final sharedPrefs = SharedPrefsService();
+        await sharedPrefs.saveOfflineLoginData(uid, username);
+
         setState(() {
           _errorMessage = "registerSuccess".tr();
         });
+
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginScreen()));
       }
     } catch (e) {
       setState(() {
@@ -77,8 +91,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(height: 30),
 
             TextField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
+              controller: _usernameController,
+              keyboardType: TextInputType.text,
               decoration: _inputStyle("user", Icons.person),
             ),
             const SizedBox(height: 16),
@@ -160,10 +174,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       filled: true,
       fillColor: Colors.grey.shade100,
       contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide.none,
       ),
+
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide(color: AppColors.primaryColor, width: 1),
