@@ -1,13 +1,14 @@
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:luggo/services/shared_prefs_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:luggo/utils/avatar_crop_screen.dart';
 import 'package:luggo/utils/notification_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:typed_data';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -19,6 +20,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
   String _username = '';
   String _email = '';
   final SharedPrefsService _prefsService = SharedPrefsService();
@@ -176,61 +178,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
 
-
-
 Future<void> pickImage() async {
-  final connectivityResult = await Connectivity().checkConnectivity();
-
-  if (connectivityResult == ConnectivityResult.none) {
-    if (context.mounted) {
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: Text('noConnection.title'.tr()),
-          content: Text('noConnection.message'.tr()),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('noConnection.ok'.tr()),
-            ),
-          ],
-        ),
-      );
-    }
-    return;
-  }
-
   final pickedFile = await ImagePicker().pickImage(
     source: ImageSource.gallery,
     imageQuality: 85,
   );
 
   if (pickedFile != null) {
-    final croppedFile = await ImageCropper().cropImage(
-      sourcePath: pickedFile.path,
-      cropStyle: CropStyle.circle,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-      ],
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarTitle: 'Edit Avatar',
-          toolbarColor: Colors.blue,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: true,
-        ),
-        IOSUiSettings(
-          title: 'Edit Avatar',
-        ),
-      ],
-    );
+    final imageFile = File(pickedFile.path);
 
-    if (croppedFile != null) {
-      await uploadProfileImage(File(croppedFile.path));
-    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => AvatarCropScreen(
+          imageFile: imageFile,
+          onCropped: (Uint8List croppedData) async {
+            final tempDir = Directory.systemTemp;
+            final file = await File('${tempDir.path}/avatar_cropped.png').writeAsBytes(croppedData);
+            await uploadProfileImage(file);
+          },
+        ),
+      ),
+    );
   }
 }
+
+
+  
 
 
 }
