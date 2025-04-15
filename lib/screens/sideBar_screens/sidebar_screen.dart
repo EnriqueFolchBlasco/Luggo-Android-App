@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:luggo/screens/sideBar_screens/about_us_screen.dart';
 import 'package:luggo/screens/sideBar_screens/help_screen.dart';
 import 'package:luggo/screens/sideBar_screens/privacy_screen.dart';
 import 'package:luggo/screens/sideBar_screens/settings_screen.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:luggo/utils/constants.dart';
 
@@ -19,17 +22,29 @@ class SideBarScreen extends StatefulWidget {
 class _SideBarScreenState extends State<SideBarScreen> {
   bool showLanguageMenu = false;
 
-  void _logout(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isRemembered', false);
-    prefs.setString("userUID", "none");
+  
+  Future<void> _logout(BuildContext context) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final uid = prefs.getString('userUID');
+  
 
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginScreen()),
-      (Route<dynamic> route) => false,
-    );
+      await FirebaseAuth.instance.signOut();
+      await prefs.clear();
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        (Route<dynamic> route) => false,
+      );
+    } catch (e) {
+      //print('❌  error: $e');
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error during logout')),
+        );
+      }
+    }
   }
 
   @override

@@ -1,12 +1,12 @@
-import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/screens/content_screens/service_buttons.dart';
 import 'package:luggo/services/shared_prefs_service.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
+
 
 //************************************************************
 // TO DO fer la db local q almacena mudances (items count)
@@ -91,21 +91,29 @@ class HomeScreenContent extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.black, width: 1.5),
                 ),
-                child: FutureBuilder<File>(
-                  future: _getLocalAvatarFile(),
+                child: FutureBuilder<String?>(
+                  future: _getAvatarFileImatge(),
                   builder: (context, snapshot) {
-                    final file = snapshot.data;
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircleAvatar(
+                        radius: 35,
+                        backgroundColor: Colors.grey,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      );
+                    }
+
+                    final url = snapshot.data;
 
                     return GestureDetector(
                       onTap: () {
-                          // TO DO REDIRIGIR A LA PANTALLA DE PERFIL
+                        // TO DO: NAVIGATE TO PROFILE
                       },
                       child: CircleAvatar(
                         backgroundColor: Colors.transparent,
                         radius: 35,
                         backgroundImage:
-                            (file != null && file.existsSync())
-                                ? FileImage(file)
+                            (url != null && url.isNotEmpty)
+                                ? NetworkImage(url)
                                 : const AssetImage(
                                       'assets/images/LuggoIconoColor.png',
                                     )
@@ -276,28 +284,35 @@ class HomeScreenContent extends StatelessWidget {
     );
   }
 
-  Future<File> _getLocalAvatarFile() async {
+  Future<String?> _getAvatarFileImatge() async {
     final prefs = await SharedPreferences.getInstance();
-    final imageUrl = prefs.getString('profileImageUrl');
-    final dir = await getApplicationDocumentsDirectory();
-    final localFile = File('${dir.path}/avatar.jpg');
+    String? imageUrl = prefs.getString('profileImageUrl');
 
-    try {
-      if (imageUrl != null && imageUrl.isNotEmpty) {
-        final response = await HttpClient().getUrl(Uri.parse(imageUrl));
-        final result = await response.close();
-
-        if (result.statusCode == 200) {
-          //200 = ok 400 error 500 = server error
-          final bytes = await consolidateHttpClientResponseBytes(result);
-          await localFile.writeAsBytes(bytes, flush: true);
-          return localFile;
+    if (imageUrl == null || imageUrl.isEmpty) {
+      final uid = prefs.getString('userUID');
+      if (uid != null) {
+        try {
+          final userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+          imageUrl = userDoc.data()?['profileImage'];
+          if (imageUrl != null && imageUrl.isNotEmpty) {
+            await prefs.setString('profileImageUrl', imageUrl);
+          }
+        } catch (e) {
+          debugPrint('Error fetching avatar from Firestore: $e');
         }
       }
-    } catch (_) {}
+    }
 
-    return localFile;
+    final connectivity = await Connectivity().checkConnectivity();
+    final hasInternet = connectivity != ConnectivityResult.none;
+
+    if (hasInternet && imageUrl != null && imageUrl.isNotEmpty) {
+      return imageUrl;
+    } else {
+      return null;
+    }
   }
+
 
   Widget _mudanzaCardAnadir(BuildContext context) {
     return GestureDetector(
