@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:luggo/utils/constants.dart';
+import '../../utils/constants.dart';
 import 'login_screen.dart';
 import '../bottomMenu_screens/home_screen.dart';
 

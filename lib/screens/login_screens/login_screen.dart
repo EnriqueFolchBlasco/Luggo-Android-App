@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:luggo/screens/login_screens/forgotPassword_Screen.dart';
-import 'package:luggo/screens/bottomMenu_screens/home_screen.dart';
-import 'package:luggo/screens/login_screens/register_screen.dart';
-import 'package:luggo/services/shared_prefs_service.dart';
-import 'package:luggo/utils/constants.dart';
+import 'forgotPassword_Screen.dart';
+import '../bottomMenu_screens/home_screen.dart';
+import 'register_screen.dart';
+import '../../services/shared_prefs_service.dart';
+import '../../utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:luggo/controllers/firebase_controller.dart';
+import '../../controllers/firebase_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

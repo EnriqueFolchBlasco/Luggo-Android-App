@@ -1,24 +1,56 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:luggo/screens/content_screens/service_buttons.dart';
+import 'package:luggo/database/app_database.dart';
+import 'package:luggo/models/mudanza.dart';
+import 'package:luggo/screens/content_screens/crear_mudanza_screen.dart';
+import 'package:luggo/screens/content_screens/inventario_screen';
+import 'package:luggo/services/database_service.dart';
 import 'package:luggo/services/shared_prefs_service.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'service_buttons.dart';
 
 //************************************************************
 // TO DO fer la db local q almacena mudances (items count)
 //************************************************************
 
-class HomeScreenContent extends StatelessWidget {
+class HomeScreenContent extends StatefulWidget {
+  const HomeScreenContent({super.key});
+
+  @override
+  State<HomeScreenContent> createState() => _HomeScreenContentState();
+}
+
+class _HomeScreenContentState extends State<HomeScreenContent> {
+  List<Mudanza> mudanzas = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _cargarMudanzas();
+  }
+
+  //************************************************************
+  // CARGAR LAS MUDANZAS DE LA DB LOCAL
+  //************************************************************
+  Future<void> _cargarMudanzas() async {
+    //final db = await $FloorAppDatabase.databaseBuilder('luggo.db').build();
+    //final lista = await db.mudanzaDao.obtenerTodos();
+    final db = await DatabaseService.getDatabase();
+    final lista = await db.mudanzaDao.obtenerTodos();
+
+    setState(() {
+      mudanzas.clear();
+      mudanzas = lista;
+    });
+  }
+
   //CAMBAIR EL MENSATGE DE HOLA DEPENGUENT DEL DIA HGORA
   String _calcularMensatgeBenbinguda() {
     final hora = DateTime.now().hour;
-
     if (hora >= 6 && hora < 13) {
-      //print(hora.toString());
       return 'greeting1'; //dia
     } else if (hora >= 13 && hora < 21) {
       return 'greeting2'; //vesprada
@@ -57,7 +89,6 @@ class HomeScreenContent extends StatelessWidget {
                         letterSpacing: 2,
                       ),
                     ),
-
                     FutureBuilder<String?>(
                       future: SharedPrefsService().getUsername(),
                       builder: (context, snapshot) {
@@ -84,7 +115,6 @@ class HomeScreenContent extends StatelessWidget {
                   ],
                 ),
               ),
-
               Container(
                 padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
@@ -154,18 +184,42 @@ class HomeScreenContent extends StatelessWidget {
 
           SizedBox(
             height: 160,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                //TO DO CREAR ANTES QUE TOT TARGETA DE AÑADIR MUDANZA
-                _mudanzaCard(context, 'Mudanza Bilbao', 64, 0.75),
-                const SizedBox(width: 12),
-                _mudanzaCard(context, 'Mudanza Castellón', 32, 0.4),
-                const SizedBox(width: 12),
-                _mudanzaCardAnadir(context),
-              ],
+            child: FutureBuilder<List<Mudanza>>(
+              future: DatabaseService.getDatabase().then(
+                (db) => db.mudanzaDao.obtenerTodos(),
+              ),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                final mudanzas = snapshot.data!;
+
+                return SizedBox(
+                  height: 160,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: mudanzas.length + 1,
+                    separatorBuilder: (_, __) => const SizedBox(width: 12),
+                    itemBuilder: (context, index) {
+                      if (index < mudanzas.length) {
+                        final mudanza = mudanzas[index];
+                        return _mudanzaCard(
+                          context,
+                          mudanza,
+                          0, // CALCULAR ITEMS
+                          0.0, // CALCULAR PROGRESO
+                        );
+                      } else {
+                        return _mudanzaCardAnadir(context);
+                      }
+                    },
+                  ),
+                );
+              },
             ),
           ),
+
           const SizedBox(height: 32),
 
           //************************************************************
@@ -197,92 +251,116 @@ class HomeScreenContent extends StatelessWidget {
     );
   }
 
-  //************************************************************
-  // CARTA ESTRUCTURA
-  // TODO FER EL PRESS/ON TAP
-  //************************************************************
-
   Widget _mudanzaCard(
     BuildContext context,
-    String title,
+    Mudanza mudanza,
     int items,
     double progress,
   ) {
-    return Container(
-      width: 180,
-      padding: const EdgeInsets.all(16),
-
-      decoration: BoxDecoration(
-        color: AppColors.primaryColor.withAlpha((0.1 * 255).round()),
-        borderRadius: BorderRadius.circular(20),
-      ),
-
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontFamily: 'Helvetica',
-              fontSize: 16,
-            ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (context) => InventarioScreen(mudanzaId: mudanza.mudanzaId!),
           ),
-
-          const Spacer(),
-
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-
-                  //*************************************************************
-                  // (!) DECIDIR COLOR CONTAINER ITEMS
-                  //*************************************************************
-                  border: Border.all(color: Colors.grey.shade300),
-
-                  //border: Border.all(color: AppColors.primaryColor),
-                ),
-                child: Text(
-                  '$items items',
-                  style: const TextStyle(fontSize: 12),
-                ),
+        );
+      },
+      child: Container(
+        width: 180,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.primaryColor.withAlpha((0.1 * 255).round()),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Mudanza ${mudanza.direccionDestino}',
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Helvetica',
+                fontSize: 16,
               ),
-              const SizedBox(width: 8),
-              Text('progressLabel'.tr(), style: TextStyle(fontSize: 12)),
-            ],
-          ),
-          const SizedBox(height: 6),
-
-          //************************************************************
-          // BARRAA
-          //************************************************************
-          LinearProgressIndicator(
-            value: progress,
-            backgroundColor: Colors.grey.shade300,
-            color: AppColors.primaryColor,
-            minHeight: 6,
-            borderRadius: BorderRadius.circular(10),
-          ),
-
-          const SizedBox(height: 4),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              '${(progress * 100).round()}%',
-              style: const TextStyle(fontSize: 12),
             ),
-          ),
-        ],
+            const Spacer(),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: Text(
+                    '$items items',
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text('progressLabel'.tr(), style: TextStyle(fontSize: 12)),
+              ],
+            ),
+            const SizedBox(height: 6),
+            LinearProgressIndicator(
+              value: progress,
+              backgroundColor: Colors.grey.shade300,
+              color: AppColors.primaryColor,
+              minHeight: 6,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            const SizedBox(height: 4),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                '${(progress * 100).round()}%',
+                style: const TextStyle(fontSize: 12),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+
+  Widget _mudanzaCardAnadir(BuildContext context) {
+  return GestureDetector(
+    onTap: () async {
+      final resultado = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CrearMudanzaScreen()),
+      );
+
+      if (resultado == true) {
+        //RECARGAR
+        setState(() {});
+      }
+    },
+    child: Container(
+      width: 180,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.primaryColor.withAlpha((0.08 * 255).round()),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: AppColors.primaryColor.withAlpha(40)),
+      ),
+      child: const Center(
+        child: Icon(
+          Icons.add_outlined,
+          size: 50,
+          color: AppColors.primaryColor,
+        ),
+      ),
+    ),
+  );
+}
+
 
   Future<String?> _getAvatarFileImatge() async {
     final prefs = await SharedPreferences.getInstance();
@@ -292,13 +370,17 @@ class HomeScreenContent extends StatelessWidget {
       final uid = prefs.getString('userUID');
       if (uid != null) {
         try {
-          final userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+          final userDoc =
+              await FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(uid)
+                  .get();
           imageUrl = userDoc.data()?['profileImage'];
           if (imageUrl != null && imageUrl.isNotEmpty) {
             await prefs.setString('profileImageUrl', imageUrl);
           }
         } catch (e) {
-          debugPrint('Error fetching avatar from Firestore: $e');
+          debugPrint('Error fetching avatar from Firestore: \$e');
         }
       }
     }
@@ -311,31 +393,5 @@ class HomeScreenContent extends StatelessWidget {
     } else {
       return null;
     }
-  }
-
-
-  Widget _mudanzaCardAnadir(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        //TO DO AÑADIR MUDANZA NOVA
-        //Navigator.push(context, MaterialPageRoute(builder: (context) => const AddMoveScreen()));},
-      },
-      child: Container(
-        width: 180,
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: AppColors.primaryColor.withAlpha((0.08 * 255).round()),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.primaryColor.withAlpha(40)),
-        ),
-        child: const Center(
-          child: Icon(
-            Icons.add_outlined,
-            size: 50,
-            color: AppColors.primaryColor,
-          ),
-        ),
-      ),
-    );
   }
 }
