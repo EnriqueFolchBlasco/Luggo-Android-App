@@ -6,7 +6,6 @@ import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class CrearMudanzaScreen extends StatefulWidget {
   const CrearMudanzaScreen({super.key});
 
@@ -15,39 +14,42 @@ class CrearMudanzaScreen extends StatefulWidget {
 }
 
 class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _origenController = TextEditingController();
-  final _destinoController = TextEditingController();
+  final controlOrigen = TextEditingController();
+  final controlDestino = TextEditingController();
   String estado = 'pendiente';
-  final prefs = SharedPreferences.getInstance();
 
   @override
   void dispose() {
-    _origenController.dispose();
-    _destinoController.dispose();
+    controlOrigen.dispose();
+    controlDestino.dispose();
     super.dispose();
   }
 
-  Future<void> _guardarMudanza() async {
-    if (_formKey.currentState!.validate()) {
-      //final db = await $FloorAppDatabase.databaseBuilder('luggo.db').build();
-      final db = await DatabaseService.getDatabase();
+  Future<void> guardarMudanza() async {
+    String origen = controlOrigen.text.trim();
+    String destino = controlDestino.text.trim();
 
-
-      final sharedPrefs = await prefs;
-      final nuevaMudanza = Mudanza(
-        userId: sharedPrefs.getString('userUID') ?? '',
-
-        fecha: DateFormat('yyyy-MM-dd').format(DateTime.now()),
-        direccionOrigen: _origenController.text,
-        direccionDestino: _destinoController.text,
-        estado: estado,
-        mudanzaId: null,
+    if (origen.isEmpty || destino.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Por favor completa todos los campos')),
       );
-
-      await db.mudanzaDao.insertar(nuevaMudanza);
-      Navigator.pop(context, true);
+      return;
     }
+
+    final prefs = await SharedPreferences.getInstance();
+    final db = await DatabaseService.getDatabase();
+
+    final nuevaMudanza = Mudanza(
+      userId: prefs.getString('userUID') ?? '',
+      fecha: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      direccionOrigen: origen,
+      direccionDestino: destino,
+      estado: estado,
+      mudanzaId: null,
+    );
+
+    await db.mudanzaDao.insertar(nuevaMudanza);
+    Navigator.pop(context, true);
   }
 
   @override
@@ -62,57 +64,56 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Dirección Origen:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 4),
-              TextFormField(
-                controller: _origenController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Dirección Origen:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 4),
+            TextField(
+              controller: controlOrigen,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                validator: (value) => value!.isEmpty ? 'Requerido' : null,
               ),
-              const SizedBox(height: 16),
-              const Text(
-                'Dirección Destino:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 4),
-              TextFormField(
-                controller: _destinoController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Dirección Destino:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 4),
+            TextField(
+              controller: controlDestino,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                validator: (value) => value!.isEmpty ? 'Requerido' : null,
               ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
                   ),
-                  onPressed: _guardarMudanza,
-                  child: const Text('Guardar mudanza'),
                 ),
-              )
-            ],
-          ),
+                onPressed: guardarMudanza,
+                child: const Text('Guardar mudanza'),
+              ),
+            ),
+          ],
         ),
       ),
     );

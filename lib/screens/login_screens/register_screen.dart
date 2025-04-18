@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:luggo/controllers/firebase_controller.dart';
+import 'package:luggo/services/shared_prefs_service.dart';
+import 'package:luggo/utils/constants.dart';
 import 'login_screen.dart';
-import '../../utils/constants.dart';
-import '../../controllers/firebase_controller.dart';
-import '../../services/shared_prefs_service.dart';
+
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

@@ -1,13 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:luggo/screens/content_screens/home_screen_content.dart';
+import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
+import 'package:luggo/utils/constants.dart';
+import 'package:luggo/utils/notification_manager.dart';
 import 'services_screen.dart';
 import 'chats_screen.dart';
 import 'profile_screen.dart';
-import '../sideBar_screens/sidebar_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../utils/constants.dart';
-import '../../utils/notification_manager.dart';
-import '../content_screens/home_screen_content.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override

@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/database/app_database.dart';
 import 'package:luggo/models/mudanza.dart';
 import 'package:luggo/screens/content_screens/crear_mudanza_screen.dart';
-import 'package:luggo/screens/content_screens/inventario_screen';
+import 'package:luggo/screens/content_screens/inventario_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/services/shared_prefs_service.dart';
 import 'package:luggo/utils/constants.dart';
@@ -263,7 +263,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
           context,
           MaterialPageRoute(
             builder:
-                (context) => InventarioScreen(mudanzaId: mudanza.mudanzaId!),
+                (context) => InventarioScreen(idMudanza: mudanza.mudanzaId!),
           ),
         );
       },

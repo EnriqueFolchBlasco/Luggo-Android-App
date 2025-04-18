@@ -1,16 +1,13 @@
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../login_screens/login_screen.dart';
+import 'package:luggo/screens/login_screens/login_screen.dart';
 import 'about_us_screen.dart';
 import 'help_screen.dart';
 import 'privacy_screen.dart';
 import 'settings_screen.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../utils/constants.dart';
+import 'package:luggo/utils/constants.dart';
 
 class SideBarScreen extends StatefulWidget {
   const SideBarScreen({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../utils/constants.dart';
+import 'package:luggo/utils/constants.dart';
 
 class ServiceButtonsGrid extends StatelessWidget {
   const ServiceButtonsGrid({super.key});
