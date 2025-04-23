@@ -3,7 +3,7 @@
 ![Language](https://img.shields.io/badge/language-Dart-blue) 
 ![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/license-CC--BY--NC--ND%204.0-blue)
 ## Description
-Luggo is the final DAM project, an Android application developed using Flutter. This repository contains the source code and project files for the Luggo Android App. The app is designed to provide a seamless user experience while adhering to modern Android app development practices.
+Luggo is the final DAM project, an Android application developed using Flutter for a end of course project (TFC). This repository contains the source code and project files for the Luggo Android App. The app is designed to provide a seamless user experience while adhering to modern Android app development practices.
 
 ---
 
