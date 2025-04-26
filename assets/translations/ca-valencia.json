@@ -89,8 +89,14 @@
 
     "yourMovesSubtitle": "Gestiona i consulta les teues mudances.",
 
+    "errorEmailMismatch": "Els correus electrònics no coincideixen.",
+    "confirmEmail": "Confirmar correu electrònic",
+
     "cropUpload": "Retallar & Putjar",
 
+    "miInventario": "EL MEU INVENTARI",
+
+    "forgotSubtitle": "Introdueix el teu correu electrònic vinculat al teu compte de Luggo i t'enviarem un enllaç per recuperar la teua contrasenya oblidada.",
 
     "noConnection": {
       "title": "Sense connexió",

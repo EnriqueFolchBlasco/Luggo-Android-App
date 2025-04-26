@@ -9,6 +9,7 @@ import 'forgotPassword_Screen.dart';
 import 'register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:luggo/utils/custom_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,8 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _passwordVisible = false;
   String _errorMensatge = "";
-
-
 
   void _login() async {
     String email = _emailController.text;
@@ -44,10 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
 
       if (userCredential.user != null && userCredential.user!.emailVerified) {
         final uid = userCredential.user!.uid;
@@ -69,7 +66,6 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       }
     } catch (e) {
-
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool? loggedBefore = prefs.getBool('loggedInBefore');
       if (loggedBefore == true) {
@@ -89,25 +85,6 @@ class _LoginScreenState extends State<LoginScreen> {
         _errorMensatge = ("errorLoginFailed").tr() + e.toString();
       });
     }
-}
-
-
-  InputDecoration customInputDecoration({required String hint, required IconData icon}) {
-    return InputDecoration(
-      hintText: hint,
-      prefixIcon: Icon(icon, color: AppColors.primaryColor),
-      filled: true,
-      fillColor: Colors.grey.shade100,
-      contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide.none,
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(color: AppColors.primaryColor, width: 1),
-      ),
-    );
   }
 
   @override
@@ -117,58 +94,56 @@ class _LoginScreenState extends State<LoginScreen> {
       resizeToAvoidBottomInset: true,
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/images/LuggoColor2.png', height: 50),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
+              Text(
+                'LUGGO',
+                style: const TextStyle(
+                  fontFamily: 'ClashDisplay',
+                  fontSize: 62,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primaryColor,
+                  letterSpacing: 2,
+                ),
+              ),
               Text(
                 ('welcomeLuggo').tr(),
                 style: const TextStyle(
-                  fontFamily: 'ClashDisplay',
-                  fontSize: 26,
+                  fontFamily: 'Helvetica',
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primaryColor,
+                  color: Colors.black87,
                 ),
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 24),
 
-              TextField(
+              CustomTextField(
                 controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                style: const TextStyle(fontFamily: 'Helvetica'),
-                decoration: customInputDecoration(
-                  hint: ('email').tr(),
-                  icon: Icons.email,
-                ),
+                hint: ('email').tr(),
+                icon: Icons.email_outlined,
               ),
+              
               const SizedBox(height: 16),
 
-              TextField(
+              CustomTextField(
                 controller: _passwordController,
-                obscureText: !_passwordVisible,
-                style: const TextStyle(fontFamily: 'Helvetica'),
-                decoration: customInputDecoration(
-                  hint: ('password').tr(),
-                  icon: Icons.lock,
-                ).copyWith(
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                      color: AppColors.primaryColor,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _passwordVisible = !_passwordVisible;
-                      });
-                    },
-                  ),
-                ),
+                hint: ('password').tr(),
+                icon: Icons.lock_outline,
+                isPassword: true,
+                isPasswordVisible: _passwordVisible,
+                togglePasswordVisibility: () {
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                },
               ),
-              const SizedBox(height: 12),
 
-              Align(
-                alignment: Alignment.centerRight,
+
+              Center(
                 child: TextButton(
                   onPressed: () {
                     _errorMensatge = "";
@@ -179,7 +154,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: Text(
                     ('forgotPassword').tr(),
-                    style: const TextStyle(color: AppColors.primaryColor),
+                    style: TextStyle(
+                      fontFamily: 'Helvetica',
+                      fontSize: 14,
+                      color: AppColors.primaryColor.withOpacity(0.8),
+                      decoration: TextDecoration.none,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
@@ -187,36 +168,47 @@ class _LoginScreenState extends State<LoginScreen> {
               if (_errorMensatge.isNotEmpty)
                 Text(
                   _errorMensatge,
-                  style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 8),
 
+              // Login Button
               ElevatedButton(
                 onPressed: _login,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
-                  minimumSize: const Size(double.infinity, 50),
+                  minimumSize: const Size(double.infinity, 55),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(50),
                   ),
                 ),
                 child: Text(
                   ('login').tr(),
                   style: const TextStyle(
                     fontFamily: 'Helvetica',
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
               ),
 
-              const SizedBox(height: 20),
+              // Register Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(('noAccount').tr()),
+                  Text(
+                    ('noAccount').tr(),
+                    style: const TextStyle(
+                      fontFamily: 'Helvetica',
+                      fontSize: 14,
+                      color: Colors.black87,
+                    ),
+                  ),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -224,9 +216,25 @@ class _LoginScreenState extends State<LoginScreen> {
                         MaterialPageRoute(builder: (_) => RegisterScreen()),
                       );
                     },
-                    child: Text(
-                      ('register').tr(),
-                      style: const TextStyle(color: AppColors.primaryColor),
+                    child: Row(
+                      children: [
+                        Text(
+                          ('register').tr(),
+                          style: TextStyle(
+                            fontFamily: 'Helvetica',
+                            fontSize: 14,
+                            color: AppColors.primaryColor.withOpacity(0.8),
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Icon(
+                          Icons.arrow_forward,
+                          size: 16,
+                          color: AppColors.primaryColor.withOpacity(0.8),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -237,4 +245,5 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
 }

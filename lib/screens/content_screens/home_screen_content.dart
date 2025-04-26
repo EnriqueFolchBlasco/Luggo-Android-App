@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:luggo/database/app_database.dart';
 import 'package:luggo/models/mudanza.dart';
 import 'package:luggo/screens/content_screens/crear_mudanza_screen.dart';
 import 'package:luggo/screens/content_screens/inventario_screen.dart';
@@ -251,12 +250,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     );
   }
 
-  Widget _mudanzaCard(
-    BuildContext context,
-    Mudanza mudanza,
-    int items,
-    double progress,
-  ) {
+  Widget _mudanzaCard(BuildContext context, Mudanza mudanza, int items, double progress) {
     return GestureDetector(
       onTap: () {
         Navigator.push(

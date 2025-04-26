@@ -104,6 +104,11 @@
   "cropUpload": "Crop & Upload",
 
   "yourMovesSubtitle": "View and manage your recent moves.",
+  "miInventario": "MY INVENTORY",
+
+  "errorEmailMismatch": "Email addresses do not match.",
+  "confirmEmail": "Confirm Email",
+  "forgotSubtitle": "Enter your email address linked to your Luggo account and we will send you a link to recover your forgotten password.",
 
   "noConnection": {
     "title": "No connection",

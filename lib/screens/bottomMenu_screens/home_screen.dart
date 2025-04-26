@@ -337,11 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
 // CUSTOM MENSATGE DE NOTIFICACIONS EN BLAU/BLANC
 //************************************************************
 
-Widget construirNotificacion(
-  String texto,
-  VoidCallback cerrarOverlay,
-  VoidCallback refrescarUI,
-) {
+Widget construirNotificacion(String texto, VoidCallback cerrarOverlay, VoidCallback refrescarUI) {
   return GestureDetector(
     onTap: () {
       NotificationManager.eliminar(texto);

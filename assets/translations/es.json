@@ -88,9 +88,14 @@
   "donateSubtitle": "Dáselo a quien lo necesita",
   "copyrightNotice": "© 2025 Luggo. Todos los derechos reservados.",
 
+  "errorEmailMismatch": "Los correos no coinciden.",
+  "confirmEmail": "Confirmar correo",
+  "forgotSubtitle": "Ingresa tu correo electrónico enlazado a tu cuenta de Luggo y te enviaremos un enlace para recuperar tu contraseña olvidada.",
+
   "yourMovesSubtitle": "Gestiona y consulta tus mudanzas recientes.",
 
   "cropUpload": "Recortar & Subir",
+  "miInventario": "MI INVENTARIO",
 
   
   "noConnection": {

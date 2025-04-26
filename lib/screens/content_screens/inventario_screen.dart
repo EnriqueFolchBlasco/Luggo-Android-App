@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/utils/constants.dart';
 
 class InventarioScreen extends StatefulWidget {
@@ -62,10 +64,33 @@ class _InventarioScreenState extends State<InventarioScreen>
         elevation: 1,
         leading: IconButton(
           padding: const EdgeInsets.only(left: 18),
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.menu),
           iconSize: 36,
-          onPressed: () {
-            Navigator.pop(context);
+          onPressed: () async {
+            // ***************************************************** */
+            // MENU DE LATERAL
+            // ***************************************************** */
+
+            final result = await Navigator.of(context).push(
+              PageRouteBuilder(
+                opaque: false,
+                pageBuilder: (_, __, ___) => const SideBarScreen(),
+                transitionsBuilder: (_, animation, __, child) {
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(-1.0, 0.0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  );
+                },
+              ),
+            );
+
+            // Condicio per a fer qe al cambiar idioma se cambie la bottombar en altres labels
+            if (result == true) {
+              setState(() {});
+            }
           },
         ),
         title: Row(
@@ -82,7 +107,40 @@ class _InventarioScreenState extends State<InventarioScreen>
       ),
       body: Column(
         children: [
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
+          Container(
+            width: 40,
+            height: 40,
+
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.black),
+            ),
+
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              splashRadius: 20,
+              
+            ),
+          ),
+
+          const SizedBox(height: 20),
+          Text(
+            'miInventario'.tr(),
+            style: const TextStyle(
+              fontFamily: 'Helvetica',
+              color: AppColors.primaryColor,
+              fontSize: 28,
+              fontWeight: FontWeight.w200,
+              letterSpacing: 1.5,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
 
           TabBar(
             controller: _controladorTabs,
@@ -170,15 +228,11 @@ class _InventarioScreenState extends State<InventarioScreen>
       // ***************************************************** */
       // TO DOOOOOOO BOTO CREAR UN ITEM
       // ***************************************************** */
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: AppColors.primaryColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        icon: const Icon(Icons.add, color: Colors.white),
-        label: const Text(
-          'Añadir ítem',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
