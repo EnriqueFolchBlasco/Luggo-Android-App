@@ -9,7 +9,6 @@ import 'chats_screen.dart';
 import 'profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -20,16 +19,31 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey _notificacionKey = GlobalKey();
   OverlayEntry? _notificacionOverlay;
 
-  List<Widget> _screens = <Widget>[
-    HomeScreenContent(),
-    ServicesScreen(),
-    ChatsScreen(),
-    ProfileScreen(),
-  ];
-
   //Llista negra de pantalles sense el bottomMenu
   List<Type> _screensSinBottomNav = [];
+  
+  late List<Widget> _screens;
 
+  @override
+  void initState() {
+    super.initState();
+
+    _screens = <Widget>[
+      HomeScreenContent(
+        onAvatarTap: () {
+          setState(() {
+            _selectedIndex = 3;
+          });
+        },
+      ),
+      ServicesScreen(),
+      ChatsScreen(),
+      ProfileScreen(),
+    ];
+
+  }
+
+  //cambiar el index del bottom menu
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -337,7 +351,11 @@ class _HomeScreenState extends State<HomeScreen> {
 // CUSTOM MENSATGE DE NOTIFICACIONS EN BLAU/BLANC
 //************************************************************
 
-Widget construirNotificacion(String texto, VoidCallback cerrarOverlay, VoidCallback refrescarUI) {
+Widget construirNotificacion(
+  String texto,
+  VoidCallback cerrarOverlay,
+  VoidCallback refrescarUI,
+) {
   return GestureDetector(
     onTap: () {
       NotificationManager.eliminar(texto);

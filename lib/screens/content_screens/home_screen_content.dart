@@ -16,7 +16,9 @@ import 'service_buttons.dart';
 //************************************************************
 
 class HomeScreenContent extends StatefulWidget {
-  const HomeScreenContent({super.key});
+  final void Function()? onAvatarTap;
+  const HomeScreenContent({super.key, this.onAvatarTap});
+
 
   @override
   State<HomeScreenContent> createState() => _HomeScreenContentState();
@@ -24,6 +26,8 @@ class HomeScreenContent extends StatefulWidget {
 
 class _HomeScreenContentState extends State<HomeScreenContent> {
   List<Mudanza> mudanzas = [];
+  
+
 
   @override
   void initState() {
@@ -134,9 +138,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                     final url = snapshot.data;
 
                     return GestureDetector(
-                      onTap: () {
-                        // TO DO: NAVIGATE TO PROFILE
-                      },
+                      onTap: widget.onAvatarTap,
                       child: CircleAvatar(
                         backgroundColor: Colors.transparent,
                         radius: 35,
