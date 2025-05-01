@@ -23,7 +23,7 @@ class _SideBarScreenState extends State<SideBarScreen> {
   Future<void> _logout(BuildContext context) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final uid = prefs.getString('userUID');
+      //final uid = prefs.getString('userUID');
   
 
       await FirebaseAuth.instance.signOut();

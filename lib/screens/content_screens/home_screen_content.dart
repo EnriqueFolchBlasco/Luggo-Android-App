@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'service_buttons.dart';
-import 'package:dotted_border/dotted_border.dart';
 
 //************************************************************
 // TO DO fer la db local q almacena mudances (items count)
