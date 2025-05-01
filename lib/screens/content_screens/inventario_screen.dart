@@ -132,21 +132,21 @@ class _InventarioScreenState extends State<InventarioScreen>
           Text(
             'miInventario'.tr(),
             style: const TextStyle(
-              fontFamily: 'Helvetica',
+              fontFamily: 'clashDisplay',
               color: AppColors.primaryColor,
               fontSize: 28,
-              fontWeight: FontWeight.w200,
+              fontWeight: FontWeight.w400,
               letterSpacing: 1.5,
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 14),
 
           TabBar(
             controller: _controladorTabs,
             isScrollable: true,
             tabAlignment: TabAlignment.start,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             labelPadding: const EdgeInsets.only(right: 12),
             indicatorPadding: EdgeInsets.zero,
             splashFactory: NoSplash.splashFactory,

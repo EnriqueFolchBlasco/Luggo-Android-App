@@ -97,13 +97,15 @@
   "fillAllFields": "Per favor, ompli tots els camps",
   "moveOptions": "Opcions de Mudança",
   "Inventory": "Inventari",
-  "Settings": "Configuració",
+  "Edit": "Editar",
   "Notes": "Notes",
-  "Recycle": "Reciclatge",
-  "Timeline": "Cronologia",
+  "Share": "Compartir",
+  "Labeling": "Etiquetatge",
   "Delete": "Eliminar",
   "deleteMoveTitle": "Eliminar Mudança",
   "deleteMoveConfirm": "Segur que vols eliminar aquesta mudança? Aquesta acció no es pot desfer.",
   "cancel": "Cancel·lar",
-  "delete": "Eliminar"
+  "delete": "Eliminar",
+  "saveChanges": "Guardar canvis",
+  "estado": "Estat"
 }

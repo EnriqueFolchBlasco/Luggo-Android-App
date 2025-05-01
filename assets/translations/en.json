@@ -129,13 +129,15 @@
   "fillAllFields": "Please fill in all fields",
   "moveOptions": "Move Options",
   "Inventory": "Inventory",
-  "Settings": "Settings",
+  "Edit": "Edit",
   "Notes": "Notes",
-  "Recycle": "Recycle",
-  "Timeline": "Timeline",
+  "Share": "Share",
+  "Labeling": "Labeling",
   "Delete": "Delete",
   "deleteMoveTitle": "Delete Move",
   "deleteMoveConfirm": "Are you sure you want to delete this move? This action cannot be undone.",
   "cancel": "Cancel",
-  "delete": "Delete"
+  "delete": "Delete",
+  "saveChanges": "Save changes",
+  "estado": "Status"
 }

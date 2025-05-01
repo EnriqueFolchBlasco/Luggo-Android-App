@@ -95,19 +95,17 @@
   "enterDestination": "Introduce la dirección de destino",
   "saveMove": "Guardar mudanza",
   "fillAllFields": "Por favor, completa todos los campos",
-
-  
-    "moveOptions": "Opciones de Mudanza",
-    "Inventory": "Inventario",
-    "Settings": "Configuración",
-    "Notes": "Notas",
-    "Recycle": "Reciclaje",
-    "Timeline": "Cronología",
-    "Delete": "Eliminar",
-    "deleteMoveTitle": "Eliminar Mudanza",
-    "deleteMoveConfirm": "¿Estás seguro de que deseas eliminar esta mudanza? Esta acción no se puede deshacer.",
-    "cancel": "Cancelar",
-    "delete": "Eliminar"
-  
-  
+  "moveOptions": "Opciones de Mudanza",
+  "Inventory": "Inventario",
+  "Edit": "Editar",
+  "Notes": "Notas",
+  "Labeling": "Etiquetado",
+  "Share": "Compartir",
+  "Delete": "Eliminar",
+  "deleteMoveTitle": "Eliminar Mudanza",
+  "deleteMoveConfirm": "¿Estás seguro de que deseas eliminar esta mudanza? Esta acción no se puede deshacer.",
+  "cancel": "Cancelar",
+  "delete": "Eliminar",
+  "saveChanges": "Guardar Cambios",
+  "estado": "Estado"
 }

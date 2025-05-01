@@ -12,13 +12,20 @@ class Mudanza {
   final String direccionDestino;
   final String estado;
 
+  final String createdAt;
+  final String? updatedAt;
+  final bool isArchived;
+
   Mudanza({
     this.mudanzaId,
-    required this.nombre,
     required this.userId,
     required this.fecha,
+    required this.nombre,
     required this.direccionOrigen,
     required this.direccionDestino,
     required this.estado,
+    required this.createdAt,
+    this.updatedAt,
+    this.isArchived = false,
   });
 }

@@ -15,5 +15,6 @@ abstract class InventarioDao {
   @Query('SELECT * FROM Inventario WHERE mudanzaId = :mudanzaId')
   Future<Inventario?> obtenerPorMudanza(int mudanzaId);
 
-
+  @Query('SELECT COUNT(*) FROM Inventario WHERE mudanzaId = :mudanzaId')
+  Future<int?> contarItemsDeMudanza(int mudanzaId);
 }

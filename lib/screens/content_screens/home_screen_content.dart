@@ -257,14 +257,18 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     double progress,
   ) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        final result = await Navigator.push(
           context,
           MaterialPageRoute(
             builder:
                 (context) => MenuMudanzaScreen(idMudanza: mudanza.mudanzaId!),
           ),
         );
+
+        if (result == true) {
+          _cargarMudanzas();
+        }
       },
       child: Container(
         width: 180,

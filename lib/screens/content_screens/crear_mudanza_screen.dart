@@ -5,6 +5,7 @@ import 'package:luggo/models/mudanza.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
+import 'package:luggo/utils/custom_form_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CrearMudanzaScreen extends StatefulWidget {
@@ -49,6 +50,9 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
       direccionDestino: destino,
       estado: estado,
       mudanzaId: null,
+      createdAt: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      updatedAt: null,
+      isArchived: false,
     );
 
     await db.mudanzaDao.insertar(nuevaMudanza);
@@ -142,14 +146,26 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
 
             const SizedBox(height: 32),
 
-            _labelCrearMudanza('moveName'.tr()),
-            _textFieldCrearMudanza(controlNombre, 'enterMoveName'.tr(), 20),
+            LuggoLabel('moveName'.tr()),
+            LuggoTextField(
+              controller: controlNombre,
+              hint: 'enterMoveName'.tr(),
+              maxLength: 20,
+            ),
 
-            _labelCrearMudanza('originAddress'.tr()),
-            _textFieldCrearMudanza(controlOrigen, 'enterOrigin'.tr(), 20),
+            LuggoLabel('originAddress'.tr()),
+            LuggoTextField(
+              controller: controlOrigen,
+              hint: 'enterOrigin'.tr(),
+              maxLength: 20,
+            ),
 
-            _labelCrearMudanza('destinationAddress'.tr()),
-            _textFieldCrearMudanza(controlDestino, 'enterDestination'.tr(), 20),
+            LuggoLabel('destinationAddress'.tr()),
+            LuggoTextField(
+              controller: controlDestino,
+              hint: 'enterDestination'.tr(),
+              maxLength: 20,
+            ),
 
             Center(
               child: SizedBox(
@@ -180,49 +196,6 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
 
             const SizedBox(height: 24),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _labelCrearMudanza(String text) {
-    return Padding(
-    padding: const EdgeInsets.only(left: 20, bottom: 8),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontWeight: FontWeight.w600,
-          fontSize: 15,
-          color: Colors.black87,
-        ),
-      ),
-    );
-  }
-
-  Widget _textFieldCrearMudanza(TextEditingController controller, String hint, int maxSize) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: TextFormField(
-        maxLength: maxSize,
-        controller: controller,
-        style: const TextStyle(fontSize: 15),
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: TextStyle(color: AppColors.primaryColor.withOpacity(0.5)),
-          fillColor: Colors.white,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(34),
-            borderSide: BorderSide(color: Colors.grey.shade300),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(34),
-            borderSide: BorderSide(color: Colors.grey.shade300),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(34),
-            borderSide: const BorderSide(color: AppColors.primaryColor, width: 1.5),
-          ),
         ),
       ),
     );
