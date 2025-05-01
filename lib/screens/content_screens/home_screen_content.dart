@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/models/mudanza.dart';
 import 'package:luggo/screens/content_screens/crear_mudanza_screen.dart';
-import 'package:luggo/screens/content_screens/inventario_screen.dart';
 import 'package:luggo/screens/content_screens/menu_mudanza_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/services/shared_prefs_service.dart';
@@ -11,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'service_buttons.dart';
+import 'package:dotted_border/dotted_border.dart';
 
 //************************************************************
 // TO DO fer la db local q almacena mudances (items count)
@@ -274,8 +274,9 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
         width: 180,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.primaryColor.withAlpha((0.1 * 255).round()),
+          color: AppColors.primaryColor.withAlpha((0.08 * 255).round()),
           borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: AppColors.primaryColor.withAlpha(40)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -360,7 +361,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
         decoration: BoxDecoration(
           color: AppColors.primaryColor.withAlpha((0.08 * 255).round()),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.primaryColor.withAlpha(40)),
         ),
         child: const Center(
           child: Icon(
