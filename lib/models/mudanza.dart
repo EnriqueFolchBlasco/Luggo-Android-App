@@ -7,12 +7,14 @@ class Mudanza {
 
   final String userId;
   final String fecha;
+  final String nombre;
   final String direccionOrigen;
   final String direccionDestino;
   final String estado;
 
   Mudanza({
     this.mudanzaId,
+    required this.nombre,
     required this.userId,
     required this.fecha,
     required this.direccionOrigen,

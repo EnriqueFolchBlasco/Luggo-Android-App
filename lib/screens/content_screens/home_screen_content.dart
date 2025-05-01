@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/models/mudanza.dart';
 import 'package:luggo/screens/content_screens/crear_mudanza_screen.dart';
 import 'package:luggo/screens/content_screens/inventario_screen.dart';
+import 'package:luggo/screens/content_screens/menu_mudanza_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/services/shared_prefs_service.dart';
 import 'package:luggo/utils/constants.dart';
@@ -19,15 +20,12 @@ class HomeScreenContent extends StatefulWidget {
   final void Function()? onAvatarTap;
   const HomeScreenContent({super.key, this.onAvatarTap});
 
-
   @override
   State<HomeScreenContent> createState() => _HomeScreenContentState();
 }
 
 class _HomeScreenContentState extends State<HomeScreenContent> {
   List<Mudanza> mudanzas = [];
-  
-
 
   @override
   void initState() {
@@ -208,8 +206,8 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                         return _mudanzaCard(
                           context,
                           mudanza,
-                          0, // CALCULAR ITEMS
-                          0.0, // CALCULAR PROGRESO
+                          0, // CALCULAR ITEMS TBD
+                          0.0, // CALCULAR PROGRESO TO BE DONE
                         );
                       } else {
                         return _mudanzaCardAnadir(context);
@@ -252,14 +250,19 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     );
   }
 
-  Widget _mudanzaCard(BuildContext context, Mudanza mudanza, int items, double progress) {
+  Widget _mudanzaCard(
+    BuildContext context,
+    Mudanza mudanza,
+    int items,
+    double progress,
+  ) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder:
-                (context) => InventarioScreen(idMudanza: mudanza.mudanzaId!),
+                (context) => MenuMudanzaScreen(idMudanza: mudanza.mudanzaId!),
           ),
         );
       },
@@ -274,12 +277,21 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Mudanza ${mudanza.direccionDestino}',
+              '${mudanza.nombre}',
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontFamily: 'Helvetica',
                 fontSize: 16,
               ),
+            ),
+            Text(
+              '${mudanza.direccionOrigen} - ${mudanza.direccionDestino}',
+              style: const TextStyle(
+                fontSize: 10,
+                color: Colors.black54,
+                fontWeight: FontWeight.w400,
+              ),
+              textAlign: TextAlign.center,
             ),
             const Spacer(),
             Row(
@@ -326,57 +338,59 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   }
 
   Widget _mudanzaCardAnadir(BuildContext context) {
-  return GestureDetector(
-    onTap: () async {
-      final resultado = await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CrearMudanzaScreen()),
-      );
+    return GestureDetector(
+      onTap: () async {
+        final resultado = await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CrearMudanzaScreen()),
+        );
 
-      if (resultado == true) {
-        //RECARGAR
-        setState(() {});
-      }
-    },
-    child: Container(
-      width: 180,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.primaryColor.withAlpha((0.08 * 255).round()),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.primaryColor.withAlpha(40)),
-      ),
-      child: const Center(
-        child: Icon(
-          Icons.add_outlined,
-          size: 50,
-          color: AppColors.primaryColor,
+        if (resultado == true) {
+          //RECARGAR
+          setState(() {});
+        }
+      },
+      child: Container(
+        width: 180,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.primaryColor.withAlpha((0.08 * 255).round()),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: AppColors.primaryColor.withAlpha(40)),
+        ),
+        child: const Center(
+          child: Icon(
+            Icons.add_outlined,
+            size: 50,
+            color: AppColors.primaryColor,
+          ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   Future<String?> _getAvatarFileImatge() async {
     final prefs = await SharedPreferences.getInstance();
     String? imageUrl = prefs.getString('profileImageUrl');
 
     if (imageUrl == null || imageUrl.isEmpty) {
-      final uid = prefs.getString('userUID');
+      String? uid = prefs.getString('userUID');
+
       if (uid != null) {
         try {
-          final userDoc =
+          var userDoc =
               await FirebaseFirestore.instance
                   .collection('users')
                   .doc(uid)
                   .get();
+
           imageUrl = userDoc.data()?['profileImage'];
+
           if (imageUrl != null && imageUrl.isNotEmpty) {
             await prefs.setString('profileImageUrl', imageUrl);
           }
         } catch (e) {
-          debugPrint('Error fetching avatar from Firestore: \$e');
+          debugPrint('Error getting avatar: $e');
         }
       }
     }

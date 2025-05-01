@@ -116,5 +116,26 @@
     "ok": "OK",
     "photoError": "❌ Error uploading photo",
     "photoSuccess": "✅ Photo uploaded successfully"
-  }
+  },
+
+  "CREAR MUDANZA": "CREATE MOVE",
+  "moveName": "Move name",
+  "enterMoveName": "Enter a name for the move",
+  "originAddress": "Origin address",
+  "enterOrigin": "Enter origin location",
+  "destinationAddress": "Destination address",
+  "enterDestination": "Enter destination location",
+  "saveMove": "Save Move",
+  "fillAllFields": "Please fill in all fields",
+  "moveOptions": "Move Options",
+  "Inventory": "Inventory",
+  "Settings": "Settings",
+  "Notes": "Notes",
+  "Recycle": "Recycle",
+  "Timeline": "Timeline",
+  "Delete": "Delete",
+  "deleteMoveTitle": "Delete Move",
+  "deleteMoveConfirm": "Are you sure you want to delete this move? This action cannot be undone.",
+  "cancel": "Cancel",
+  "delete": "Delete"
 }

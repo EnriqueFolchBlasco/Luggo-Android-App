@@ -106,7 +106,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Mudanza` (`mudanzaId` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` TEXT NOT NULL, `fecha` TEXT NOT NULL, `direccionOrigen` TEXT NOT NULL, `direccionDestino` TEXT NOT NULL, `estado` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `Mudanza` (`mudanzaId` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` TEXT NOT NULL, `fecha` TEXT NOT NULL, `nombre` TEXT NOT NULL, `direccionOrigen` TEXT NOT NULL, `direccionDestino` TEXT NOT NULL, `estado` TEXT NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Inventario` (`inventarioId` INTEGER PRIMARY KEY AUTOINCREMENT, `mudanzaId` INTEGER NOT NULL)');
         await database.execute(
@@ -167,6 +167,7 @@ class _$MudanzaDao extends MudanzaDao {
                   'mudanzaId': item.mudanzaId,
                   'userId': item.userId,
                   'fecha': item.fecha,
+                  'nombre': item.nombre,
                   'direccionOrigen': item.direccionOrigen,
                   'direccionDestino': item.direccionDestino,
                   'estado': item.estado
@@ -179,6 +180,7 @@ class _$MudanzaDao extends MudanzaDao {
                   'mudanzaId': item.mudanzaId,
                   'userId': item.userId,
                   'fecha': item.fecha,
+                  'nombre': item.nombre,
                   'direccionOrigen': item.direccionOrigen,
                   'direccionDestino': item.direccionDestino,
                   'estado': item.estado
@@ -199,6 +201,7 @@ class _$MudanzaDao extends MudanzaDao {
     return _queryAdapter.queryList('SELECT * FROM Mudanza',
         mapper: (Map<String, Object?> row) => Mudanza(
             mudanzaId: row['mudanzaId'] as int?,
+            nombre: row['nombre'] as String,
             userId: row['userId'] as String,
             fecha: row['fecha'] as String,
             direccionOrigen: row['direccionOrigen'] as String,
@@ -211,11 +214,19 @@ class _$MudanzaDao extends MudanzaDao {
     return _queryAdapter.query('SELECT * FROM Mudanza WHERE mudanzaId = ?1',
         mapper: (Map<String, Object?> row) => Mudanza(
             mudanzaId: row['mudanzaId'] as int?,
+            nombre: row['nombre'] as String,
             userId: row['userId'] as String,
             fecha: row['fecha'] as String,
             direccionOrigen: row['direccionOrigen'] as String,
             direccionDestino: row['direccionDestino'] as String,
             estado: row['estado'] as String),
+        arguments: [id]);
+  }
+
+  @override
+  Future<void> eliminarPorId(int id) async {
+    await _queryAdapter.queryNoReturn(
+        'DELETE FROM Mudanza WHERE mudanzaId = ?1',
         arguments: [id]);
   }
 

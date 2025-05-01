@@ -3,19 +3,16 @@
   "spanish": "Español",
   "english": "Inglés",
   "valencian": "Valenciano",
-
   "inicio": "Inicio",
   "servicios": "Servicios",
   "chats": "Chats",
   "perfil": "Perfil",
-
   "user": "Usuario",
   "opciones": "Opciones",
   "logOut": "Cerrar sesión",
   "sobreNosotros": "Sobre nosotros",
   "ayuda": "Ayuda",
   "privacidad": "Privacidad",
-
   "aboutUs": "Sobre nosotros",
   "whoWeAre": "Quiénes somos",
   "whoWeAreText": "En Luggo, creemos que mudarse debería ser fácil, accesible y ecológico.",
@@ -24,21 +21,16 @@
   "ourMission": "Nuestra misión",
   "ourMissionText": "Queremos reducir el estrés de mudarse mientras promovemos la sostenibilidad y la conexión comunitaria.",
   "thankYou": "Gracias por elegir Luggo 💙",
-
   "help": "Ayuda",
   "needHelp": "¿Necesitas asistencia?",
   "helpText": "Si tienes problemas con Luggo, nuestro equipo de soporte está aquí para ayudarte.",
   "contactUs": "Contáctanos",
-
   "privacy": "Privacidad",
   "privacyTitle": "Tus datos importan",
   "privacyText": "Luggo respeta tu privacidad. Guardamos tus datos de forma segura y nunca los compartimos sin tu permiso. Consulta nuestra política de privacidad para más información.",
-
   "settingsIntro": "Personaliza tu experiencia con Luggo a continuación.",
   "notificationSettings": "Preferencias de notificación",
   "securitySettings": "Seguridad e inicio de sesión",
-
-  
   "welcomeLuggo": "¡Bienvenido a Luggo!",
   "email": "Correo electrónico",
   "password": "Contraseña",
@@ -50,30 +42,24 @@
   "errorInvalidEmail": "Introduce un correo válido.",
   "errorEmailNotVerified": "Verifica tu correo antes de iniciar sesión.",
   "errorLoginFailed": "Fallo al iniciar sesión: ",
-  
   "confirmPassword": "Confirmar contraseña",
   "registerTitle": "Crea una cuenta",
   "errorPasswordMismatch": "Las contraseñas no coinciden.",
   "registerSuccess": "¡Registro exitoso! Verifica tu correo.",
   "haveAccount": "¿Ya tienes una cuenta?",
-
   "forgotTitle": "¿Olvidaste tu contraseña?",
   "resetSuccess": "¡Correo enviado! Revisa tu bandeja.",
   "resetError": "Error al enviar el correo:",
   "resetPassword": "Restablecer contraseña",
   "backLogin": "Volver al inicio de sesión",
-
   "greeting1": "Buenos\ndías,",
   "greeting2": "Buenas\ntardes,",
   "greeting3": "Buenas\nnoches,",
-
   "userName": "Enrique F.",
   "yourMoves": "Tus mudanzas",
   "needMoveHelp": "¿Ayuda en tu mudanza?",
   "moveHelpText": "Encuentra el servicio perfecto que te hace falta\npara que tu mudanza vaya sobre ruedas.",
   "progressLabel": "Progreso",
-
-
   "transport": "Transporte",
   "transportSubtitle": "¿Necesitas ayuda con algo?",
   "laborOnly": "Mano de obra",
@@ -87,23 +73,41 @@
   "donate": "Donar",
   "donateSubtitle": "Dáselo a quien lo necesita",
   "copyrightNotice": "© 2025 Luggo. Todos los derechos reservados.",
-
   "errorEmailMismatch": "Los correos no coinciden.",
   "confirmEmail": "Confirmar correo",
   "forgotSubtitle": "Ingresa tu correo electrónico enlazado a tu cuenta de Luggo y te enviaremos un enlace para recuperar tu contraseña olvidada.",
-
   "yourMovesSubtitle": "Gestiona y consulta tus mudanzas recientes.",
-
   "cropUpload": "Recortar & Subir",
   "miInventario": "MI INVENTARIO",
-
-  
   "noConnection": {
     "title": "Sin conexión",
     "message": "Por favor, conéctate a Internet para subir tu foto.",
     "ok": "Aceptar",
     "photoError": "❌ Error al subir la foto",
     "photoSuccess": "✅ Foto subida con éxito"
-}
+  },
+  "CREAR MUDANZA": "CREAR MUDANZA",
+  "moveName": "Nombre de la mudanza",
+  "enterMoveName": "Introduce un nombre para la mudanza",
+  "originAddress": "Dirección de origen",
+  "enterOrigin": "Introduce la dirección de origen",
+  "destinationAddress": "Dirección de destino",
+  "enterDestination": "Introduce la dirección de destino",
+  "saveMove": "Guardar mudanza",
+  "fillAllFields": "Por favor, completa todos los campos",
 
+  
+    "moveOptions": "Opciones de Mudanza",
+    "Inventory": "Inventario",
+    "Settings": "Configuración",
+    "Notes": "Notas",
+    "Recycle": "Reciclaje",
+    "Timeline": "Cronología",
+    "Delete": "Eliminar",
+    "deleteMoveTitle": "Eliminar Mudanza",
+    "deleteMoveConfirm": "¿Estás seguro de que deseas eliminar esta mudanza? Esta acción no se puede deshacer.",
+    "cancel": "Cancelar",
+    "delete": "Eliminar"
+  
+  
 }

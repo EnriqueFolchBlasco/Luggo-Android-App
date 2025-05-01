@@ -14,4 +14,9 @@ abstract class MudanzaDao {
 
   @Query('SELECT * FROM Mudanza WHERE mudanzaId = :id')
   Future<Mudanza?> obtenerPorId(int id);
+
+  @Query('DELETE FROM Mudanza WHERE mudanzaId = :id')
+  Future<void> eliminarPorId(int id);
+
+
 }

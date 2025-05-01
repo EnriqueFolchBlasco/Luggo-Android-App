@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:luggo/database/app_database.dart';
 import 'package:luggo/models/mudanza.dart';
+import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,25 +15,26 @@ class CrearMudanzaScreen extends StatefulWidget {
 }
 
 class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
+  final controlNombre = TextEditingController();
   final controlOrigen = TextEditingController();
   final controlDestino = TextEditingController();
   String estado = 'pendiente';
 
   @override
   void dispose() {
+    controlNombre.dispose();
     controlOrigen.dispose();
     controlDestino.dispose();
     super.dispose();
   }
 
   Future<void> guardarMudanza() async {
-    String origen = controlOrigen.text.trim();
-    String destino = controlDestino.text.trim();
+    final nombre = controlNombre.text.trim();
+    final origen = controlOrigen.text.trim();
+    final destino = controlDestino.text.trim();
 
-    if (origen.isEmpty || destino.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor completa todos los campos')),
-      );
+    if (nombre.isEmpty || origen.isEmpty || destino.isEmpty) {
+      // TO DO
       return;
     }
 
@@ -41,6 +43,7 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
 
     final nuevaMudanza = Mudanza(
       userId: prefs.getString('userUID') ?? '',
+      nombre: nombre,
       fecha: DateFormat('yyyy-MM-dd').format(DateTime.now()),
       direccionOrigen: origen,
       direccionDestino: destino,
@@ -55,65 +58,171 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE8F0FF),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
-        title: const Text('Nueva Mudanza'),
-        centerTitle: true,
+        elevation: 0,
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        leading: IconButton(
+          padding: const EdgeInsets.only(left: 18),
+          icon: const Icon(Icons.menu),
+          iconSize: 36,
+          onPressed: () async {
+            final result = await Navigator.of(context).push(
+              PageRouteBuilder(
+                opaque: false,
+                pageBuilder: (_, __, ___) => const SideBarScreen(),
+                transitionsBuilder: (_, animation, __, child) {
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(-1.0, 0.0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  );
+                },
+              ),
+            );
+
+            if (result == true) setState(() {});
+          },
+        ),
+        title: Row(
+          children: const [
+            Spacer(),
+            Image(
+              image: AssetImage('assets/images/LuggoColor_noBackground.png'),
+              height: 28,
+            ),
+            Spacer(),
+            Spacer(),
+          ],
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Dirección Origen:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 4),
-            TextField(
-              controller: controlOrigen,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-            ),
             const SizedBox(height: 16),
-            const Text(
-              'Dirección Destino:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 4),
-            TextField(
-              controller: controlDestino,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+            Center(
+              child: Column(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.black),
+                    ),
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(Icons.arrow_back, color: Colors.black),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      splashRadius: 20,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'CREAR MUDANZA'.tr(),
+                    style: const TextStyle(
+                      fontFamily: 'Helvetica',
+                      color: AppColors.primaryColor,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w200,
+                      letterSpacing: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+
+            const SizedBox(height: 32),
+
+            _labelCrearMudanza('moveName'.tr()),
+            _textFieldCrearMudanza(controlNombre, 'enterMoveName'.tr(), 20),
+
+            _labelCrearMudanza('originAddress'.tr()),
+            _textFieldCrearMudanza(controlOrigen, 'enterOrigin'.tr(), 20),
+
+            _labelCrearMudanza('destinationAddress'.tr()),
+            _textFieldCrearMudanza(controlDestino, 'enterDestination'.tr(), 20),
+
+            Center(
+              child: SizedBox(
+                width: double.infinity,
+                height: 52,
+                child: ElevatedButton(
+                  onPressed: guardarMudanza,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primaryColor,
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    shadowColor: Colors.black12,
+                  ),
+                  child: Text(
+                    'saveMove'.tr(),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                      letterSpacing: 0.5,
+                    ),
                   ),
                 ),
-                onPressed: guardarMudanza,
-                child: const Text('Guardar mudanza'),
               ),
             ),
+
+            const SizedBox(height: 24),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _labelCrearMudanza(String text) {
+    return Padding(
+    padding: const EdgeInsets.only(left: 20, bottom: 8),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 15,
+          color: Colors.black87,
+        ),
+      ),
+    );
+  }
+
+  Widget _textFieldCrearMudanza(TextEditingController controller, String hint, int maxSize) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: TextFormField(
+        maxLength: maxSize,
+        controller: controller,
+        style: const TextStyle(fontSize: 15),
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: TextStyle(color: AppColors.primaryColor.withOpacity(0.5)),
+          fillColor: Colors.white,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(34),
+            borderSide: BorderSide(color: Colors.grey.shade300),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(34),
+            borderSide: BorderSide(color: Colors.grey.shade300),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(34),
+            borderSide: const BorderSide(color: AppColors.primaryColor, width: 1.5),
+          ),
         ),
       ),
     );

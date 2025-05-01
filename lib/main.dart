@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:luggo/utils/constants.dart';
 import 'utils/firebase_options.dart';
 import 'screens/login_screens/splash_screen.dart';
 //17042025_2023_1720
@@ -35,6 +36,10 @@ class MyApp extends StatelessWidget {
       title: 'Luggo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: AppColors.primaryColor,
+        ),
       ),
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
