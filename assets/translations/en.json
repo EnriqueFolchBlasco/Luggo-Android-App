@@ -139,5 +139,17 @@
   "cancel": "Cancel",
   "delete": "Delete",
   "saveChanges": "Save changes",
-  "estado": "Status"
+  "estado": "Status",
+  "misNotas": "My Notes",
+  "kitchen": "Kitchen",
+  "diningRoom": "Dining Room",
+  "bathroom": "Bathroom",
+  "tabs": "Categories",
+  "warning": "Warning",
+  "atLeastOneCategoryMustExist": "At least one category must exist.",
+  "cannotDeleteCategoryInUse": "This category is used by one or more items and cannot be deleted.",
+  "ok": "OK",
+  "addNewTab": "Afegir nova categoria"
+
+
 }

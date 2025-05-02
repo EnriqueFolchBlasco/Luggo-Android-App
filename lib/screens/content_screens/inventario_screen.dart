@@ -1,6 +1,8 @@
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
+import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
 
 class InventarioScreen extends StatefulWidget {
@@ -12,50 +14,62 @@ class InventarioScreen extends StatefulWidget {
   State<InventarioScreen> createState() => _InventarioScreenState();
 }
 
-class _InventarioScreenState extends State<InventarioScreen>
-    with TickerProviderStateMixin {
-  late TabController _controladorTabs;
-
-  // ***************************************************** */
-  // HARDDDDDCODED DB IMPROTAR
-  // ***************************************************** */
-  final List<Map<String, dynamic>> categorias = [
-    {
-      "nombre": "Salón",
-      "cantidad": 3,
-      "items": ["Sofá", "TV", "Mesa"],
-    },
-    {
-      "nombre": "Cocina",
-      "cantidad": 2,
-      "items": ["Sartén", "Horno"],
-    },
-    {
-      "nombre": "Terraza",
-      "cantidad": 1,
-      "items": ["Planta"],
-    },
-    {
-      "nombre": "Habitación",
-      "cantidad": 2,
-      "items": ["Cama", "Armario"],
-    },
-  ];
+class _InventarioScreenState extends State<InventarioScreen> with TickerProviderStateMixin {
+  TabController? _controladorTabs;
+  List<Map<String, dynamic>> categorias = [];
+  bool cargando = true;
 
   @override
   void initState() {
     super.initState();
-    _controladorTabs = TabController(length: categorias.length, vsync: this);
+    _cargarCategorias();
+  }
+
+  Future<void> _cargarCategorias() async {
+    try {
+      final db = await DatabaseService.getDatabase();
+      final mudanza = await db.mudanzaDao.obtenerPorId(widget.idMudanza);
+      if (mudanza == null) return;
+
+      final tabs = mudanza.tabs?.split('|') ?? [];
+      final List<Map<String, dynamic>> categoriasTemp = [];
+
+      for (final tab in tabs) {
+        final count = await db.inventarioDao.contarItemsPorCategoria(widget.idMudanza, tab);
+        final items = await db.itemDao.obtenerNombresDeItemsPorCategoria(widget.idMudanza, tab);
+        categoriasTemp.add({
+          "nombre": tab,
+          "cantidad": count,
+          "items": items,
+        });
+      }
+
+      setState(() {
+        categorias = categoriasTemp;
+        if (categorias.isNotEmpty) {
+          _controladorTabs = TabController(length: categorias.length, vsync: this);
+        }
+        cargando = false;
+      });
+    } catch (e) {
+      print("Error loading tabs: \$e");
+    }
   }
 
   @override
   void dispose() {
-    _controladorTabs.dispose();
+    _controladorTabs?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (cargando || _controladorTabs == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFFF4F6FA),
       appBar: AppBar(
@@ -67,10 +81,6 @@ class _InventarioScreenState extends State<InventarioScreen>
           icon: const Icon(Icons.menu),
           iconSize: 36,
           onPressed: () async {
-            // ***************************************************** */
-            // MENU DE LATERAL
-            // ***************************************************** */
-
             final result = await Navigator.of(context).push(
               PageRouteBuilder(
                 opaque: false,
@@ -86,11 +96,7 @@ class _InventarioScreenState extends State<InventarioScreen>
                 },
               ),
             );
-
-            // Condicio per a fer qe al cambiar idioma se cambie la bottombar en altres labels
-            if (result == true) {
-              setState(() {});
-            }
+            if (result == true) setState(() {});
           },
         ),
         title: Row(
@@ -111,23 +117,17 @@ class _InventarioScreenState extends State<InventarioScreen>
           Container(
             width: 40,
             height: 40,
-
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: Colors.black),
             ),
-
             child: IconButton(
               padding: EdgeInsets.zero,
               icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: () => Navigator.pop(context),
               splashRadius: 20,
-              
             ),
           ),
-
           const SizedBox(height: 20),
           Text(
             'miInventario'.tr(),
@@ -141,7 +141,6 @@ class _InventarioScreenState extends State<InventarioScreen>
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 14),
-
           TabBar(
             controller: _controladorTabs,
             isScrollable: true,
@@ -150,30 +149,24 @@ class _InventarioScreenState extends State<InventarioScreen>
             labelPadding: const EdgeInsets.only(right: 12),
             indicatorPadding: EdgeInsets.zero,
             splashFactory: NoSplash.splashFactory,
-
-            //**************************************************** */
-            // estilo de pestraña
             indicator: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(30),
               border: Border.all(color: const Color(0xFF0066FF), width: 1.3),
             ),
-
-            //**************************************************** */
             labelColor: Colors.black,
             unselectedLabelColor: Colors.grey.shade500,
-            tabs:
-                categorias.map((x) {
-                  return Tab(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(x["nombre"]),
-                          const SizedBox(width: 6),
-                          CircleAvatar(
-                            radius: 10,
+            tabs: categorias.map((x) {
+              return Tab(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(x["nombre"]),
+                      const SizedBox(width: 6),
+                      CircleAvatar(
+                        radius: 10,
                             backgroundColor: const Color(0xFF0066FF),
                             child: Text(
                               '${x["cantidad"]}',
@@ -184,50 +177,37 @@ class _InventarioScreenState extends State<InventarioScreen>
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                  );
-                }).toList(),
+                  ),
+                ),
+              );
+            }).toList(),
           ),
-
-          // ***************************************************** */
-          // TO DOOOOOOO
-          // ***************************************************** */
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
               children: [_crearFiltro("Estado"), _crearFiltro("Peso")],
             ),
           ),
-
-          // ***************************************************** */
-          // Llista items
-          // ***************************************************** */
           Expanded(
             child: TabBarView(
               controller: _controladorTabs,
-              children:
-                  categorias.map((i) {
-                    final items = List<String>.from(i["items"]);
-                    return ListView.builder(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 10,
-                      ),
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        return _crearItem(items[index]);
-                      },
-                    );
-                  }).toList(),
+              children: categorias.map((i) {
+                final items = List<String>.from(i["items"]);
+                return ListView.builder(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
+                  ),
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    return _crearItem(items[index]);
+                  },
+                );
+              }).toList(),
             ),
           ),
         ],
       ),
-
-      // ***************************************************** */
-      // TO DOOOOOOO BOTO CREAR UN ITEM
-      // ***************************************************** */
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: AppColors.primaryColor,
@@ -240,7 +220,7 @@ class _InventarioScreenState extends State<InventarioScreen>
   Widget _crearFiltro(String texto) {
     return GestureDetector(
       onTap: () {
-        print('filtro: $texto');
+        print('filtro: \$texto');
       },
       child: Container(
         margin: const EdgeInsets.only(right: 10),
@@ -259,11 +239,7 @@ class _InventarioScreenState extends State<InventarioScreen>
         ),
         child: Row(
           children: [
-            const Icon(
-              Icons.filter_alt_outlined,
-              size: 16,
-              color: Colors.black54,
-            ),
+            const Icon(Icons.filter_alt_outlined, size: 16, color: Colors.black54),
             const SizedBox(width: 6),
             Text(
               texto,
@@ -278,7 +254,7 @@ class _InventarioScreenState extends State<InventarioScreen>
   Widget _crearItem(String nombreItem) {
     return GestureDetector(
       onTap: () {
-        print('click: $nombreItem');
+        print('click: \$nombreItem');
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 14),
@@ -299,17 +275,10 @@ class _InventarioScreenState extends State<InventarioScreen>
             Expanded(
               child: Text(
                 nombreItem,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
               ),
             ),
-            const Icon(
-              Icons.check_circle_outline,
-              color: Color(0xFF0066FF),
-              size: 24,
-            ),
+            const Icon(Icons.check_circle_outline, color: Color(0xFF0066FF), size: 24),
           ],
         ),
       ),

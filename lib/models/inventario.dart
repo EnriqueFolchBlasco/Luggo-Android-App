@@ -6,6 +6,7 @@ class Inventario {
   final int? inventarioId;
 
   final int mudanzaId;
+  final String? categoria;
 
-  Inventario({this.inventarioId, required this.mudanzaId});
+  Inventario({this.inventarioId, required this.mudanzaId, this.categoria});
 }

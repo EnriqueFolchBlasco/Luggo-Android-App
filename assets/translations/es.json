@@ -107,5 +107,16 @@
   "cancel": "Cancelar",
   "delete": "Eliminar",
   "saveChanges": "Guardar Cambios",
-  "estado": "Estado"
+  "estado": "Estado",
+    "misNotas": "Mis Notas",
+    "kitchen": "Cocina",
+  "diningRoom": "Comedor",
+  "bathroom": "Baño",
+  "tabs": "Categorias",
+  "warning": "Warning",
+  "atLeastOneCategoryMustExist": "Al menos una categoría debe existir.",
+  "cannotDeleteCategoryInUse": "No se puede eliminar una categoría en uso.",
+  "ok": "Aceptar",
+  "addNewTab": "Afegir nova categoria"
+
 }

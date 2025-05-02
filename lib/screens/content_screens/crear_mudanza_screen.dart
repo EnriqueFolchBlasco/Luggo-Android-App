@@ -18,7 +18,7 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
   final controlNombre = TextEditingController();
   final controlOrigen = TextEditingController();
   final controlDestino = TextEditingController();
-  String estado = 'pendiente';
+  String estado = 'Planificada';
 
   @override
   void dispose() {
@@ -41,6 +41,14 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
     final prefs = await SharedPreferences.getInstance();
     final db = await DatabaseService.getDatabase();
 
+    final defaultTabs = [
+      'kitchen',
+      'diningRoom',
+      'bathroom',
+    ];
+    
+    final tabsString = defaultTabs.map((key) => key.tr()).join('|');
+
     final nuevaMudanza = Mudanza(
       userId: prefs.getString('userUID') ?? '',
       nombre: nombre,
@@ -48,10 +56,12 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
       direccionOrigen: origen,
       direccionDestino: destino,
       estado: estado,
+      notas: '',
       mudanzaId: null,
       createdAt: DateFormat('yyyy-MM-dd').format(DateTime.now()),
       updatedAt: null,
       isArchived: false,
+      tabs: tabsString,
     );
 
     await db.mudanzaDao.insertar(nuevaMudanza);

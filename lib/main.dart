@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/utils/constants.dart';
 import 'utils/firebase_options.dart';
 import 'screens/login_screens/splash_screen.dart';
-//17042025_2023_1720
+//02052025_2023_1925
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +36,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: AppColors.primaryColor,
+          selectionColor: AppColors.primaryColor.withOpacity(
+            0.3,
+          ),
+          selectionHandleColor: AppColors.primaryColor,
+        ),
         progressIndicatorTheme: ProgressIndicatorThemeData(
           color: AppColors.primaryColor,
         ),

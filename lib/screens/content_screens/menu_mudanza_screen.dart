@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:luggo/models/mudanza.dart';
 import 'package:luggo/screens/content_screens/editar_mudanza_screen.dart';
 import 'package:luggo/screens/content_screens/inventario_screen.dart';
+import 'package:luggo/screens/content_screens/notas_mudanza.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
@@ -157,7 +158,11 @@ class _MenuMudanzaScreenState extends State<MenuMudanzaScreen> {
                               );
                             },
                           ),
-                          _crearOpcio(Icons.mode_edit_outlined, 'Edit', () {Navigator.push(
+                          _crearOpcio(
+                            Icons.mode_edit_outlined,
+                            'Edit',
+                            () async {
+                              final result = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder:
@@ -165,11 +170,27 @@ class _MenuMudanzaScreenState extends State<MenuMudanzaScreen> {
                                         mudanza: mudanza!,
                                       ),
                                 ),
-                              );}),
+                              );
+
+                              if (result == true) {
+                                _cargarMudanza();
+                              }
+                            },
+                          ),
                           _crearOpcio(
                             Icons.sticky_note_2_outlined,
                             'Notes',
-                            () {},
+                            () {
+                              Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) =>
+                                        NotasMudanzaScreen(mudanzaId: widget.idMudanza),
+                              ),
+                            );
+
+                            },
                           ),
                           _crearOpcio(Icons.qr_code_2, 'Labeling', () {}),
                           _crearOpcio(Icons.share, 'Share', () {}),
@@ -188,26 +209,50 @@ class _MenuMudanzaScreenState extends State<MenuMudanzaScreen> {
   }
 
   Future<void> _confirmarBorradoMudanza() async {
-    final db = await DatabaseService.getDatabase();
-    final mudanza = await db.mudanzaDao.obtenerPorId(widget.idMudanza);
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Text('deleteMoveTitle'.tr()),
+            content: Text('deleteMoveConfirm'.tr()),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text('cancel'.tr()),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: Text(
+                  'delete'.tr(),
+                  style: const TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
+          ),
+    );
 
-    if (mudanza != null) {
-      final mudanzaArchivada = Mudanza(
-        mudanzaId: mudanza.mudanzaId,
-        userId: mudanza.userId,
-        nombre: mudanza.nombre,
-        fecha: mudanza.fecha,
-        direccionOrigen: mudanza.direccionOrigen,
-        direccionDestino: mudanza.direccionDestino,
-        estado: mudanza.estado,
-        createdAt: mudanza.createdAt,
-        updatedAt: DateTime.now().toIso8601String(),
-        isArchived: true,
-      );
+    if (confirm == true) {
+      final db = await DatabaseService.getDatabase();
+      final mudanza = await db.mudanzaDao.obtenerPorId(widget.idMudanza);
 
-      await db.mudanzaDao.actualizar(mudanzaArchivada);
-      Navigator.pop(context, true);
+      if (mudanza != null) {
+        final mudanzaArchivada = Mudanza(
+          mudanzaId: mudanza.mudanzaId,
+          userId: mudanza.userId,
+          nombre: mudanza.nombre,
+          fecha: mudanza.fecha,
+          notas: mudanza.notas,
+          direccionOrigen: mudanza.direccionOrigen,
+          direccionDestino: mudanza.direccionDestino,
+          estado: mudanza.estado,
+          createdAt: mudanza.createdAt,
+          updatedAt: DateTime.now().toIso8601String(),
+          isArchived: true,
+        );
 
+        await db.mudanzaDao.actualizar(mudanzaArchivada);
+        Navigator.pop(context, true);
+      }
     }
   }
 

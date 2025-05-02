@@ -17,4 +17,12 @@ abstract class InventarioDao {
 
   @Query('SELECT COUNT(*) FROM Inventario WHERE mudanzaId = :mudanzaId')
   Future<int?> contarItemsDeMudanza(int mudanzaId);
+
+  @Query('SELECT COUNT(*) FROM Item WHERE mudanzaId = :mudanzaId AND categoria = :categoria')
+  Future<int?> contarItemsPorCategoria(int mudanzaId, String categoria);
+
+  @Query('SELECT EXISTS(SELECT 1 FROM inventario WHERE mudanzaId = :mudanzaId AND categoria = :categoria LIMIT 1)')
+  Future<bool?> existeItemConCategoria(int mudanzaId, String categoria);
+
+
 }

@@ -107,5 +107,16 @@
   "cancel": "Cancel·lar",
   "delete": "Eliminar",
   "saveChanges": "Guardar canvis",
-  "estado": "Estat"
+  "estado": "Estat",
+  "misNotas": "Les meues Notes",
+  "kitchen": "Cuina",
+  "diningRoom": "Menjador",
+  "bathroom": "Bany",
+  "tabs": "Categories",
+  "warning": "Warning",
+  "atLeastOneCategoryMustExist": "Almenys una categoria ha de existir.",
+  "cannotDeleteCategoryInUse": "No es pot eliminar una categoria en ús.",
+  "ok": "D'acord",
+  "addNewTab": "Afegir nova categoria"
+
 }

@@ -90,7 +90,7 @@ class _$AppDatabase extends AppDatabase {
     Callback? callback,
   ]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
-      version: 1,
+      version: 2,
       onConfigure: (database) async {
         await database.execute('PRAGMA foreign_keys = ON');
         await callback?.onConfigure?.call(database);
@@ -106,11 +106,11 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Mudanza` (`mudanzaId` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` TEXT NOT NULL, `fecha` TEXT NOT NULL, `nombre` TEXT NOT NULL, `direccionOrigen` TEXT NOT NULL, `direccionDestino` TEXT NOT NULL, `estado` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT, `isArchived` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `Mudanza` (`mudanzaId` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` TEXT NOT NULL, `fecha` TEXT NOT NULL, `nombre` TEXT NOT NULL, `direccionOrigen` TEXT NOT NULL, `direccionDestino` TEXT NOT NULL, `estado` TEXT NOT NULL, `notas` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT, `isArchived` INTEGER NOT NULL, `tabs` TEXT)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Inventario` (`inventarioId` INTEGER PRIMARY KEY AUTOINCREMENT, `mudanzaId` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `Inventario` (`inventarioId` INTEGER PRIMARY KEY AUTOINCREMENT, `mudanzaId` INTEGER NOT NULL, `categoria` TEXT)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Item` (`itemId` INTEGER PRIMARY KEY AUTOINCREMENT, `inventarioId` INTEGER NOT NULL, `nombre` TEXT NOT NULL, `peso` REAL NOT NULL, `foto` TEXT, `descripcion` TEXT)');
+            'CREATE TABLE IF NOT EXISTS `Item` (`itemId` INTEGER PRIMARY KEY AUTOINCREMENT, `mudanzaId` INTEGER NOT NULL, `inventarioId` INTEGER NOT NULL, `nombre` TEXT NOT NULL, `peso` REAL NOT NULL, `foto` TEXT, `descripcion` TEXT, `gotIt` INTEGER NOT NULL, `categoria` TEXT)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Mensaje` (`mensajeId` INTEGER PRIMARY KEY AUTOINCREMENT, `chatId` INTEGER NOT NULL, `remitente` TEXT NOT NULL, `contenido` TEXT NOT NULL, `timestamp` TEXT NOT NULL)');
         await database.execute(
@@ -171,9 +171,11 @@ class _$MudanzaDao extends MudanzaDao {
                   'direccionOrigen': item.direccionOrigen,
                   'direccionDestino': item.direccionDestino,
                   'estado': item.estado,
+                  'notas': item.notas,
                   'createdAt': item.createdAt,
                   'updatedAt': item.updatedAt,
-                  'isArchived': item.isArchived ? 1 : 0
+                  'isArchived': item.isArchived ? 1 : 0,
+                  'tabs': item.tabs
                 }),
         _mudanzaUpdateAdapter = UpdateAdapter(
             database,
@@ -187,9 +189,11 @@ class _$MudanzaDao extends MudanzaDao {
                   'direccionOrigen': item.direccionOrigen,
                   'direccionDestino': item.direccionDestino,
                   'estado': item.estado,
+                  'notas': item.notas,
                   'createdAt': item.createdAt,
                   'updatedAt': item.updatedAt,
-                  'isArchived': item.isArchived ? 1 : 0
+                  'isArchived': item.isArchived ? 1 : 0,
+                  'tabs': item.tabs
                 }),
         _mudanzaDeletionAdapter = DeletionAdapter(
             database,
@@ -203,9 +207,11 @@ class _$MudanzaDao extends MudanzaDao {
                   'direccionOrigen': item.direccionOrigen,
                   'direccionDestino': item.direccionDestino,
                   'estado': item.estado,
+                  'notas': item.notas,
                   'createdAt': item.createdAt,
                   'updatedAt': item.updatedAt,
-                  'isArchived': item.isArchived ? 1 : 0
+                  'isArchived': item.isArchived ? 1 : 0,
+                  'tabs': item.tabs
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -232,8 +238,10 @@ class _$MudanzaDao extends MudanzaDao {
             direccionDestino: row['direccionDestino'] as String,
             estado: row['estado'] as String,
             createdAt: row['createdAt'] as String,
+            notas: row['notas'] as String,
             updatedAt: row['updatedAt'] as String?,
-            isArchived: (row['isArchived'] as int) != 0));
+            isArchived: (row['isArchived'] as int) != 0,
+            tabs: row['tabs'] as String?));
   }
 
   @override
@@ -248,8 +256,10 @@ class _$MudanzaDao extends MudanzaDao {
             direccionDestino: row['direccionDestino'] as String,
             estado: row['estado'] as String,
             createdAt: row['createdAt'] as String,
+            notas: row['notas'] as String,
             updatedAt: row['updatedAt'] as String?,
-            isArchived: (row['isArchived'] as int) != 0));
+            isArchived: (row['isArchived'] as int) != 0,
+            tabs: row['tabs'] as String?));
   }
 
   @override
@@ -264,8 +274,10 @@ class _$MudanzaDao extends MudanzaDao {
             direccionDestino: row['direccionDestino'] as String,
             estado: row['estado'] as String,
             createdAt: row['createdAt'] as String,
+            notas: row['notas'] as String,
             updatedAt: row['updatedAt'] as String?,
-            isArchived: (row['isArchived'] as int) != 0),
+            isArchived: (row['isArchived'] as int) != 0,
+            tabs: row['tabs'] as String?),
         arguments: [id]);
   }
 
@@ -302,7 +314,8 @@ class _$InventarioDao extends InventarioDao {
             'Inventario',
             (Inventario item) => <String, Object?>{
                   'inventarioId': item.inventarioId,
-                  'mudanzaId': item.mudanzaId
+                  'mudanzaId': item.mudanzaId,
+                  'categoria': item.categoria
                 }),
         _inventarioDeletionAdapter = DeletionAdapter(
             database,
@@ -310,7 +323,8 @@ class _$InventarioDao extends InventarioDao {
             ['inventarioId'],
             (Inventario item) => <String, Object?>{
                   'inventarioId': item.inventarioId,
-                  'mudanzaId': item.mudanzaId
+                  'mudanzaId': item.mudanzaId,
+                  'categoria': item.categoria
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -328,7 +342,8 @@ class _$InventarioDao extends InventarioDao {
     return _queryAdapter.queryList('SELECT * FROM Inventario',
         mapper: (Map<String, Object?> row) => Inventario(
             inventarioId: row['inventarioId'] as int?,
-            mudanzaId: row['mudanzaId'] as int));
+            mudanzaId: row['mudanzaId'] as int,
+            categoria: row['categoria'] as String?));
   }
 
   @override
@@ -336,7 +351,8 @@ class _$InventarioDao extends InventarioDao {
     return _queryAdapter.query('SELECT * FROM Inventario WHERE mudanzaId = ?1',
         mapper: (Map<String, Object?> row) => Inventario(
             inventarioId: row['inventarioId'] as int?,
-            mudanzaId: row['mudanzaId'] as int),
+            mudanzaId: row['mudanzaId'] as int,
+            categoria: row['categoria'] as String?),
         arguments: [mudanzaId]);
   }
 
@@ -346,6 +362,28 @@ class _$InventarioDao extends InventarioDao {
         'SELECT COUNT(*) FROM Inventario WHERE mudanzaId = ?1',
         mapper: (Map<String, Object?> row) => row.values.first as int,
         arguments: [mudanzaId]);
+  }
+
+  @override
+  Future<int?> contarItemsPorCategoria(
+    int mudanzaId,
+    String categoria,
+  ) async {
+    return _queryAdapter.query(
+        'SELECT COUNT(*) FROM Item WHERE mudanzaId = ?1 AND categoria = ?2',
+        mapper: (Map<String, Object?> row) => row.values.first as int,
+        arguments: [mudanzaId, categoria]);
+  }
+
+  @override
+  Future<bool?> existeItemConCategoria(
+    int mudanzaId,
+    String categoria,
+  ) async {
+    return _queryAdapter.query(
+        'SELECT EXISTS(SELECT 1 FROM inventario WHERE mudanzaId = ?1 AND categoria = ?2 LIMIT 1)',
+        mapper: (Map<String, Object?> row) => (row.values.first as int) != 0,
+        arguments: [mudanzaId, categoria]);
   }
 
   @override
@@ -370,11 +408,14 @@ class _$ItemDao extends ItemDao {
             'Item',
             (Item item) => <String, Object?>{
                   'itemId': item.itemId,
+                  'mudanzaId': item.mudanzaId,
                   'inventarioId': item.inventarioId,
                   'nombre': item.nombre,
                   'peso': item.peso,
                   'foto': item.foto,
-                  'descripcion': item.descripcion
+                  'descripcion': item.descripcion,
+                  'gotIt': item.gotIt ? 1 : 0,
+                  'categoria': item.categoria
                 }),
         _itemDeletionAdapter = DeletionAdapter(
             database,
@@ -382,11 +423,14 @@ class _$ItemDao extends ItemDao {
             ['itemId'],
             (Item item) => <String, Object?>{
                   'itemId': item.itemId,
+                  'mudanzaId': item.mudanzaId,
                   'inventarioId': item.inventarioId,
                   'nombre': item.nombre,
                   'peso': item.peso,
                   'foto': item.foto,
-                  'descripcion': item.descripcion
+                  'descripcion': item.descripcion,
+                  'gotIt': item.gotIt ? 1 : 0,
+                  'categoria': item.categoria
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -404,11 +448,14 @@ class _$ItemDao extends ItemDao {
     return _queryAdapter.queryList('SELECT * FROM Item',
         mapper: (Map<String, Object?> row) => Item(
             itemId: row['itemId'] as int?,
+            mudanzaId: row['mudanzaId'] as int,
             inventarioId: row['inventarioId'] as int,
             nombre: row['nombre'] as String,
             peso: row['peso'] as double,
             foto: row['foto'] as String?,
-            descripcion: row['descripcion'] as String?));
+            descripcion: row['descripcion'] as String?,
+            gotIt: (row['gotIt'] as int) != 0,
+            categoria: row['categoria'] as String?));
   }
 
   @override
@@ -416,11 +463,14 @@ class _$ItemDao extends ItemDao {
     return _queryAdapter.queryList('SELECT * FROM Item WHERE inventarioId = ?1',
         mapper: (Map<String, Object?> row) => Item(
             itemId: row['itemId'] as int?,
+            mudanzaId: row['mudanzaId'] as int,
             inventarioId: row['inventarioId'] as int,
             nombre: row['nombre'] as String,
             peso: row['peso'] as double,
             foto: row['foto'] as String?,
-            descripcion: row['descripcion'] as String?),
+            descripcion: row['descripcion'] as String?,
+            gotIt: (row['gotIt'] as int) != 0,
+            categoria: row['categoria'] as String?),
         arguments: [inventarioId]);
   }
 
@@ -430,6 +480,17 @@ class _$ItemDao extends ItemDao {
         'SELECT COUNT(*) FROM Inventario WHERE mudanzaId = ?1',
         mapper: (Map<String, Object?> row) => row.values.first as int,
         arguments: [mudanzaId]);
+  }
+
+  @override
+  Future<List<String>> obtenerNombresDeItemsPorCategoria(
+    int mudanzaId,
+    String categoria,
+  ) async {
+    return _queryAdapter.queryList(
+        'SELECT nombre FROM Item WHERE mudanzaId = ?1 AND categoria = ?2',
+        mapper: (Map<String, Object?> row) => row.values.first as String,
+        arguments: [mudanzaId, categoria]);
   }
 
   @override
