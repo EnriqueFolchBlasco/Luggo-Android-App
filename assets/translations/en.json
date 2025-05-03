@@ -125,7 +125,7 @@
   "enterOrigin": "Enter origin location",
   "destinationAddress": "Destination address",
   "enterDestination": "Enter destination location",
-  "saveMove": "Save Move",
+  "saveMove": "SAVE",
   "fillAllFields": "Please fill in all fields",
   "moveOptions": "Move Options",
   "Inventory": "Inventory",
@@ -150,7 +150,12 @@
   "cannotDeleteCategoryInUse": "This category is used by one or more items and cannot be deleted.",
   "ok": "OK",
   "addNewTab": "Afegir nova categoria",
-  "editMode": "EDIT MODE"
+  "editMode": "EDIT MODE",
+  "crearMudanza": "CREATE MOVE",
+  "addItem": "Add Item",
+  "enterName": "Enter item name",
+  "save": "Save",
+  "notasTexto": "Write your notes here..."
 
 
 }

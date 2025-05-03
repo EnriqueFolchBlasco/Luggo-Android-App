@@ -139,7 +139,7 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'CREAR MUDANZA'.tr(),
+                    'crearMudanza'.tr(),
                     style: const TextStyle(
                       fontFamily: 'Helvetica',
                       color: AppColors.primaryColor,
@@ -186,7 +186,7 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
                     backgroundColor: AppColors.primaryColor,
                     elevation: 3,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(34),
                     ),
                     shadowColor: Colors.black12,
                   ),

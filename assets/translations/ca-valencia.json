@@ -93,7 +93,7 @@
   "enterOrigin": "Escriu l'adreça d'origen",
   "destinationAddress": "Adreça de destí",
   "enterDestination": "Escriu l'adreça de destí",
-  "saveMove": "Guardar mudança",
+  "saveMove": "GUARDAR",
   "fillAllFields": "Per favor, ompli tots els camps",
   "moveOptions": "Opcions de Mudança",
   "Inventory": "Inventari",
@@ -118,6 +118,11 @@
   "cannotDeleteCategoryInUse": "No es pot eliminar una categoria en ús.",
   "ok": "D'acord",
   "addNewTab": "Afegir nova categoria",
-  "editMode": "MODE D'EDICIÓ"
+  "editMode": "MODE D'EDICIÓ",
+  "crearMudanza": "CREAR MUDANÇA",
+  "addItem": "Afegir article",
+  "enterName": "Nom de l'article",
+  "save": "Guardar",
+  "notasTexto": "Escriu les teues notes ací..."
 
 }

@@ -58,9 +58,8 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
 
   Future<void> _cantidadItems() async {
     final db = await DatabaseService.getDatabase();
-    final count = await db.inventarioDao.contarItemsDeMudanza(
-      widget.mudanza.mudanzaId!,
-    );
+    final count = await db.itemDao.contarItemsDeMudanza(widget.mudanza.mudanzaId!);
+
     setState(() {
       _itemsCount = count!;
     });
@@ -290,11 +289,8 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
                           return;
                         }
 
-                        final isUsed = await db.inventarioDao
-                            .existeItemConCategoria(
-                              widget.mudanza.mudanzaId!,
-                              tab,
-                            );
+                        final isUsed = await db.itemDao.existeItemConCategoria(widget.mudanza.mudanzaId!, tab);
+
 
                         if (isUsed == true) {
                           showDialog(

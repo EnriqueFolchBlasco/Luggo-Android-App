@@ -93,7 +93,7 @@
   "enterOrigin": "Introduce la dirección de origen",
   "destinationAddress": "Dirección de destino",
   "enterDestination": "Introduce la dirección de destino",
-  "saveMove": "Guardar mudanza",
+  "saveMove": "GUARDAR",
   "fillAllFields": "Por favor, completa todos los campos",
   "moveOptions": "Opciones de Mudanza",
   "Inventory": "Inventario",
@@ -118,6 +118,11 @@
   "cannotDeleteCategoryInUse": "No se puede eliminar una categoría en uso.",
   "ok": "Aceptar",
   "addNewTab": "Afegir nova categoria",
-  "editMode": "MODO DE EDICIÓN"
+  "editMode": "MODO DE EDICIÓN",
+  "crearMudanza": "CREAR MUDANZA",
+  "addItem": "Añadir artículo",
+  "enterName": "Nombre del artículo",
+  "save": "Guardar",
+  "notasTexto": "Escribe tus notas aquí..."
 
 }

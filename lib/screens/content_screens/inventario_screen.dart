@@ -1,9 +1,10 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:luggo/models/item.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
+import 'package:luggo/utils/custom_form_widgets.dart';
 
 class InventarioScreen extends StatefulWidget {
   final int idMudanza;
@@ -14,10 +15,12 @@ class InventarioScreen extends StatefulWidget {
   State<InventarioScreen> createState() => _InventarioScreenState();
 }
 
-class _InventarioScreenState extends State<InventarioScreen> with TickerProviderStateMixin {
+class _InventarioScreenState extends State<InventarioScreen>
+    with TickerProviderStateMixin {
   TabController? _controladorTabs;
   List<Map<String, dynamic>> categorias = [];
   bool cargando = true;
+  int _selectedTabIndex = 0;
 
   @override
   void initState() {
@@ -29,30 +32,47 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
     try {
       final db = await DatabaseService.getDatabase();
       final mudanza = await db.mudanzaDao.obtenerPorId(widget.idMudanza);
+
       if (mudanza == null) return;
 
       final tabs = mudanza.tabs?.split('|') ?? [];
-      final List<Map<String, dynamic>> categoriasTemp = [];
+      final List<Map<String, dynamic>> llistaCategoriesTemproals = [];
 
       for (final tab in tabs) {
-        final count = await db.inventarioDao.contarItemsPorCategoria(widget.idMudanza, tab);
-        final items = await db.itemDao.obtenerNombresDeItemsPorCategoria(widget.idMudanza, tab);
-        categoriasTemp.add({
-          "nombre": tab,
-          "cantidad": count,
-          "items": items,
-        });
+        final count = await db.itemDao.contarItemsPorCategoria(
+          widget.idMudanza,
+          tab,
+        );
+
+        final items = await db.itemDao.obtenerNombresDeItemsPorCategoria(
+          widget.idMudanza,
+          tab,
+        );
+
+        llistaCategoriesTemproals.add({"nombre": tab, "cantidad": count, "items": items});
       }
 
       setState(() {
-        categorias = categoriasTemp;
+        categorias = llistaCategoriesTemproals;
         if (categorias.isNotEmpty) {
-          _controladorTabs = TabController(length: categorias.length, vsync: this);
+          _controladorTabs = TabController(
+            length: categorias.length,
+            vsync: this,
+            initialIndex: _selectedTabIndex < categorias.length ? _selectedTabIndex : 0,
+          );
+
+          _controladorTabs!.addListener(() {
+            if (!_controladorTabs!.indexIsChanging) {
+              setState(() {
+                _selectedTabIndex = _controladorTabs!.index;
+              });
+            }
+          });
         }
         cargando = false;
       });
     } catch (e) {
-      print("Error loading tabs: \$e");
+      print("Error en les categos");
     }
   }
 
@@ -65,9 +85,7 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
   @override
   Widget build(BuildContext context) {
     if (cargando || _controladorTabs == null) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
@@ -128,6 +146,7 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
               splashRadius: 20,
             ),
           ),
+
           const SizedBox(height: 20),
           Text(
             'miInventario'.tr(),
@@ -140,6 +159,7 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
             ),
             textAlign: TextAlign.center,
           ),
+
           const SizedBox(height: 14),
           TabBar(
             controller: _controladorTabs,
@@ -167,16 +187,16 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
                       const SizedBox(width: 6),
                       CircleAvatar(
                         radius: 10,
-                            backgroundColor: const Color(0xFF0066FF),
-                            child: Text(
-                              '${x["cantidad"]}',
-                              style: const TextStyle(
-                                fontSize: 10,
-                                color: Colors.white,
-                              ),
-                            ),
+                        backgroundColor: const Color(0xFF0066FF),
+                        child: Text(
+                          '${x["cantidad"]}',
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: Colors.white,
                           ),
-                        ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               );
@@ -209,7 +229,12 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+
+        onPressed: () {
+          final currentCategoria = categorias[_selectedTabIndex]["nombre"];
+          _mostrarDialogoAgregarItem(currentCategoria);
+        },
+
         backgroundColor: AppColors.primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
         child: const Icon(Icons.add, color: Colors.white),
@@ -239,7 +264,11 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
         ),
         child: Row(
           children: [
-            const Icon(Icons.filter_alt_outlined, size: 16, color: Colors.black54),
+            const Icon(
+              Icons.filter_alt_outlined,
+              size: 16,
+              color: Colors.black54,
+            ),
             const SizedBox(width: 6),
             Text(
               texto,
@@ -251,10 +280,133 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
     );
   }
 
+  void _mostrarDialogoAgregarItem(String initialCategoria) {
+    final nombreCtrl = TextEditingController();
+    final pesoCtrl = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        String categoriaSeleccionada = initialCategoria;
+
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          backgroundColor: Colors.white,
+          titlePadding: const EdgeInsets.only(top: 24),
+          title: Text(
+            'addItem'.tr(),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                LuggoTextField(controller: nombreCtrl, hint: 'enterName'.tr()),
+                Padding(
+                  padding: EdgeInsets.zero,
+                  child: DropdownButtonFormField<String>(
+                    value: categoriaSeleccionada,
+                    onChanged: (value) {
+                      if (value != null) categoriaSeleccionada = value;
+                    },
+                    items: categorias.map((x) {
+                      return DropdownMenuItem<String>(
+                        value: x["nombre"],
+                        child: Text(
+                          x["nombre"],
+                          style: const TextStyle(
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(34),
+                        borderSide: BorderSide(color: Colors.grey.shade300),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(34),
+                        borderSide: BorderSide(color: Colors.grey.shade300),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(34),
+                        borderSide: const BorderSide(
+                          color: AppColors.primaryColor,
+                          width: 1.5,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actionsPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 10,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'cancel'.tr(),
+                style: const TextStyle(color: Colors.black54),
+              ),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              onPressed: () async {
+                final db = await DatabaseService.getDatabase();
+
+                await db.itemDao.insertarItem(
+                  Item(
+                    mudanzaId: widget.idMudanza,
+                    nombre: nombreCtrl.text.trim(),
+                    peso: double.tryParse(pesoCtrl.text.trim()) ?? 0.0,
+                    gotIt: false,
+                    categoria: categoriaSeleccionada,
+                    estado: 'UNREADY',
+                  ),
+                );
+
+                Navigator.pop(context);
+                await _cargarCategorias();
+              },
+              child: Text(
+                'save'.tr(),
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget _crearItem(String nombreItem) {
     return GestureDetector(
       onTap: () {
-        print('click: \$nombreItem');
+        print('click');
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 14),
@@ -275,10 +427,17 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
             Expanded(
               child: Text(
                 nombreItem,
-                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
-            const Icon(Icons.check_circle_outline, color: Color(0xFF0066FF), size: 24),
+            const Icon(
+              Icons.check_circle_outline,
+              color: Color(0xFF0066FF),
+              size: 24,
+            ),
           ],
         ),
       ),

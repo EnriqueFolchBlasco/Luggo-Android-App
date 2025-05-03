@@ -179,8 +179,8 @@ class _NotasMudanzaScreenState extends State<NotasMudanzaScreen> {
                                 height: 1.4,
                                 color: Colors.black87,
                               ),
-                              decoration: const InputDecoration.collapsed(
-                                hintText: 'Escribe tus notas aquí...',
+                              decoration: InputDecoration.collapsed(
+                                hintText: 'notasTexto'.tr(),
                               ),
                             ),
                           ),
