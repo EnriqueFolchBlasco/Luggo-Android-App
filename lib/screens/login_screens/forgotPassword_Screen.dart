@@ -116,9 +116,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 _message,
                 style: TextStyle(
                   color:
+                  
                       _message.contains("success") || _message.contains("¡")
                           ? Colors.green
                           : Colors.red,
+
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
@@ -156,6 +158,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   fontSize: 14,
                   color: AppColors.primaryColor,
                   decoration: TextDecoration.underline,
+                  decorationColor: AppColors.primaryColor,
                 ),
               ),
             ),

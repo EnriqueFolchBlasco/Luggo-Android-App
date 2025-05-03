@@ -38,11 +38,11 @@
   "notificationSettings": "Notification Preferences",
   "securitySettings": "Security & Login",
 
-  "welcomeLuggo": "Welcome to Luggo!",
+  "welcomeLuggo": "¡WE WELCOME YOU!",
   "email": "Email",
   "password": "Password",
   "forgotPassword": "Forgot password?",
-  "login": "Login",
+  "login": "LOGIN",
   "register": "Register",
   "noAccount": "Don't have an account?",
   "errorEmptyFields": "Please enter both email and password.",
@@ -149,7 +149,8 @@
   "atLeastOneCategoryMustExist": "At least one category must exist.",
   "cannotDeleteCategoryInUse": "This category is used by one or more items and cannot be deleted.",
   "ok": "OK",
-  "addNewTab": "Afegir nova categoria"
+  "addNewTab": "Afegir nova categoria",
+  "editMode": "EDIT MODE"
 
 
 }

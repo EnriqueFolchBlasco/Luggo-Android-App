@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +20,12 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
   late TextEditingController _nombreCtrl;
   late TextEditingController _origenCtrl;
   late TextEditingController _destinoCtrl;
-  final TextEditingController _newTabController = TextEditingController();
-  List<String> _tabs = [];
+  final TextEditingController _controlladorCategoriaNova = TextEditingController();
+  List<String> _categories = [];
   String _estado = 'Planificada';
   int _itemsCount = 0;
   Timer? _seHaActualizado;
+  bool _antiNoCarregat = false;
 
   @override
   void initState() {
@@ -35,20 +35,25 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
 
   Future<void> _loadMudanzaActualizada() async {
     final db = await DatabaseService.getDatabase();
-    final refreshed = await db.mudanzaDao.obtenerPorId(widget.mudanza.mudanzaId!);
+    final refreshed = await db.mudanzaDao.obtenerPorId(
+      widget.mudanza.mudanzaId!,
+    );
 
-    setState(() {
-      _nombreCtrl = TextEditingController(text: refreshed!.nombre);
-      _origenCtrl = TextEditingController(text: refreshed.direccionOrigen);
-      _destinoCtrl = TextEditingController(text: refreshed.direccionDestino);
-      _estado = refreshed.estado;
-      _tabs = refreshed.tabs?.split('|') ?? [];
-    });
+    _nombreCtrl = TextEditingController(text: refreshed!.nombre);
+    _origenCtrl = TextEditingController(text: refreshed.direccionOrigen);
+    _destinoCtrl = TextEditingController(text: refreshed.direccionDestino);
+    _estado = refreshed.estado;
+    _categories = refreshed.tabs?.split('|') ?? [];
 
     _nombreCtrl.addListener(_autoGuardado);
     _origenCtrl.addListener(_autoGuardado);
     _destinoCtrl.addListener(_autoGuardado);
-    _cantidadItems();
+
+    await _cantidadItems();
+
+    setState(() {
+      _antiNoCarregat = true;
+    });
   }
 
   Future<void> _cantidadItems() async {
@@ -63,42 +68,47 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
 
   void _autoGuardado() {
     _seHaActualizado?.cancel();
-    _seHaActualizado = Timer(const Duration(seconds: 1), () async {
-      final db = await DatabaseService.getDatabase();
-      final updated = Mudanza(
-        mudanzaId: widget.mudanza.mudanzaId,
-        userId: widget.mudanza.userId,
-        nombre: _nombreCtrl.text.trim(),
-        fecha: widget.mudanza.fecha,
-        direccionOrigen: _origenCtrl.text.trim(),
-        direccionDestino: _destinoCtrl.text.trim(),
-        estado: _estado,
-        notas: widget.mudanza.notas,
-        createdAt: widget.mudanza.createdAt,
-        updatedAt: DateTime.now().toIso8601String(),
-        isArchived: widget.mudanza.isArchived,
-        tabs: _tabs.join('|'),
-      );
-      await db.mudanzaDao.actualizar(updated);
-    });
+    _seHaActualizado = Timer(const Duration(seconds: 1), _guardarEstadoActual);
+  }
+
+  Future<void> _guardarEstadoActual() async {
+    final db = await DatabaseService.getDatabase();
+
+    final updated = Mudanza(
+      mudanzaId: widget.mudanza.mudanzaId,
+      userId: widget.mudanza.userId,
+      nombre: _nombreCtrl.text.trim(),
+      fecha: widget.mudanza.fecha,
+      direccionOrigen: _origenCtrl.text.trim(),
+      direccionDestino: _destinoCtrl.text.trim(),
+      estado: _estado,
+      notas: widget.mudanza.notas,
+      createdAt: widget.mudanza.createdAt,
+      updatedAt: DateTime.now().toIso8601String(),
+      isArchived: widget.mudanza.isArchived,
+      tabs: _categories.join('|'),
+    );
+
+
+    await db.mudanzaDao.actualizar(updated);
   }
 
   @override
   void dispose() {
+
     _seHaActualizado?.cancel();
     _nombreCtrl.dispose();
     _origenCtrl.dispose();
     _destinoCtrl.dispose();
-    _newTabController.dispose();
+    _controlladorCategoriaNova.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_tabs.isEmpty && _nombreCtrl.text.isEmpty) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+
+    if (!_antiNoCarregat) { //antipetada gastronomica
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
@@ -111,12 +121,14 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
           padding: const EdgeInsets.only(left: 18),
           icon: const Icon(Icons.menu),
           iconSize: 36,
+
           onPressed: () async {
             final result = await Navigator.of(context).push(
               PageRouteBuilder(
                 opaque: false,
                 pageBuilder: (_, __, ___) => const SideBarScreen(),
                 transitionsBuilder: (_, animation, __, child) {
+
                   return SlideTransition(
                     position: Tween<Offset>(
                       begin: const Offset(-1.0, 0.0),
@@ -124,9 +136,11 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
                     ).animate(animation),
                     child: child,
                   );
+
                 },
               ),
             );
+
             if (result == true) {
               setState(() {});
             }
@@ -144,6 +158,7 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
           ],
         ),
       ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -173,7 +188,7 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
                 const SizedBox(height: 12),
                 Center(
                   child: Text(
-                    'Modo edición'.tr(),
+                    'editMode'.tr(),
                     style: const TextStyle(
                       fontFamily: 'clashDisplay',
                       color: AppColors.primaryColor,
@@ -209,12 +224,15 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
                   _autoGuardado();
                 }
               },
-              items: ['Planificada', 'En curso', 'Completada']
-                  .map((estado) => DropdownMenuItem(
-                        value: estado,
-                        child: Text(estado.tr()),
-                      ))
-                  .toList(),
+              items:
+                  ['Planificada', 'En curso', 'Completada']
+                      .map(
+                        (estado) => DropdownMenuItem(
+                          value: estado,
+                          child: Text(estado.tr()),
+                        ),
+                      )
+                      .toList(),
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
@@ -243,74 +261,84 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
             const SizedBox(height: 24),
             LuggoLabel('tabs'.tr()),
             Wrap(
-  spacing: 8,
-  children: _tabs.map((tab) {
-    return Chip(
-      label: Text(tab),
-      deleteIcon: const Icon(Icons.close),
-      onDeleted: () async {
-        final db = await DatabaseService.getDatabase();
+              spacing: 8,
+              children:
+                  _categories.map((tab) {
+                    return Chip(
+                      label: Text(tab),
+                      deleteIcon: const Icon(Icons.close),
+                      onDeleted: () async {
+                        final db = await DatabaseService.getDatabase();
 
-        if (_tabs.length <= 1) {
-          showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-              title: Text('warning'.tr()),
-              content: Text('atLeastOneCategoryMustExist'.tr()),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text('ok'.tr()),
-                ),
-              ],
+                        if (_categories.length <= 1) {
+                          showDialog(
+                            context: context,
+                            builder:
+                                (_) => AlertDialog(
+                                  title: Text('warning'.tr()),
+                                  content: Text(
+                                    'atLeastOneCategoryMustExist'.tr(),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: Text('ok'.tr()),
+                                    ),
+                                  ],
+                                ),
+                          );
+                          return;
+                        }
+
+                        final isUsed = await db.inventarioDao
+                            .existeItemConCategoria(
+                              widget.mudanza.mudanzaId!,
+                              tab,
+                            );
+
+                        if (isUsed == true) {
+                          showDialog(
+                            context: context,
+                            builder:
+                                (_) => AlertDialog(
+                                  title: Text('warning'.tr()),
+                                  content: Text(
+                                    'cannotDeleteCategoryInUse'.tr(),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: Text('ok'.tr()),
+                                    ),
+                                  ],
+                                ),
+                          );
+                          return;
+                        }
+
+                        setState(() {
+                          _categories.remove(tab);
+                        });
+                        await _guardarEstadoActual();
+                      },
+                    );
+                  }).toList(),
             ),
-          );
-          return;
-        }
-
-        final isUsed = await db.inventarioDao.existeItemConCategoria(
-          widget.mudanza.mudanzaId!,
-          tab,
-        );
-
-        if (isUsed == true) {
-          showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-              title: Text('warning'.tr()),
-              content: Text('cannotDeleteCategoryInUse'.tr()),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text('ok'.tr()),
-                ),
-              ],
-            ),
-          );
-          return;
-        }
-
-        setState(() {
-          _tabs.remove(tab);
-        });
-        _autoGuardado();
-      },
-    );
-  }).toList(),
-),
 
             const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
                   child: TextField(
-                    controller: _newTabController,
+                    controller: _controlladorCategoriaNova,
                     decoration: InputDecoration(
                       hintText: 'addNewTab'.tr(),
                       filled: true,
                       fillColor: Colors.white,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(34),
                         borderSide: BorderSide(color: Colors.grey.shade300),
@@ -324,13 +352,14 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
                     shape: const StadiumBorder(),
                     backgroundColor: AppColors.primaryColor,
                   ),
-                  onPressed: () {
-                    final newTab = _newTabController.text.trim();
-                    if (newTab.isNotEmpty && !_tabs.contains(newTab)) {
+                  onPressed: () async {
+                    final newTab = _controlladorCategoriaNova.text.trim();
+                    if (newTab.isNotEmpty && !_categories.contains(newTab)) {
                       setState(() {
-                        _tabs.add(newTab);
-                        _newTabController.clear();
+                        _categories.add(newTab);
+                        _controlladorCategoriaNova.clear();
                       });
+                      await _guardarEstadoActual();
                       _autoGuardado();
                     }
                   },

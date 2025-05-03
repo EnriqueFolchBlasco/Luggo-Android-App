@@ -23,7 +23,7 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(30),
         border: Border.all(color: Colors.black),
       ),
@@ -36,7 +36,7 @@ class CustomTextField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(
-              color: AppColors.primaryColor.withOpacity(0.6),
+              color: AppColors.primaryColor.withOpacity(0.4)
             ),
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -45,8 +45,8 @@ class CustomTextField extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white,
-                  border: Border.all(color: Colors.black),
+                  color: AppColors.primaryColor.withOpacity(0.2),
+                  //rgba(186, 208, 241, 0.41)
                 ),
                 padding: const EdgeInsets.all(6),
                 child: Icon(icon, color: Colors.black, size: 20),

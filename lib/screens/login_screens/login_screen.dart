@@ -104,17 +104,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: const TextStyle(
                   fontFamily: 'ClashDisplay',
                   fontSize: 62,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   color: AppColors.primaryColor,
                   letterSpacing: 2,
+                  height: 1.2,
                 ),
               ),
+              
               Text(
                 ('welcomeLuggo').tr(),
                 style: const TextStyle(
                   fontFamily: 'Helvetica',
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w400,
                   color: Colors.black87,
                 ),
                 textAlign: TextAlign.center,
@@ -176,7 +178,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
               const SizedBox(height: 8),
 
-              // Login Button
               ElevatedButton(
                 onPressed: _login,
                 style: ElevatedButton.styleFrom(
@@ -197,7 +198,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
-              // Register Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -226,13 +226,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: AppColors.primaryColor.withOpacity(0.8),
                             fontWeight: FontWeight.bold,
                             decoration: TextDecoration.underline,
+                            decorationColor: AppColors.primaryColor,
                           ),
                         ),
                         const SizedBox(width: 4),
-                        Icon(
-                          Icons.arrow_forward,
-                          size: 16,
-                          color: AppColors.primaryColor.withOpacity(0.8),
+                        
+                        Container(
+                          width: 17,
+                          height: 17,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: AppColors.primaryColor),
+                          ),
+                          child: Icon(Icons.arrow_forward,
+                          size: 12,
+                          color: AppColors.primaryColor.withOpacity(0.8),),
                         ),
                       ],
                     ),

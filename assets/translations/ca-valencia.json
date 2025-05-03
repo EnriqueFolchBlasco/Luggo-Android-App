@@ -31,11 +31,11 @@
   "settingsIntro": "Personalitza la teua experiència amb Luggo a continuació.",
   "notificationSettings": "Preferències de notificació",
   "securitySettings": "Seguretat i inici de sessió",
-  "welcomeLuggo": "Benvingut a Luggo!",
+  "welcomeLuggo": "¡ET DONEM LA BENVINGUDA!",
   "email": "Correu electrònic",
   "password": "Contrasenya",
   "forgotPassword": "Has oblidat la contrasenya?",
-  "login": "Inicia sessió",
+  "login": "INICIA SESSIÓ",
   "register": "Registra't",
   "noAccount": "Encara no tens compte?",
   "errorEmptyFields": "Per favor, escriu el correu i la contrasenya.",
@@ -117,6 +117,7 @@
   "atLeastOneCategoryMustExist": "Almenys una categoria ha de existir.",
   "cannotDeleteCategoryInUse": "No es pot eliminar una categoria en ús.",
   "ok": "D'acord",
-  "addNewTab": "Afegir nova categoria"
+  "addNewTab": "Afegir nova categoria",
+  "editMode": "MODE D'EDICIÓ"
 
 }
