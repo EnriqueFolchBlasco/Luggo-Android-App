@@ -155,7 +155,9 @@
   "addItem": "Add Item",
   "enterName": "Enter item name",
   "save": "Save",
-  "notasTexto": "Write your notes here..."
+  "notasTexto": "Write your notes here...",
+  "newCategory": "New category",
+  "categoryName": "Category name"
 
 
 }

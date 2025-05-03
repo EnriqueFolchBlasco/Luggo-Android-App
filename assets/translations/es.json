@@ -123,6 +123,8 @@
   "addItem": "Añadir artículo",
   "enterName": "Nombre del artículo",
   "save": "Guardar",
-  "notasTexto": "Escribe tus notas aquí..."
+  "notasTexto": "Escribe tus notas aquí...",
+  "newCategory": "Nueva categoría",
+  "categoryName": "Nombre de la categoría"
 
 }

@@ -280,6 +280,16 @@ class _$MudanzaDao extends MudanzaDao {
   }
 
   @override
+  Future<void> actualizarTabs(
+    int id,
+    String tabs,
+  ) async {
+    await _queryAdapter.queryNoReturn(
+        'UPDATE Mudanza SET tabs = ?2 WHERE mudanzaId = ?1',
+        arguments: [id, tabs]);
+  }
+
+  @override
   Future<void> insertar(Mudanza mudanza) async {
     await _mudanzaInsertionAdapter.insert(mudanza, OnConflictStrategy.abort);
   }

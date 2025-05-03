@@ -25,6 +25,10 @@ abstract class MudanzaDao {
   @update
   Future<void> actualizar(Mudanza mudanza);
 
+  @Query('UPDATE Mudanza SET tabs = :tabs WHERE mudanzaId = :id')
+  Future<void> actualizarTabs(int id, String tabs);
+
+
 
 
 }

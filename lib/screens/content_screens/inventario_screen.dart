@@ -5,6 +5,8 @@ import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/custom_form_widgets.dart';
+import 'package:luggo/utils/modal_nueva_categoria.dart';
+import 'package:luggo/utils/modal_nuevo_item.dart';
 
 class InventarioScreen extends StatefulWidget {
   final int idMudanza;
@@ -27,6 +29,59 @@ class _InventarioScreenState extends State<InventarioScreen>
     super.initState();
     _cargarCategorias();
   }
+
+  List<Tab> getTabs() {
+
+    List<Tab> llistaCompleta = [];
+
+    for (var x in categorias) {
+      llistaCompleta.add(
+        Tab(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(x["nombre"]),
+                const SizedBox(width: 6),
+                CircleAvatar(
+                  radius: 10,
+                  backgroundColor: const Color(0xFF0066FF),
+                  child: Text(
+                    '${x["cantidad"]}',
+                    style: const TextStyle(
+                      fontSize: 10,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    llistaCompleta.add( //ANTI EFECTO per al plus
+      Tab(
+        child: GestureDetector(
+          onTap: () {
+            if (_controladorTabs != null) {
+              _controladorTabs!.index = _selectedTabIndex;
+              _mostrarDialogoCrearCategoria();
+            }
+          },
+          behavior: HitTestBehavior.opaque,
+          child: 
+            Icon(Icons.add, color: AppColors.primaryColor),
+          
+        ),
+      ),
+    );
+
+    return llistaCompleta;
+  }
+
 
   Future<void> _cargarCategorias() async {
     try {
@@ -55,16 +110,31 @@ class _InventarioScreenState extends State<InventarioScreen>
       setState(() {
         categorias = llistaCategoriesTemproals;
         if (categorias.isNotEmpty) {
+          
           _controladorTabs = TabController(
-            length: categorias.length,
+            length: categorias.length + 1,
             vsync: this,
-            initialIndex: _selectedTabIndex < categorias.length ? _selectedTabIndex : 0,
+            initialIndex: _selectedTabIndex < categorias.length + 1 ? _selectedTabIndex : 0,
           );
 
           _controladorTabs!.addListener(() {
-            if (!_controladorTabs!.indexIsChanging) {
+            final index = _controladorTabs!.index;
+
+            if (!_controladorTabs!.indexIsChanging &&
+                index == categorias.length) {
+              //ANTI PLUS EFECTE
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                _controladorTabs!.animateTo(_selectedTabIndex);
+              });
+
+              _mostrarDialogoCrearCategoria();
+              return;
+            }
+
+            if (!_controladorTabs!.indexIsChanging &&
+                index < categorias.length) {
               setState(() {
-                _selectedTabIndex = _controladorTabs!.index;
+                _selectedTabIndex = index;
               });
             }
           });
@@ -99,7 +169,7 @@ class _InventarioScreenState extends State<InventarioScreen>
           icon: const Icon(Icons.menu),
           iconSize: 36,
           onPressed: () async {
-            final result = await Navigator.of(context).push(
+            final llistaCompleta = await Navigator.of(context).push(
               PageRouteBuilder(
                 opaque: false,
                 pageBuilder: (_, __, ___) => const SideBarScreen(),
@@ -114,7 +184,7 @@ class _InventarioScreenState extends State<InventarioScreen>
                 },
               ),
             );
-            if (result == true) setState(() {});
+            if (llistaCompleta == true) setState(() {});
           },
         ),
         title: Row(
@@ -176,32 +246,9 @@ class _InventarioScreenState extends State<InventarioScreen>
             ),
             labelColor: Colors.black,
             unselectedLabelColor: Colors.grey.shade500,
-            tabs: categorias.map((x) {
-              return Tab(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(x["nombre"]),
-                      const SizedBox(width: 6),
-                      CircleAvatar(
-                        radius: 10,
-                        backgroundColor: const Color(0xFF0066FF),
-                        child: Text(
-                          '${x["cantidad"]}',
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }).toList(),
+            tabs: getTabs(),
           ),
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
@@ -209,37 +256,41 @@ class _InventarioScreenState extends State<InventarioScreen>
             ),
           ),
           Expanded(
-            child: TabBarView(
-              controller: _controladorTabs,
-              children: categorias.map((i) {
-                final items = List<String>.from(i["items"]);
-                return ListView.builder(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 10,
-                  ),
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    return _crearItem(items[index]);
-                  },
-                );
-              }).toList(),
-            ),
-          ),
+  child: TabBarView(
+    controller: _controladorTabs,
+    physics: const ClampingScrollPhysics(),
+    children: [
+      ...categorias.map((i) {
+        return ListView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          itemCount: i["items"].length,
+          itemBuilder: (context, index) {
+            return _crearItem(i["items"][index]);
+          },
+        );
+      }).toList(),
+      const SizedBox(),
+    ],
+  ),
+),
+
+
         ],
       ),
       floatingActionButton: FloatingActionButton(
-
         onPressed: () {
-          final currentCategoria = categorias[_selectedTabIndex]["nombre"];
-          _mostrarDialogoAgregarItem(currentCategoria);
+          if (_selectedTabIndex < categorias.length) {
+            final currentCategoria = categorias[_selectedTabIndex]["nombre"];
+            _mostrarDialogoAgregarItem(currentCategoria);
+          }
         },
-
         backgroundColor: AppColors.primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
         child: const Icon(Icons.add, color: Colors.white),
       ),
-    );
+
+
+    );  
   }
 
   Widget _crearFiltro(String texto) {
@@ -280,128 +331,60 @@ class _InventarioScreenState extends State<InventarioScreen>
     );
   }
 
-  void _mostrarDialogoAgregarItem(String initialCategoria) {
-    final nombreCtrl = TextEditingController();
-    final pesoCtrl = TextEditingController();
+  void _mostrarDialogoAgregarItem(String categoriaInicial) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+    ),
+    builder: (context) {
+      return ModalNuevoItem(
+        idMudanza: widget.idMudanza,
+        categorias: categorias,
+        categoriaActual: categoriaInicial,
+        onItemGuardado: () async {
+          await _cargarCategorias();
+        },
+      );
+    },
+  );
+}
 
-    showDialog(
+
+
+
+
+
+  void _mostrarDialogoCrearCategoria() {
+    showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
+      
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
       builder: (context) {
-        String categoriaSeleccionada = initialCategoria;
-
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          backgroundColor: Colors.white,
-          titlePadding: const EdgeInsets.only(top: 24),
-          title: Text(
-            'addItem'.tr(),
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: AppColors.primaryColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                LuggoTextField(controller: nombreCtrl, hint: 'enterName'.tr()),
-                Padding(
-                  padding: EdgeInsets.zero,
-                  child: DropdownButtonFormField<String>(
-                    value: categoriaSeleccionada,
-                    onChanged: (value) {
-                      if (value != null) categoriaSeleccionada = value;
-                    },
-                    items: categorias.map((x) {
-                      return DropdownMenuItem<String>(
-                        value: x["nombre"],
-                        child: Text(
-                          x["nombre"],
-                          style: const TextStyle(
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(34),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(34),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(34),
-                        borderSide: const BorderSide(
-                          color: AppColors.primaryColor,
-                          width: 1.5,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actionsPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 10,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                'cancel'.tr(),
-                style: const TextStyle(color: Colors.black54),
-              ),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              onPressed: () async {
-                final db = await DatabaseService.getDatabase();
-
-                await db.itemDao.insertarItem(
-                  Item(
-                    mudanzaId: widget.idMudanza,
-                    nombre: nombreCtrl.text.trim(),
-                    peso: double.tryParse(pesoCtrl.text.trim()) ?? 0.0,
-                    gotIt: false,
-                    categoria: categoriaSeleccionada,
-                    estado: 'UNREADY',
-                  ),
-                );
-
-                Navigator.pop(context);
-                await _cargarCategorias();
-              },
-              child: Text(
-                'save'.tr(),
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
+        return ModalNuevaCategoria(
+          
+          idMudanza: widget.idMudanza,
+          onCategoriaCreada: () async {
+            await _cargarCategorias();
+            setState(() {
+              final newIndex = categorias.length - 1;
+              _selectedTabIndex = newIndex;
+              _controladorTabs?.animateTo(newIndex);
+            });
+          },
         );
       },
     );
   }
+
+
+  
+
+
 
   Widget _crearItem(String nombreItem) {
     return GestureDetector(
