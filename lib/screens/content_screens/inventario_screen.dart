@@ -184,7 +184,10 @@ class _InventarioScreenState extends State<InventarioScreen>
                 },
               ),
             );
-            if (llistaCompleta == true) setState(() {});
+
+            if (llistaCompleta == true) {
+              setState(() {});
+            }
           },
         ),
         title: Row(
@@ -256,37 +259,42 @@ class _InventarioScreenState extends State<InventarioScreen>
             ),
           ),
           Expanded(
-  child: TabBarView(
-    controller: _controladorTabs,
-    physics: const ClampingScrollPhysics(),
-    children: [
-      ...categorias.map((i) {
-        return ListView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          itemCount: i["items"].length,
-          itemBuilder: (context, index) {
-            return _crearItem(i["items"][index]);
-          },
-        );
-      }).toList(),
-      const SizedBox(),
-    ],
-  ),
-),
-
-
+            child: TabBarView(
+              controller: _controladorTabs,
+              physics: const ClampingScrollPhysics(),
+              children: [
+                ...categorias.map((i) {
+                  return ListView.builder(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    itemCount: i["items"].length,
+                    itemBuilder: (context, index) {
+                      return _crearItem(i["items"][index]);
+                    },
+                  );
+                }).toList(),
+                const SizedBox(),
+              ],
+            ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (_selectedTabIndex < categorias.length) {
-            final currentCategoria = categorias[_selectedTabIndex]["nombre"];
-            _mostrarDialogoAgregarItem(currentCategoria);
-          }
-        },
         backgroundColor: AppColors.primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
         child: const Icon(Icons.add, color: Colors.white),
+        onPressed: () {
+
+          if (_selectedTabIndex < categorias.length) {
+
+            final currentCategoria = categorias[_selectedTabIndex]["nombre"];
+            _mostrarDialogoAgregarItem(currentCategoria);
+          }
+
+        },
+
       ),
 
 
@@ -296,7 +304,7 @@ class _InventarioScreenState extends State<InventarioScreen>
   Widget _crearFiltro(String texto) {
     return GestureDetector(
       onTap: () {
-        print('filtro: \$texto');
+        print('filtro');
       },
       child: Container(
         margin: const EdgeInsets.only(right: 10),
@@ -332,48 +340,40 @@ class _InventarioScreenState extends State<InventarioScreen>
   }
 
   void _mostrarDialogoAgregarItem(String categoriaInicial) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-    ),
-    builder: (context) {
-      return ModalNuevoItem(
-        idMudanza: widget.idMudanza,
-        categorias: categorias,
-        categoriaActual: categoriaInicial,
-        onItemGuardado: () async {
-          await _cargarCategorias();
-        },
-      );
-    },
-  );
-}
-
-
-
-
-
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) {
+        return ModalNuevoItem(idMudanza: widget.idMudanza, categorias: categorias, categoriaActual: categoriaInicial,
+          onItemGuardado: () async {
+            await _cargarCategorias();
+          },
+        );
+      },
+    );
+  } 
 
   void _mostrarDialogoCrearCategoria() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
+
       builder: (context) {
-        return ModalNuevaCategoria(
-          
-          idMudanza: widget.idMudanza,
+        return ModalNuevaCategoria(idMudanza: widget.idMudanza,
           onCategoriaCreada: () async {
             await _cargarCategorias();
             setState(() {
+
               final newIndex = categorias.length - 1;
               _selectedTabIndex = newIndex;
               _controladorTabs?.animateTo(newIndex);
+              
             });
           },
         );
