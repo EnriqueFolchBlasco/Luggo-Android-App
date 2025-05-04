@@ -188,13 +188,9 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
-            Spacer(),
-            Image.asset(
-              'assets/images/LuggoColor_noBackground.png',
-              height: 30,
-            ),
-            Spacer(),
+            Spacer(flex: 3),
+            Image.asset('assets/images/LuggoColor_noBackground.png', height: 30),
+            Spacer(flex: 2),
           ],
         ),
         actions: [

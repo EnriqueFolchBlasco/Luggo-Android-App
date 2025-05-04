@@ -157,7 +157,16 @@
   "save": "Save",
   "notasTexto": "Write your notes here...",
   "newCategory": "New category",
-  "categoryName": "Category name"
+  "categoryName": "Category name",
+  "items": "items",
+  "mudanza": "Move ",
+  "moveNameSingleWord": "Please enter only one word (no spaces)",
+  "chooseBackground": "Choose a background"
+
+
+
+
+
 
 
 }

@@ -30,28 +30,29 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
 
   Future<void> guardarMudanza() async {
     final nombre = controlNombre.text.trim();
+    final nomPrimMayus = nombre[0].toUpperCase() + (nombre.length > 1 ? nombre.substring(1).toLowerCase() : '');
     final origen = controlOrigen.text.trim();
     final destino = controlDestino.text.trim();
 
-    if (nombre.isEmpty || origen.isEmpty || destino.isEmpty) {
-      // TO DO
+
+    final regularUnaParaulaSoles = RegExp(r'^\S+$');
+
+    if (nombre.isEmpty || !regularUnaParaulaSoles.hasMatch(nombre)) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('moveNameSingleWord'.tr())));
       return;
     }
 
     final prefs = await SharedPreferences.getInstance();
     final db = await DatabaseService.getDatabase();
 
-    final defaultTabs = [
-      'kitchen',
-      'diningRoom',
-      'bathroom',
-    ];
-    
+    final defaultTabs = ['kitchen', 'diningRoom', 'bathroom'];
     final tabsString = defaultTabs.map((key) => key.tr()).join('|');
 
     final nuevaMudanza = Mudanza(
       userId: prefs.getString('userUID') ?? '',
-      nombre: nombre,
+      nombre: nomPrimMayus,
       fecha: DateFormat('yyyy-MM-dd').format(DateTime.now()),
       direccionOrigen: origen,
       direccionDestino: destino,
@@ -62,11 +63,14 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
       updatedAt: null,
       isArchived: false,
       tabs: tabsString,
+      imatge: 'assets/images/Luggo_Baseline Color 1.png',
+
     );
 
     await db.mudanzaDao.insertar(nuevaMudanza);
     Navigator.pop(context, true);
   }
+
 
   @override
   Widget build(BuildContext context) {

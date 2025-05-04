@@ -125,6 +125,15 @@
   "save": "Guardar",
   "notasTexto": "Escribe tus notas aquí...",
   "newCategory": "Nueva categoría",
-  "categoryName": "Nombre de la categoría"
+  "categoryName": "Nombre de la categoría",
+  "items": "artículos",
+  "mudanza": "Mudanza ",
+  "moveNameSingleWord": "Por favor, introduce solo una palabra (sin espacios)",
+  "chooseBackground": "Elige un fondo"
+
+
+
+
+
 
 }

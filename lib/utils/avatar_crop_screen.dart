@@ -81,7 +81,7 @@ class _AvatarCropScreenState extends State<AvatarCropScreen> {
                   ),
                   elevation: 4,
                 ),
-                onPressed: _cropImage,
+                onPressed: _retallarImatge,
                 child: Text(
                   'cropUpload'.tr(),
                   style: const TextStyle(
@@ -100,19 +100,26 @@ class _AvatarCropScreenState extends State<AvatarCropScreen> {
     );
   }
 
-  Future<void> _cropImage() async {
+  Future<void> _retallarImatge() async {
     try {
+      // declaras els borders y retalles
+      //print('entra');
+
       final boundary = _cropKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
       final image = await boundary.toImage(pixelRatio: 3.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final Uint8List bytes = byteData!.buffer.asUint8List();
+      //print('encara no peta');
 
       widget.onCropped(bytes);
-      if (mounted) Navigator.pop(context);
+
+      if (mounted){
+        Navigator.pop(context);
+      } 
+      
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Error cropping avatar')),
-      );
+      print('acurrucate palomo no va');
+
     }
   }
 }

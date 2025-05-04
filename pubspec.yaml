@@ -52,6 +52,8 @@ flutter:
     - assets/images/Luggo_Baseline Color.png
     - assets/images/Luggo_Baseline2.PNG
     - assets/images/LuggoColor_noBackground.png
+    - assets/images/mudanza_background1.png
+    - assets/images/mudanza_background2.png
     - assets/translations/
     - assets/flags/
     - assets/flags/valencian.png

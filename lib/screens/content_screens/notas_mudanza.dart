@@ -56,6 +56,7 @@ class _NotasMudanzaScreenState extends State<NotasMudanzaScreen> {
         updatedAt: DateTime.now().toIso8601String(),
         notas: _controller.text,
         isArchived: _mudanza.isArchived,
+        imatge: _mudanza.imatge,
       );
 
       await db.mudanzaDao.actualizar(updated);

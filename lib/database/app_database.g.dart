@@ -104,7 +104,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Mudanza` (`mudanzaId` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` TEXT NOT NULL, `fecha` TEXT NOT NULL, `nombre` TEXT NOT NULL, `direccionOrigen` TEXT NOT NULL, `direccionDestino` TEXT NOT NULL, `estado` TEXT NOT NULL, `notas` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT, `isArchived` INTEGER NOT NULL, `tabs` TEXT)');
+            'CREATE TABLE IF NOT EXISTS `Mudanza` (`mudanzaId` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` TEXT NOT NULL, `fecha` TEXT NOT NULL, `nombre` TEXT NOT NULL, `direccionOrigen` TEXT NOT NULL, `direccionDestino` TEXT NOT NULL, `estado` TEXT NOT NULL, `notas` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT, `isArchived` INTEGER NOT NULL, `imatge` TEXT NOT NULL, `tabs` TEXT)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Item` (`itemId` INTEGER PRIMARY KEY AUTOINCREMENT, `mudanzaId` INTEGER NOT NULL, `nombre` TEXT NOT NULL, `peso` REAL, `foto` TEXT, `descripcion` TEXT, `gotIt` INTEGER NOT NULL, `categoria` TEXT, `estado` TEXT)');
         await database.execute(
@@ -166,6 +166,7 @@ class _$MudanzaDao extends MudanzaDao {
                   'createdAt': item.createdAt,
                   'updatedAt': item.updatedAt,
                   'isArchived': item.isArchived ? 1 : 0,
+                  'imatge': item.imatge,
                   'tabs': item.tabs
                 }),
         _mudanzaUpdateAdapter = UpdateAdapter(
@@ -184,6 +185,7 @@ class _$MudanzaDao extends MudanzaDao {
                   'createdAt': item.createdAt,
                   'updatedAt': item.updatedAt,
                   'isArchived': item.isArchived ? 1 : 0,
+                  'imatge': item.imatge,
                   'tabs': item.tabs
                 }),
         _mudanzaDeletionAdapter = DeletionAdapter(
@@ -202,6 +204,7 @@ class _$MudanzaDao extends MudanzaDao {
                   'createdAt': item.createdAt,
                   'updatedAt': item.updatedAt,
                   'isArchived': item.isArchived ? 1 : 0,
+                  'imatge': item.imatge,
                   'tabs': item.tabs
                 });
 
@@ -230,6 +233,7 @@ class _$MudanzaDao extends MudanzaDao {
             estado: row['estado'] as String,
             createdAt: row['createdAt'] as String,
             notas: row['notas'] as String,
+            imatge: row['imatge'] as String,
             updatedAt: row['updatedAt'] as String?,
             isArchived: (row['isArchived'] as int) != 0,
             tabs: row['tabs'] as String?));
@@ -248,6 +252,7 @@ class _$MudanzaDao extends MudanzaDao {
             estado: row['estado'] as String,
             createdAt: row['createdAt'] as String,
             notas: row['notas'] as String,
+            imatge: row['imatge'] as String,
             updatedAt: row['updatedAt'] as String?,
             isArchived: (row['isArchived'] as int) != 0,
             tabs: row['tabs'] as String?));
@@ -266,6 +271,7 @@ class _$MudanzaDao extends MudanzaDao {
             estado: row['estado'] as String,
             createdAt: row['createdAt'] as String,
             notas: row['notas'] as String,
+            imatge: row['imatge'] as String,
             updatedAt: row['updatedAt'] as String?,
             isArchived: (row['isArchived'] as int) != 0,
             tabs: row['tabs'] as String?),

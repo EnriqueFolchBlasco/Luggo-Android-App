@@ -34,7 +34,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void loadUserData() async {
     final data = await _prefsService.getOfflineUserData();
-    if (data == null) return;
+    if (data == null){
+      return;
+    }
 
     final prefs = await SharedPreferences.getInstance();
     String? imageUrl = prefs.getString('profileImageUrl');
@@ -49,7 +51,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         if (imageUrl != null && imageUrl.isNotEmpty) {
           await prefs.setString('profileImageUrl', imageUrl);
         }
-      } catch (_) {}
+      } catch (_) {
+        print('petadon');
+      }
     }
 
     final connectivity = await Connectivity().checkConnectivity();
@@ -58,10 +62,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       _username = data['username'] ?? '';
       _email = data['email'] ?? '';
-      _networkImageUrl =
-          (hasInternet && imageUrl != null && imageUrl.isNotEmpty)
-              ? imageUrl
-              : null;
+      _networkImageUrl = (hasInternet && imageUrl != null && imageUrl.isNotEmpty) ? imageUrl : null;
+
     });
   }
 
@@ -167,6 +169,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: TextStyle(color: Colors.grey, fontSize: 15),
                     ),
                     const SizedBox(height: 32),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: Colors.grey.shade300,
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              _buildGridCell('Followers', 1, rightBorder: true),
+                              _buildGridCell('Mudanzas', 2),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -177,34 +198,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-
-Future<void> pickImage() async {
-  final pickedFile = await ImagePicker().pickImage(
-    source: ImageSource.gallery,
-    imageQuality: 85,
-  );
-
-  if (pickedFile != null) {
-    final imageFile = File(pickedFile.path);
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => AvatarCropScreen(
-          imageFile: imageFile,
-          onCropped: (Uint8List croppedData) async {
-            final tempDir = Directory.systemTemp;
-            final file = await File('${tempDir.path}/avatar_cropped.png').writeAsBytes(croppedData);
-            await uploadProfileImage(file);
-          },
+  // datoCurioso {} = optional parameter !!!
+  Widget _buildGridCell(String label, int count, {bool rightBorder = false}) {
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        decoration: BoxDecoration(
+          border: Border(
+            right:
+                rightBorder ? BorderSide(color: Colors.grey.shade300, width: 1) : BorderSide.none,
+          ),
+        ),
+        child: Column(
+          children: [
+            Text(
+              count.toString(),
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 14, color: Colors.grey),
+            ),
+          ],
         ),
       ),
     );
   }
-}
 
 
-  
+  Future<void> pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 85,
+    );
 
+    if (pickedFile != null) {
+      final imageFile = File(pickedFile.path);
 
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder:
+              (_) => AvatarCropScreen(
+                imageFile: imageFile,
+                onCropped: (Uint8List croppedData) async {
+                  final tempDir = Directory.systemTemp;
+                  final file = await File(
+                    '${tempDir.path}/avatar_cropped.png',
+                  ).writeAsBytes(croppedData);
+                  await uploadProfileImage(file);
+                },
+              ),
+        ),
+      );
+    }
+  }
 }

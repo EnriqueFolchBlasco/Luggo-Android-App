@@ -125,6 +125,11 @@
   "save": "Guardar",
   "notasTexto": "Escriu les teues notes ací...",
   "newCategory": "Nova categoria",
-  "categoryName": "Nom de la categoria"
+  "categoryName": "Nom de la categoria",
+  "items": "articles",
+  "mudanza": "Mudança ",
+  "moveNameSingleWord": "Per favor, escriu només una paraula (sense espais)",
+  "chooseBackground": "Tria un fons"
+
 
 }

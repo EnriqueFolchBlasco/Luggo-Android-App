@@ -17,15 +17,21 @@ class EditarMudanzaScreen extends StatefulWidget {
 }
 
 class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
+
   late TextEditingController _nombreCtrl;
   late TextEditingController _origenCtrl;
   late TextEditingController _destinoCtrl;
   final TextEditingController _controlladorCategoriaNova = TextEditingController();
+
   List<String> _categories = [];
+  final List<String> _imageOptions = [ 'assets/images/Luggo_Baseline Color 1_2.png', 'assets/images/mudanza_background1.png', 'assets/images/mudanza_background2.png', 'assets/images/Luggo_Baseline Color.png'];
+
   String _estado = 'Planificada';
   int _itemsCount = 0;
+
   Timer? _seHaActualizado;
   bool _antiNoCarregat = false;
+  late Mudanza mudanza;
 
   @override
   void initState() {
@@ -34,10 +40,15 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
   }
 
   Future<void> _loadMudanzaActualizada() async {
+
     final db = await DatabaseService.getDatabase();
+
     final refreshed = await db.mudanzaDao.obtenerPorId(
       widget.mudanza.mudanzaId!,
     );
+
+    mudanza = refreshed!;
+
 
     _nombreCtrl = TextEditingController(text: refreshed!.nombre);
     _origenCtrl = TextEditingController(text: refreshed.direccionOrigen);
@@ -73,21 +84,14 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
   Future<void> _guardarEstadoActual() async {
     final db = await DatabaseService.getDatabase();
 
-    final updated = Mudanza(
-      mudanzaId: widget.mudanza.mudanzaId,
-      userId: widget.mudanza.userId,
+final updated = mudanza.copyWith(
       nombre: _nombreCtrl.text.trim(),
-      fecha: widget.mudanza.fecha,
       direccionOrigen: _origenCtrl.text.trim(),
       direccionDestino: _destinoCtrl.text.trim(),
       estado: _estado,
-      notas: widget.mudanza.notas,
-      createdAt: widget.mudanza.createdAt,
-      updatedAt: DateTime.now().toIso8601String(),
-      isArchived: widget.mudanza.isArchived,
       tabs: _categories.join('|'),
+      updatedAt: DateTime.now().toIso8601String(),
     );
-
 
     await db.mudanzaDao.actualizar(updated);
   }
@@ -163,7 +167,6 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 12),
             Column(
               children: [
                 Center(
@@ -365,6 +368,52 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
             ),
 
             const SizedBox(height: 24),
+            LuggoLabel('chooseBackground'.tr()),
+            SizedBox(
+              height: 100,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: _imageOptions.length,
+                separatorBuilder: (_, __) => const SizedBox(width: 12),
+                itemBuilder: (context, index) {
+                  final imagePath = _imageOptions[index];
+                  final isSelected = mudanza.imatge == imagePath;
+
+                  return GestureDetector(
+                    onTap: () async {
+                      setState(() {
+                        mudanza = mudanza.copyWith(imatge: imagePath);
+                      });
+
+                      await _guardarEstadoActual();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color:
+                              isSelected
+                                  ? AppColors.primaryColor
+                                  : Colors.transparent,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          imagePath,
+                          width: 120,
+                          height: 80,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 24),
+
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(

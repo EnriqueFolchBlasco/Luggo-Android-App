@@ -24,28 +24,35 @@ class HomeScreenContent extends StatefulWidget {
 }
 
 class _HomeScreenContentState extends State<HomeScreenContent> {
-  List<Mudanza> mudanzas = [];
+  late Future<List<Mudanza>> _futureMudanzas;
+  Map<int, int> itemCounts = {};
+
 
   @override
   void initState() {
     super.initState();
-    _cargarMudanzas();
+    _futureMudanzas = _cargarMudanzas();
   }
+
 
   //************************************************************
   // CARGAR LAS MUDANZAS DE LA DB LOCAL
   //************************************************************
-  Future<void> _cargarMudanzas() async {
-    //final db = await $FloorAppDatabase.databaseBuilder('luggo.db').build();
-    //final lista = await db.mudanzaDao.obtenerTodos();
+  Future<List<Mudanza>> _cargarMudanzas() async {
     final db = await DatabaseService.getDatabase();
-    final lista = await db.mudanzaDao.obtenerTodos();
+    final mudanzas = await db.mudanzaDao.obtenerTodos();
 
-    setState(() {
-      mudanzas.clear();
-      mudanzas = lista;
-    });
+    itemCounts.clear();
+
+    for (final mudanza in mudanzas) {
+      final count = await db.itemDao.contarItemsDeMudanza(mudanza.mudanzaId!);
+      itemCounts[mudanza.mudanzaId!] = count ?? 0;
+    }
+
+    return mudanzas;
   }
+
+
 
   //CAMBAIR EL MENSATGE DE HOLA DEPENGUENT DEL DIA HGORA
   String _calcularMensatgeBenbinguda() {
@@ -181,11 +188,9 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
           const SizedBox(height: 16),
 
           SizedBox(
-            height: 160,
+            height: 180,
             child: FutureBuilder<List<Mudanza>>(
-              future: DatabaseService.getDatabase().then(
-                (db) => db.mudanzaDao.obtenerTodos(),
-              ),
+              future: _futureMudanzas,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(child: CircularProgressIndicator());
@@ -205,7 +210,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                         return _mudanzaCard(
                           context,
                           mudanza,
-                          0, // CALCULAR ITEMS TBD
                           0.0, // CALCULAR PROGRESO TO BE DONE
                         );
                       } else {
@@ -249,12 +253,10 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     );
   }
 
-  Widget _mudanzaCard(
-    BuildContext context,
-    Mudanza mudanza,
-    int items,
-    double progress,
-  ) {
+  Widget _mudanzaCard(BuildContext context, Mudanza mudanza, double progress) {
+    String itemsCantidad =
+        '${itemCounts[mudanza.mudanzaId] ?? 0} ${'items'.tr()}';
+
     return GestureDetector(
       onTap: () async {
         final result = await Navigator.push(
@@ -266,80 +268,106 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
         );
 
         if (result == true) {
-          _cargarMudanzas();
+          setState(() {
+            _futureMudanzas = _cargarMudanzas();
+          });
         }
       },
       child: Container(
-        width: 180,
-        padding: const EdgeInsets.all(16),
+        width: 200,
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: AppColors.primaryColor.withAlpha((0.08 * 255).round()),
+          color: Colors.blue.shade50,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.primaryColor.withAlpha(40)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '${mudanza.nombre}',
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontFamily: 'Helvetica',
-                fontSize: 16,
+
+            Center(
+              child: Text(
+                'mudanza'.tr() + mudanza.nombre,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  fontFamily: 'Helvetica',
+                ),
               ),
             ),
-            Text(
-              '${mudanza.direccionOrigen} - ${mudanza.direccionDestino}',
-              style: const TextStyle(
-                fontSize: 10,
-                color: Colors.black54,
-                fontWeight: FontWeight.w400,
+
+
+            const SizedBox(height: 8),
+
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                mudanza.imatge,
+                height: 80,
+                width: double.infinity,
+                fit: BoxFit.cover,
               ),
-              textAlign: TextAlign.center,
             ),
-            const Spacer(),
+
+            const SizedBox(height: 10),
+
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 4,
+                    horizontal: 12,
+                    vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.blue.shade100,
                     borderRadius: BorderRadius.circular(30),
-                    border: Border.all(color: Colors.grey.shade300),
+                    border: Border.all(color: Colors.black, width: 1),
                   ),
                   child: Text(
-                    '$items items',
+                    itemsCantidad,
                     style: const TextStyle(fontSize: 12),
                   ),
                 ),
-                const SizedBox(width: 8),
-                Text('progressLabel'.tr(), style: TextStyle(fontSize: 12)),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'progressLabel'.tr(),
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                          Text(
+                            '${(progress * 100).round()}%',
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: LinearProgressIndicator(
+                          value: progress,
+                          backgroundColor: Colors.blue.shade100,
+                          color: Colors.blue,
+                          minHeight: 8,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
-            ),
-            const SizedBox(height: 6),
-            LinearProgressIndicator(
-              value: progress,
-              backgroundColor: Colors.grey.shade300,
-              color: AppColors.primaryColor,
-              minHeight: 6,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            const SizedBox(height: 4),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                '${(progress * 100).round()}%',
-                style: const TextStyle(fontSize: 12),
-              ),
             ),
           ],
         ),
       ),
     );
   }
+
+
 
   Widget _mudanzaCardAnadir(BuildContext context) {
     return GestureDetector(
@@ -348,14 +376,17 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
           context,
           MaterialPageRoute(builder: (context) => const CrearMudanzaScreen()),
         );
-
+        
+        //refreshingggg
         if (resultado == true) {
-          //RECARGAR
-          setState(() {});
+          setState(() {
+            _futureMudanzas = _cargarMudanzas();
+          });
         }
+
       },
       child: Container(
-        width: 180,
+        width: 200,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: AppColors.primaryColor.withAlpha((0.08 * 255).round()),
@@ -371,6 +402,8 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
       ),
     );
   }
+
+
 
   Future<String?> _getAvatarFileImatge() async {
     final prefs = await SharedPreferences.getInstance();

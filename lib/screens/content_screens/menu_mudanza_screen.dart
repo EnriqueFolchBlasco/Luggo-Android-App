@@ -248,6 +248,8 @@ class _MenuMudanzaScreenState extends State<MenuMudanzaScreen> {
           createdAt: mudanza.createdAt,
           updatedAt: DateTime.now().toIso8601String(),
           isArchived: true,
+          tabs: mudanza.tabs,
+          imatge: mudanza.imatge,
         );
 
         await db.mudanzaDao.actualizar(mudanzaArchivada);
