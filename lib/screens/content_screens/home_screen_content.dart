@@ -376,14 +376,12 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
           context,
           MaterialPageRoute(builder: (context) => const CrearMudanzaScreen()),
         );
-        
-        //refreshingggg
-        if (resultado == true) {
+
+        if (resultado == true && mounted) {
           setState(() {
             _futureMudanzas = _cargarMudanzas();
           });
         }
-
       },
       child: Container(
         width: 200,

@@ -30,19 +30,17 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
 
   Future<void> guardarMudanza() async {
     final nombre = controlNombre.text.trim();
-    final nomPrimMayus = nombre[0].toUpperCase() + (nombre.length > 1 ? nombre.substring(1).toLowerCase() : '');
-    final origen = controlOrigen.text.trim();
-    final destino = controlDestino.text.trim();
-
 
     final regularUnaParaulaSoles = RegExp(r'^\S+$');
 
     if (nombre.isEmpty || !regularUnaParaulaSoles.hasMatch(nombre)) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('moveNameSingleWord'.tr())));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('moveNameSingleWord'.tr())));
       return;
     }
+
+    final nomPrimMayus = nombre[0].toUpperCase() + (nombre.length > 1 ? nombre.substring(1).toLowerCase() : '');
+    final origen = controlOrigen.text.trim();
+    final destino = controlDestino.text.trim();
 
     final prefs = await SharedPreferences.getInstance();
     final db = await DatabaseService.getDatabase();
@@ -64,12 +62,18 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
       isArchived: false,
       tabs: tabsString,
       imatge: 'assets/images/Luggo_Baseline Color 1.png',
-
     );
 
     await db.mudanzaDao.insertar(nuevaMudanza);
-    Navigator.pop(context, true);
+
+    // Seguro per a  que l idone temps a recargar al Navigator de home
+    await Future.delayed(const Duration(milliseconds: 100));
+
+    if (mounted) {
+      Navigator.pop(context, true);
+    }
   }
+
 
 
   @override
