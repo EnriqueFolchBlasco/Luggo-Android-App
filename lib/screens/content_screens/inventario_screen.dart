@@ -42,7 +42,8 @@ class _InventarioScreenState extends State<InventarioScreen>
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(x["nombre"]),
+                // fallback per si no hi ha traduccio 
+                Text(x["nombre"].tr(args: [], namedArgs: {}, fallback: x["nombre"])),
                 const SizedBox(width: 6),
                 CircleAvatar(
                   radius: 10,

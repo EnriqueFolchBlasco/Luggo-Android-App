@@ -46,7 +46,8 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
     final db = await DatabaseService.getDatabase();
 
     final defaultTabs = ['kitchen', 'diningRoom', 'bathroom'];
-    final tabsString = defaultTabs.map((key) => key.tr()).join('|');
+    //final tabsString = defaultTabs.map((key) => key.tr()).join('|');
+    final tabsString = defaultTabs.join('|');
 
     final nuevaMudanza = Mudanza(
       userId: prefs.getString('userUID') ?? '',
