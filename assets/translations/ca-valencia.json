@@ -136,7 +136,11 @@
   "smallMoveService": "Mudança menuda",
   "storePickupService": "Recollida a botiga",
   "recyclingService": "Reciclatge",
-  "donateService": "Donació"
+  "donateService": "Donació",
+  "next": "SEGÜENT",
+
+  "offeredService": "Aquest servei és oferit per LUGGO per ajudar-te amb la teua mudança de manera ràpida, segura i sostenible. Ens encarreguem de tot perquè només et preocupes de gaudir del canvi.",
+  "transportServiceInfo": "Pots llogar un vehicle adaptat i el seu conductor per a les teues necessitats per hores o dies, sense complicacions ni paperassa innecessària. Tant si estàs traslladant caixes, mobles o simplement necessites un mitjà de transport puntual, Luggo t’ofereix la comoditat de reservar, gestionar i gaudir del servei des del teu mòbil, amb total seguretat i suport en tot moment."
 
 
 }

@@ -163,12 +163,16 @@
   "moveNameSingleWord": "Please enter only one word (no spaces)",
   "chooseBackground": "Choose a background",
 
-    "transportService": "Transport Rental",
-    "laborService": "Labor Only",
-    "smallMoveService": "Small Move",
-    "storePickupService": "Store Pickup",
-    "recyclingService": "Recycling",
-    "donateService": "Donation"
+  "transportService": "Transport Rental",
+  "laborService": "Labor Only",
+  "smallMoveService": "Small Move",
+  "storePickupService": "Store Pickup",
+  "recyclingService": "Recycling",
+  "donateService": "Donation",
+  "next": "NEXT",
+
+  "offeredService": "This service is provided by LUGGO to support your move in a fast, safe, and sustainable way. Our team takes care of everything so you can focus on enjoying the transition.",
+  "transportServiceInfo": "You can rent a suitable vehicle and driver for your needs by the hour or day, without complications or unnecessary paperwork. Whether you're moving boxes, furniture, or simply need occasional transport, Luggo offers you the convenience of booking, managing, and enjoying the service from your phone, with full security and support at every step."
   
 
   

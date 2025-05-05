@@ -136,7 +136,13 @@
   "smallMoveService": "Mudanza pequeña",
   "storePickupService": "Recogida en tienda",
   "recyclingService": "Reciclaje",
-  "donateService": "Donación"
+  "donateService": "Donación",
+  "next": "SIGUIENTE",
+
+  "offeredService": "Este servicio es ofrecido por LUGGO para ayudarte en tu mudanza de forma rápida, segura y sostenible. Nuestro equipo se encargará de todo para que tú solo te preocupes de disfrutar del cambio.",
+
+  "transportServiceInfo": "Puedes alquilar un vehículo adaptado y su conductor para tus necesidades por horas o días, sin complicaciones ni papeleos innecesarios. Ya sea que estés trasladando cajas, muebles o simplemente necesites un medio de transporte puntual, Luggo te ofrece la comodidad de reservar, gestionar y disfrutar del servicio desde tu móvil, con total seguridad y soporte en cada paso.",
+  "":""
 
 
 
