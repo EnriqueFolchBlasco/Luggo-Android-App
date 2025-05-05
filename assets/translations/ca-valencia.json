@@ -129,7 +129,14 @@
   "items": "articles",
   "mudanza": "Mudança ",
   "moveNameSingleWord": "Per favor, escriu només una paraula (sense espais)",
-  "chooseBackground": "Tria un fons"
+  "chooseBackground": "Tria un fons",
+
+  "transportService": "Lloguer de Transport",
+  "laborService": "Mà d'obra",
+  "smallMoveService": "Mudança menuda",
+  "storePickupService": "Recollida a botiga",
+  "recyclingService": "Reciclatge",
+  "donateService": "Donació"
 
 
 }

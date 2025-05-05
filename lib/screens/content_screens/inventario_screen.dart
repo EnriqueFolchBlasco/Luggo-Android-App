@@ -1,10 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:luggo/models/item.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
-import 'package:luggo/utils/custom_form_widgets.dart';
 import 'package:luggo/utils/modal_nueva_categoria.dart';
 import 'package:luggo/utils/modal_nuevo_item.dart';
 
@@ -17,8 +15,7 @@ class InventarioScreen extends StatefulWidget {
   State<InventarioScreen> createState() => _InventarioScreenState();
 }
 
-class _InventarioScreenState extends State<InventarioScreen>
-    with TickerProviderStateMixin {
+class _InventarioScreenState extends State<InventarioScreen> with TickerProviderStateMixin {
   TabController? _controladorTabs;
   List<Map<String, dynamic>> categorias = [];
   bool cargando = true;
@@ -43,7 +40,7 @@ class _InventarioScreenState extends State<InventarioScreen>
               mainAxisSize: MainAxisSize.min,
               children: [
                 // fallback per si no hi ha traduccio 
-                Text(x["nombre"].tr(args: [], namedArgs: {}, fallback: x["nombre"])),
+                Text(tr(x["nombre"])),
                 const SizedBox(width: 6),
                 CircleAvatar(
                   radius: 10,

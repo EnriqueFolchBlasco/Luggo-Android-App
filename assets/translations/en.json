@@ -161,7 +161,17 @@
   "items": "items",
   "mudanza": "Move ",
   "moveNameSingleWord": "Please enter only one word (no spaces)",
-  "chooseBackground": "Choose a background"
+  "chooseBackground": "Choose a background",
+
+    "transportService": "Transport Rental",
+    "laborService": "Labor Only",
+    "smallMoveService": "Small Move",
+    "storePickupService": "Store Pickup",
+    "recyclingService": "Recycling",
+    "donateService": "Donation"
+  
+
+  
 
 
 

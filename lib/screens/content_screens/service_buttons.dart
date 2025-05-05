@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:luggo/screens/content_screens/service_request_screen.dart';
 import 'package:luggo/utils/constants.dart';
 
 class ServiceButtonsGrid extends StatelessWidget {
@@ -12,58 +13,57 @@ class ServiceButtonsGrid extends StatelessWidget {
       children: [
         const SizedBox(height: 5),
 
-        _plantillaBotoServici(
+        _serviceButton(
+          context,
           icon: Icons.local_shipping_outlined,
           title: 'transport'.tr(),
           subtitle: 'transportSubtitle'.tr(),
-          onTap: () {
-            //TO DO FER MES SCREENS
-          },
+          serviceType: 'transportService',
         ),
         const SizedBox(height: 10),
-        _plantillaBotoServici(
+
+        _serviceButton(
+          context,
           icon: Icons.fitness_center_outlined,
           title: 'laborOnly'.tr(),
           subtitle: 'laborOnlySubtitle'.tr(),
-          onTap: () {},
+          serviceType: 'laborService',
         ),
         const SizedBox(height: 10),
 
-        _plantillaBotoServici(
+        _serviceButton(
+          context,
           icon: Icons.moving_outlined,
           title: 'smallMove'.tr(),
           subtitle: 'smallMoveSubtitle'.tr(),
-          onTap: () {
-            //TO DO FER MES SCREENS
-          },
+          serviceType: 'smallMoveService',
         ),
-
         const SizedBox(height: 10),
 
-        _plantillaBotoServici(
+        _serviceButton(
+          context,
           icon: Icons.store_mall_directory_outlined,
           title: 'storePickup'.tr(),
           subtitle: 'storePickupSubtitle'.tr(),
-          onTap: () {
-            //TO DO FER MES SCREENS
-          },
-        ),
-        const SizedBox(height: 10),
-        _plantillaBotoServici(
-          icon: Icons.recycling_outlined,
-          title: 'recycling'.tr(),
-          subtitle: 'recyclingSubtitle'.tr(),
-          onTap: () {},
+          serviceType: 'storePickupService',
         ),
         const SizedBox(height: 10),
 
-        _plantillaBotoServici(
+        _serviceButton(
+          context,
+          icon: Icons.recycling_outlined,
+          title: 'recycling'.tr(),
+          subtitle: 'recyclingSubtitle'.tr(),
+          serviceType: 'recyclingService',
+        ),
+        const SizedBox(height: 10),
+
+        _serviceButton(
+          context,
           icon: Icons.volunteer_activism_outlined,
           title: 'donate'.tr(),
           subtitle: 'donateSubtitle'.tr(),
-          onTap: () {
-            //TO DO FER MES SCREENS
-          },
+          serviceType: 'donateService',
         ),
 
         const SizedBox(height: 10),
@@ -84,14 +84,10 @@ class ServiceButtonsGrid extends StatelessWidget {
     );
   }
 
-  ///***********************************************************************
-  ///* PLANTILAL BOTO SERVICI
-  ///***********************************************************************
-
-  Widget _plantillaBotoServici({required IconData icon, required String title,required String subtitle, required VoidCallback onTap}) {
+  Widget _serviceButton(BuildContext context, { required IconData icon, required String title, required String subtitle, required String serviceType}) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.primaryColor.withAlpha((0.07 * 255).round()),
+        color: AppColors.primaryColor.withAlpha(18),
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
@@ -105,11 +101,20 @@ class ServiceButtonsGrid extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(14),
-          onTap: onTap,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) => ServiceRequestScreen(serviceType: serviceType),
+              ),
+            );
+          },
           child: Padding(
             padding: const EdgeInsets.all(14),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment:
+                  CrossAxisAlignment.center,
               children: [
                 Container(
                   padding: const EdgeInsets.all(10),
@@ -146,10 +151,16 @@ class ServiceButtonsGrid extends StatelessWidget {
                     ],
                   ),
                 ),
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 14,
-                  color: AppColors.primaryColor,
+                const SizedBox(width: 8),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 24,
+                      color: AppColors.primaryColor,
+                    ),
+                  ],
                 ),
               ],
             ),

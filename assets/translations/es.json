@@ -129,7 +129,14 @@
   "items": "artículos",
   "mudanza": "Mudanza ",
   "moveNameSingleWord": "Por favor, introduce solo una palabra (sin espacios)",
-  "chooseBackground": "Elige un fondo"
+  "chooseBackground": "Elige un fondo",
+
+  "transportService": "Transporte Alquiler",
+  "laborService": "Mano de obra",
+  "smallMoveService": "Mudanza pequeña",
+  "storePickupService": "Recogida en tienda",
+  "recyclingService": "Reciclaje",
+  "donateService": "Donación"
 
 
 

@@ -267,7 +267,7 @@ final updated = mudanza.copyWith(
               children:
                   _categories.map((tab) {
                     return Chip(
-                      label: Text(tab),
+                      label: Text(tab.tr()),
                       deleteIcon: const Icon(Icons.close),
                       onDeleted: () async {
                         final db = await DatabaseService.getDatabase();
