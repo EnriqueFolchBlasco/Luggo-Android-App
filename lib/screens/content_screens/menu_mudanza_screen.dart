@@ -100,28 +100,7 @@ class _MenuMudanzaScreenState extends State<MenuMudanzaScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Text(
-                    mudanza!.nombre.toUpperCase(),
-                    style: const TextStyle(
-                      fontFamily: 'Helvetica',
-                      color: AppColors.primaryColor,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w200,
-                      letterSpacing: 1.5,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '${mudanza!.direccionOrigen} - ${mudanza!.direccionDestino}'
-                        .toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black54,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
+                  
                   Text(
                     'moveOptions'.tr().toUpperCase(),
                     style: const TextStyle(
@@ -130,6 +109,19 @@ class _MenuMudanzaScreenState extends State<MenuMudanzaScreen> {
                       fontWeight: FontWeight.w400,
                       color: AppColors.primaryColor,
                     ),
+                  ),
+                  const SizedBox(height: 4),
+
+                  Text(
+                    mudanza!.nombre.toUpperCase(),
+                    style: const TextStyle(
+                      fontFamily: 'Helvetica',
+                      color: Colors.blueGrey,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      letterSpacing: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 24),
 
