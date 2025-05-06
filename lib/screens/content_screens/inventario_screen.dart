@@ -88,7 +88,12 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
 
       if (mudanza == null) return;
 
-      final tabs = mudanza.tabs?.split('|') ?? [];
+      final tabs = (mudanza.tabs ?? '')
+              .split('|')
+              .map((e) => e.trim())
+              .where((e) => e.isNotEmpty)
+              .toList();
+
       final List<Map<String, dynamic>> llistaCategoriesTemproals = [];
 
       for (final tab in tabs) {

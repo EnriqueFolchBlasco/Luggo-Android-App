@@ -92,7 +92,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
 
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-                  child: BarraProgressoAmazon(0),
+                  child: BarraProgressoAmazon(1),
 
                 ),
                 

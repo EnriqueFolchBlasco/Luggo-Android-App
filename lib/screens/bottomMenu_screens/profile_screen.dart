@@ -101,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     const Color luggoBlue = Color(0xFF2B68FF);
 
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       body: SafeArea(
         child: SizedBox.expand(
           child: SingleChildScrollView(

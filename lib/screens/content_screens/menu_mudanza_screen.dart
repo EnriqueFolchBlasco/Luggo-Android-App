@@ -139,6 +139,36 @@ class _MenuMudanzaScreenState extends State<MenuMudanzaScreen> {
                             Icons.inventory_2_outlined,
                             'Inventory',
                             () {
+
+                              final tabs = (mudanza!.tabs ?? '')
+                                      .split('|')
+                                      .map((e) => e.trim())
+                                      .where((e) => e.isNotEmpty)
+                                      .toList();
+
+                              if (tabs.isEmpty) {
+                                showDialog(
+                                  context: context,
+                                  builder:
+                                      (_) => AlertDialog(
+                                        title: Text('warning'.tr()),
+                                        content: Text(
+                                          'atLeastOneCategoryMustExist'.tr(),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed:
+                                                () => Navigator.pop(context),
+                                            child: Text('ok'.tr()),
+                                          ),
+                                        ],
+                                      ),
+                                );
+                                return;
+                              }
+
+
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

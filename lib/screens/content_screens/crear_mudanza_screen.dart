@@ -68,7 +68,7 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
     await db.mudanzaDao.insertar(nuevaMudanza);
 
     // Seguro per a  que l idone temps a recargar al Navigator de home
-    await Future.delayed(const Duration(milliseconds: 100));
+    await db.mudanzaDao.obtenerTodos();
 
     if (mounted) {
       Navigator.pop(context, true);

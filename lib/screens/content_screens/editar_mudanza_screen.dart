@@ -54,7 +54,13 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
     _origenCtrl = TextEditingController(text: refreshed.direccionOrigen);
     _destinoCtrl = TextEditingController(text: refreshed.direccionDestino);
     _estado = refreshed.estado;
-    _categories = refreshed.tabs?.split('|') ?? [];
+    _categories =
+        (refreshed.tabs ?? '')
+            .split('|')
+            .map((e) => e.trim())
+            .where((e) => e.isNotEmpty)
+            .toList();
+
 
     _nombreCtrl.addListener(_autoGuardado);
     _origenCtrl.addListener(_autoGuardado);
@@ -84,12 +90,13 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
   Future<void> _guardarEstadoActual() async {
     final db = await DatabaseService.getDatabase();
 
-final updated = mudanza.copyWith(
+    final updated = mudanza.copyWith(
       nombre: _nombreCtrl.text.trim(),
       direccionOrigen: _origenCtrl.text.trim(),
       direccionDestino: _destinoCtrl.text.trim(),
       estado: _estado,
-      tabs: _categories.join('|'),
+      tabs: _categories.where((e) => e.trim().isNotEmpty).join('|'),
+
       updatedAt: DateTime.now().toIso8601String(),
     );
 
@@ -181,7 +188,7 @@ final updated = mudanza.copyWith(
                       padding: EdgeInsets.zero,
                       icon: const Icon(Icons.arrow_back, color: Colors.black),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.pop(context, true);
                       },
                       splashRadius: 20,
                     ),
@@ -271,27 +278,6 @@ final updated = mudanza.copyWith(
                       deleteIcon: const Icon(Icons.close),
                       onDeleted: () async {
                         final db = await DatabaseService.getDatabase();
-
-                        if (_categories.length <= 1) {
-                          showDialog(
-                            context: context,
-                            builder:
-                                (_) => AlertDialog(
-                                  title: Text('warning'.tr()),
-                                  content: Text(
-                                    'atLeastOneCategoryMustExist'.tr(),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: Text('ok'.tr()),
-                                    ),
-                                  ],
-                                ),
-                          );
-                          return;
-                        }
-
                         final isUsed = await db.itemDao.existeItemConCategoria(widget.mudanza.mudanzaId!, tab);
 
 
@@ -353,7 +339,11 @@ final updated = mudanza.copyWith(
                   ),
                   onPressed: () async {
                     final newTab = _controlladorCategoriaNova.text.trim();
-                    if (newTab.isNotEmpty && !_categories.contains(newTab)) {
+
+                    final esValit = newTab.isNotEmpty && !newTab.contains('|');
+
+                    if (esValit && !_categories.contains(newTab)) {
+
                       setState(() {
                         _categories.add(newTab);
                         _controlladorCategoriaNova.clear();

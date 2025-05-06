@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final PageController _pageController = PageController();
   int _selectedIndex = 0;
   final GlobalKey _notificacionKey = GlobalKey();
   OverlayEntry? _notificacionOverlay;
@@ -46,9 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
   //cambiar el index del bottom menu
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+       _pageController.jumpToPage(index);
+      
     });
   }
+
 
   //************************************************************
   // CONTROL DE UID
@@ -239,24 +242,25 @@ class _HomeScreenState extends State<HomeScreen> {
       //************************************************************
       // CENTER DE LA APP (Sense bottom/upper bars)
       //************************************************************
-      body: FutureBuilder<String?>(
-        future: _getUserUID(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-
-          if (snapshot.hasData) {
-            return _screens[_selectedIndex];
-          } else {
-            return Center(child: Text('No se encontró el UID'));
-          }
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
         },
+        children: [
+          HomeScreenContent(
+            onAvatarTap: () {
+              _pageController.jumpToPage(3);
+            },
+          ),
+          ServicesScreen(),
+          ChatsScreen(),
+          ProfileScreen(),
+        ],
       ),
+
 
       //************************************************************
       // BOTTOM BAR
