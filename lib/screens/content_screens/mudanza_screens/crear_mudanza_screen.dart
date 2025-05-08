@@ -82,6 +82,7 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
@@ -109,17 +110,12 @@ class _CrearMudanzaScreenState extends State<CrearMudanzaScreen> {
             if (result == true) setState(() {});
           },
         ),
-        title: Row(
-          children: const [
-            Spacer(),
+        title: 
+        
             Image(
               image: AssetImage('assets/images/LuggoColor_noBackground.png'),
               height: 28,
             ),
-            Spacer(),
-            Spacer(),
-          ],
-        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24),

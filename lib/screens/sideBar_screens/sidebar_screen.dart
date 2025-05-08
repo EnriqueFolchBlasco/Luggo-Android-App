@@ -49,6 +49,7 @@ class _SideBarScreenState extends State<SideBarScreen> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       appBar: AppBar(
+        centerTitle: true,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
@@ -63,15 +64,14 @@ class _SideBarScreenState extends State<SideBarScreen> {
             },
           ),
         ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Spacer(),
-            Image.asset('assets/images/LuggoColor2.png', height: 30),
-            const Spacer(),
-            const Spacer(),
-          ],
-        ),
+        title: 
+           
+            Image(
+              image: AssetImage('assets/images/LuggoColor_noBackground.png'),
+              height: 28,
+            ),
+            
+          
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:luggo/screens/bottomMenu_screens/home_screen.dart';
+import 'package:luggo/screens/introduction_screens/IntroScreenDemo.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_screen.dart';
@@ -41,9 +42,14 @@ class _SplashScreenState extends State<SplashScreen> {
     //final isRemembered = prefs.getBool('isRemembered') ?? false;
     final savedUID = prefs.getString('userUID');
 
+    final introVista = prefs.getBool('introVista');
+
+
     Widget nextScreen;
 
-    if (loggedInBefore && savedUID != null) {
+    if (introVista == null || !introVista) {
+      nextScreen = const IntroLuggoScreen();
+    } else if (loggedInBefore && savedUID != null) {
       nextScreen = HomeScreen();
     } else {
       nextScreen = LoginScreen();

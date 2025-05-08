@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:luggo/screens/content_screens/service_request_screen.dart';
+import 'package:luggo/screens/content_screens/service_screens/service_info_screen.dart';
 import 'package:luggo/utils/constants.dart';
 
 class ServiceButtonsGrid extends StatelessWidget {
@@ -106,7 +106,7 @@ class ServiceButtonsGrid extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder:
-                    (context) => ServiceRequestScreen(serviceType: serviceType),
+                    (context) => ServiceInfoScreen(serviceType: serviceType),
               ),
             );
           },

@@ -100,7 +100,7 @@ class AboutUsScreen extends StatelessWidget {
             const SizedBox(height: 30),
             Center(
               child: Image.asset(
-                'assets/images/LuggoColor2.png',
+                'assets/images/LuggoColor_noBackground.png',
                 height: 30,
                 fit: BoxFit.contain,
               ),

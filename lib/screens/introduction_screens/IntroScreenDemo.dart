@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:luggo/screens/login_screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //https://pub.dev/packages/introduction_screen
 
@@ -16,8 +18,14 @@ class IntroLuggoScreen extends StatefulWidget {
 class _IntroLuggoScreenState extends State<IntroLuggoScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
-  void _onDone() {
-    Navigator.of(context).pop(); // Or navigate to login/home
+  Future<void> _onDone() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('introVista', true);
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const LoginScreen()),
+    );
+
   }
 
   @override
@@ -27,21 +35,21 @@ class _IntroLuggoScreenState extends State<IntroLuggoScreen> {
       globalBackgroundColor: Colors.white,
       pages: [
         PageViewModel(
-          title: 'welcomeTitle'.tr(), // e.g., "Welcome to Luggo"
-          body: 'welcomeBody'.tr(),   // e.g., "Organize your moves with ease"
+          title: 'introWelcomeTitle'.tr(),
+          body: 'introWelcomeBody'.tr(),
           image: Image.asset('assets/images/LuggoIconoColor.png', height: 160),
           decoration: _getPageDecoration(),
         ),
         PageViewModel(
-          title: 'servicesTitle'.tr(), // e.g., "All-in-One Services"
-          body: 'servicesBody'.tr(),   // e.g., "Transport, donations, assembly, recycling & more"
-          image: Image.asset('assets/images/mudanza_background1.png', height: 160),
+          title: 'introServicesTitle'.tr(),
+          body: 'introServicesBody'.tr(),
+          image: Image.asset('assets/images/Luggo_Baseline2.png', height: 160),
           decoration: _getPageDecoration(),
         ),
         PageViewModel(
-          title: 'startNowTitle'.tr(), // e.g., "Ready to simplify your move?"
-          body: 'startNowBody'.tr(),   // e.g., "Start planning with Luggo today"
-          image: Image.asset('assets/images/mudanza_background2.png', height: 160),
+          title: 'introStartNowTitle'.tr(),
+          body: 'introStartNowBody'.tr(),
+          image: Image.asset('assets/images/Luggo_Baseline Color 1.png', height: 160),
           decoration: _getPageDecoration(),
         ),
       ],

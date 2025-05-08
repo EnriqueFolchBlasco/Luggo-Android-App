@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/models/mudanza.dart';
-import 'package:luggo/screens/content_screens/crear_mudanza_screen.dart';
-import 'package:luggo/screens/content_screens/menu_mudanza_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/services/shared_prefs_service.dart';
 import 'package:luggo/utils/constants.dart';
@@ -10,7 +8,7 @@ import 'package:luggo/utils/mudanzas_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'service_buttons.dart';
+import '../service_screens/services_widgets/service_buttons.dart';
 
 //************************************************************
 // TO DO fer la db local q almacena mudances (items count)

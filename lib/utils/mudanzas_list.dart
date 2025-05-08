@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:luggo/models/mudanza.dart';
-import 'package:luggo/screens/content_screens/crear_mudanza_screen.dart';
-import 'package:luggo/screens/content_screens/menu_mudanza_screen.dart';
+import 'package:luggo/screens/content_screens/mudanza_screens/crear_mudanza_screen.dart';
+import 'package:luggo/screens/content_screens/mudanza_screens/menu_mudanza_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
 

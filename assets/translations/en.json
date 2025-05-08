@@ -172,8 +172,21 @@
   "next": "NEXT",
 
   "offeredService": "This service is provided by LUGGO to support your move in a fast, safe, and sustainable way. Our team takes care of everything so you can focus on enjoying the transition.",
-  "transportServiceInfo": "You can rent a suitable vehicle and driver for your needs by the hour or day, without complications or unnecessary paperwork. Whether you're moving boxes, furniture, or simply need occasional transport, Luggo offers you the convenience of booking, managing, and enjoying the service from your phone, with full security and support at every step."
+  "transportServiceInfo": "You can rent an adapted vehicle and its driver for your needs by the hour or day, without unnecessary paperwork or hassle. Whether you're moving boxes, furniture, or just need occasional transport, Luggo offers the convenience of booking, managing, and enjoying the service from your phone, with full security and support.",
+  "laborServiceInfo": "Hire professional help to load, unload, or move items within your home or space. Perfect for quick tasks without needing a vehicle.",
+  "smallMoveServiceInfo": "Perfect for small moves, such as student rooms or moves within the same city. Fast, efficient, and affordable.",
+  "storePickupServiceInfo": "Request pickup of your purchases from stores or large retailers and have them delivered to your home conveniently and on time.",
+  "recyclingServiceInfo": "We collect your old or unusable items and ensure they are recycled responsibly, respecting the environment.",
+  "donateServiceInfo": "Give your usable items a second life. We collect them and deliver them to charitable organizations.",
   
+  "introWelcomeTitle": "Welcome to Luggo",
+  "introWelcomeBody": "Organize your moves easily and stress-free, all from your phone.",
+  "introServicesTitle": "All-in-One Services",
+  "introServicesBody": "Transport, donations, assembly, recycling & more. Everything you need for a smooth move.",
+  "introStartNowTitle": "Ready to simplify your move?",
+  "introStartNowBody": "Start planning with Luggo today.",
+  "skip": "Skip",
+  "done": "Done"
 
   
 

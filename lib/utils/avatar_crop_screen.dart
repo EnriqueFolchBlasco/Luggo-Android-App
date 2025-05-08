@@ -33,7 +33,7 @@ class _AvatarCropScreenState extends State<AvatarCropScreen> {
           children: [
             const Spacer(),
             Image.asset(
-              'assets/images/LuggoColor2.png',
+              'assets/images/LuggoColor_noBackground.png',
               height: 30,
             ),
             const Spacer(),

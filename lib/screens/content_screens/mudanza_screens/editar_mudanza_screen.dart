@@ -124,6 +124,7 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF4F6FA),
       appBar: AppBar(
+        centerTitle: true,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 1,
@@ -156,17 +157,12 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
             }
           },
         ),
-        title: Row(
-          children: const [
-            Spacer(),
+        title: 
+           
             Image(
               image: AssetImage('assets/images/LuggoColor_noBackground.png'),
               height: 28,
             ),
-            Spacer(),
-            Spacer(),
-          ],
-        ),
       ),
 
       body: SingleChildScrollView(

@@ -141,9 +141,21 @@
 
   "offeredService": "Este servicio es ofrecido por LUGGO para ayudarte en tu mudanza de forma rápida, segura y sostenible. Nuestro equipo se encargará de todo para que tú solo te preocupes de disfrutar del cambio.",
 
-  "transportServiceInfo": "Puedes alquilar un vehículo adaptado y su conductor para tus necesidades por horas o días, sin complicaciones ni papeleos innecesarios. Ya sea que estés trasladando cajas, muebles o simplemente necesites un medio de transporte puntual, Luggo te ofrece la comodidad de reservar, gestionar y disfrutar del servicio desde tu móvil, con total seguridad y soporte en cada paso.",
-  "":""
+  "transportServiceInfo": "Puedes alquilar un vehículo adaptado y su conductor según tus necesidades por horas o días, sin complicaciones ni papeleo innecesario. Ya sea que estés trasladando cajas, muebles o simplemente necesites un medio de transporte puntual, Luggo te ofrece la comodidad de reservar, gestionar y disfrutar del servicio desde tu móvil, con total seguridad y soporte en todo momento.",
+  "laborServiceInfo": "Contrata ayuda profesional para cargar, descargar o mover objetos dentro de tu hogar o espacio. Ideal para tareas puntuales sin necesidad de transporte.",
+  "smallMoveServiceInfo": "Perfecto para mudanzas pequeñas, como habitaciones de estudiantes o traslados dentro de la misma ciudad. Rápido, eficiente y económico.",
+  "storePickupServiceInfo": "Solicita que recojamos tus compras en tiendas o grandes superficies y te las llevamos a casa de forma cómoda y puntual.",
+  "recyclingServiceInfo": "Recogemos tus objetos inservibles o antiguos y nos encargamos de reciclarlos de forma responsable, respetando el medio ambiente.",
+  "donateServiceInfo": "Dale una segunda vida a tus objetos en buen estado. Nosotros los recogemos y los llevamos a organizaciones benéficas.",
 
+  "introWelcomeTitle": "Bienvenido a Luggo",
+  "introWelcomeBody": "Organiza tus mudanzas fácilmente y sin estrés, todo desde tu móvil.",
+  "introServicesTitle": "Todos los servicios en un solo lugar",
+  "introServicesBody": "Transporte, donaciones, montaje, reciclaje y más. Todo lo que necesitas para mudarte bien.",
+  "introStartNowTitle": "¿Listo para simplificar tu mudanza?",
+  "introStartNowBody": "Empieza a planificar con Luggo hoy mismo.",
+  "skip": "Saltar",
+  "done": "Hecho"
 
 
 

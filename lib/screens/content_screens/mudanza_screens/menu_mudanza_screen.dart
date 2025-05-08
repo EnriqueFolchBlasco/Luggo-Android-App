@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:luggo/models/mudanza.dart';
-import 'package:luggo/screens/content_screens/editar_mudanza_screen.dart';
-import 'package:luggo/screens/content_screens/inventario_screen.dart';
-import 'package:luggo/screens/content_screens/notas_mudanza.dart';
+import 'package:luggo/screens/content_screens/mudanza_screens/editar_mudanza_screen.dart';
+import 'package:luggo/screens/content_screens/mudanza_screens/inventario_screen.dart';
+import 'package:luggo/screens/content_screens/mudanza_screens/notas_mudanza.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
@@ -39,6 +39,7 @@ class _MenuMudanzaScreenState extends State<MenuMudanzaScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF4F6FA),
       appBar: AppBar(
+        centerTitle: true,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 1,
@@ -65,17 +66,12 @@ class _MenuMudanzaScreenState extends State<MenuMudanzaScreen> {
             if (result == true) setState(() {});
           },
         ),
-        title: Row(
-          children: const [
-            Spacer(),
+        title: 
+           
             Image(
               image: AssetImage('assets/images/LuggoColor_noBackground.png'),
               height: 28,
             ),
-            Spacer(),
-            Spacer(),
-          ],
-        ),
       ),
       body:
           mudanza == null

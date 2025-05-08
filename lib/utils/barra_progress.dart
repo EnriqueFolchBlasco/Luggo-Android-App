@@ -54,7 +54,7 @@ class BarraProgressoAmazon extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               alignment: Alignment.center,
-              child: const Text(
+              child:  Text(
                 '2',
                 style: TextStyle(
                   color: Colors.white,
@@ -80,7 +80,7 @@ class BarraProgressoAmazon extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               alignment: Alignment.center,
-              child: const Text(
+              child:  Text(
                 '3',
                 style: TextStyle(
                   color: Colors.white,
@@ -97,14 +97,22 @@ class BarraProgressoAmazon extends StatelessWidget {
 
 
         Row(
-          children: const [
+          children: [
             Expanded(
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
                   'Info',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 12),
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight:
+                        currentStep == 0 ? FontWeight.bold : FontWeight.normal,
+                    color:
+                        currentStep == 0
+                            ? AppColors.primaryColor
+                            : Colors.black,
+                  ),
                 ),
               ),
             ),
@@ -114,7 +122,15 @@ class BarraProgressoAmazon extends StatelessWidget {
                 child: Text(
                   'Details',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 12),
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight:
+                        currentStep == 1 ? FontWeight.bold : FontWeight.normal,
+                    color:
+                        currentStep == 1
+                            ? AppColors.primaryColor
+                            : Colors.black,
+                  ),
                 ),
               ),
             ),
@@ -124,7 +140,15 @@ class BarraProgressoAmazon extends StatelessWidget {
                 child: Text(
                   'Confirm',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 12),
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight:
+                        currentStep == 2 ? FontWeight.bold : FontWeight.normal,
+                    color:
+                        currentStep == 2
+                            ? AppColors.primaryColor
+                            : Colors.black,
+                  ),
                 ),
               ),
             ),

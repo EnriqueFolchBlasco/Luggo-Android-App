@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:luggo/screens/content_screens/home_screen_content.dart';
+import 'package:luggo/screens/content_screens/mudanza_screens/home_screen_content.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/notification_manager.dart';
@@ -57,10 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
   // CONTROL DE UID
   //************************************************************
 
-  Future<String?> _getUserUID() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('userUID');
-  }
+  // Future<String?> _getUserUID() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //  return prefs.getString('userUID');
+  //}
 
   void _toggleNotificaciones() {
     if (NotificationManager.notificaciones.value.isEmpty) return;
@@ -155,6 +155,8 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       extendBody: true,
       appBar: AppBar(
+         centerTitle: true,
+
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
@@ -188,14 +190,14 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(flex: 3),
-            Image.asset('assets/images/LuggoColor_noBackground.png', height: 30),
-            Spacer(flex: 2),
-          ],
-        ),
+        title: 
+           
+            Image(
+              image: AssetImage('assets/images/LuggoColor_noBackground.png'),
+              height: 28,
+            ),
+            
+          
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -249,6 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _selectedIndex = index;
           });
         },
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           HomeScreenContent(
             onAvatarTap: () {

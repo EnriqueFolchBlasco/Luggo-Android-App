@@ -140,7 +140,21 @@
   "next": "SEGÜENT",
 
   "offeredService": "Aquest servei és oferit per LUGGO per ajudar-te amb la teua mudança de manera ràpida, segura i sostenible. Ens encarreguem de tot perquè només et preocupes de gaudir del canvi.",
-  "transportServiceInfo": "Pots llogar un vehicle adaptat i el seu conductor per a les teues necessitats per hores o dies, sense complicacions ni paperassa innecessària. Tant si estàs traslladant caixes, mobles o simplement necessites un mitjà de transport puntual, Luggo t’ofereix la comoditat de reservar, gestionar i gaudir del servei des del teu mòbil, amb total seguretat i suport en tot moment."
+  "transportServiceInfo": "Pots llogar un vehicle adaptat i el seu conductor per a les teues necessitats per hores o dies, sense complicacions ni paperassa innecessària. Tant si estàs traslladant caixes, mobles o simplement necessites un mitjà de transport puntual, Luggo t’ofereix la comoditat de reservar, gestionar i gaudir del servei des del teu mòbil, amb total seguretat i suport en tot moment.",
+  "laborServiceInfo": "Contracta ajuda professional per carregar, descarregar o moure objectes dins de la teua llar o espai. Ideal per a tasques puntuals sense necessitat de transport.",
+  "smallMoveServiceInfo": "Perfecte per a trasllats menuts, com habitacions d'estudiants o trasllats dins de la mateixa ciutat. Ràpid, eficient i assequible.",
+  "storePickupServiceInfo": "Demana que arrepleguem les teues compres de botigues o grans superfícies i te les portem a casa còmodament i a temps.",
+  "recyclingServiceInfo": "Recol·lim els teus objectes inservibles o vells i ens encarreguem de reciclar-los de forma responsable, respectant el medi ambient.",
+  "donateServiceInfo": "Dona una segona vida als teus objectes en bon estat. Nosaltres els arrepleguem i els portem a organitzacions benèfiques.",
+
+  "introWelcomeTitle": "Benvingut a Luggo",
+  "introWelcomeBody": "Organitza les teues mudances de forma fàcil i sense estrès, tot des del teu mòbil.",
+  "introServicesTitle": "Tots els serveis en un sol lloc",
+  "introServicesBody": "Transport, donacions, muntatge, reciclatge i més. Tot el que necessites per a mudar-te bé.",
+  "introStartNowTitle": "Preparat per simplificar la teua mudança?",
+  "introStartNowBody": "Comença a planificar amb Luggo avui mateix.",
+  "skip": "Omet",
+  "done": "Fet"
 
 
 }
