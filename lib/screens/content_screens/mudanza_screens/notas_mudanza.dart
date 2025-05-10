@@ -184,6 +184,8 @@ class _NotasMudanzaScreenState extends State<NotasMudanzaScreen> {
                         ),
                       ),
                     ),
+                    SizedBox(height: MediaQuery.of(context).viewPadding.bottom + 16),
+
                   ],
                 ),
               ),

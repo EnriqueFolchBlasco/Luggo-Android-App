@@ -421,7 +421,7 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
                     children: [
                       const Icon(
                         Icons.inventory_2_outlined,
-                        color: Colors.black54,
+                        color: AppColors.primaryColor,
                         size: 20,
                       ),
                       const SizedBox(width: 8),
@@ -429,8 +429,9 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
                         '${'items'.tr()}: $_itemsCount',
                         style: const TextStyle(
                           fontSize: 14,
+                          fontFamily: "clashDisplay",
                           fontWeight: FontWeight.w500,
-                          color: Colors.black87,
+                          color: Colors.black,
                         ),
                       ),
                     ],
@@ -440,29 +441,33 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
                     children: [
                       const Icon(
                         Icons.calendar_today_outlined,
-                        color: Colors.black38,
-                        size: 16,
+                        color: AppColors.primaryColor,
+                        size: 20,
                       ),
                       const SizedBox(width: 6),
                       Text(
                         '${'created'.tr()}: ${widget.mudanza.createdAt.split("T").first}',
                         style: const TextStyle(
-                          fontSize: 13,
-                          color: Colors.black54,
+                          fontSize: 14,
+                          fontFamily: "clashDisplay",
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 12),
                   Row(
                     children: [
-                      const Icon(Icons.update, color: Colors.black38, size: 16),
+                      const Icon(Icons.update, color: AppColors.primaryColor, size: 20),
                       const SizedBox(width: 6),
                       Text(
                         '${'updated'.tr()}: ${widget.mudanza.updatedAt?.split("T").first ?? "-"}',
                         style: const TextStyle(
-                          fontSize: 13,
-                          color: Colors.black54,
+                          fontSize: 14,
+                          fontFamily: "clashDisplay",
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
                         ),
                       ),
                     ],
@@ -470,6 +475,8 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
                 ],
               ),
             ),
+            SizedBox(height: MediaQuery.of(context).viewPadding.bottom + 16),
+
           ],
         ),
       ),

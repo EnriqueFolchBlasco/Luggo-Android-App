@@ -126,7 +126,7 @@
   "notasTexto": "Escribe tus notas aquí...",
   "newCategory": "Nueva categoría",
   "categoryName": "Nombre de la categoría",
-  "items": "artículos",
+  "items": "Artículos",
   "mudanza": "Mudanza ",
   "moveNameSingleWord": "Por favor, introduce solo una palabra (sin espacios)",
   "chooseBackground": "Elige un fondo",
@@ -160,7 +160,9 @@
   "addPhoto": "Añadir foto",
   "peso": "Peso",
   "gotIt": "Confirmado",
-  "descripcion": "Descripción"
+  "descripcion": "Descripción",
+  "updated": "Actualizado",
+  "created": "Creado"
 
 
 

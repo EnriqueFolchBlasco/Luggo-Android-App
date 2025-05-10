@@ -180,30 +180,38 @@ class _ItemDetallesScreenState extends State<ItemDetallesScreen> {
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(16),
-                  image: selectedImage != null
-                      ? DecorationImage(
-                          image: FileImage(selectedImage!),
-                          fit: BoxFit.cover,
-                        )
-                      : null,
+                  border: Border.all(color: AppColors.primaryColor, width: 1),
+                  image:
+                      selectedImage != null
+                          ? DecorationImage(
+                            image: FileImage(selectedImage!),
+                            fit: BoxFit.cover,
+                          )
+                          : null,
                 ),
-                child: selectedImage == null
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.add_a_photo, size: 36, color: Colors.grey),
-                            const SizedBox(height: 8),
-                            Text(
-                              'addPhoto'.tr(),
-                              style: const TextStyle(color: Colors.grey),
-                            )
-                          ],
-                        ),
-                      )
-                    : null,
+                child:
+                    selectedImage == null
+                        ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.add_a_photo,
+                                size: 36,
+                                color: Colors.grey,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'addPhoto'.tr(),
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                        )
+                        : null,
               ),
             ),
+
             const SizedBox(height: 24),
             LuggoLabel('enterName'.tr()),
             LuggoTextArea(

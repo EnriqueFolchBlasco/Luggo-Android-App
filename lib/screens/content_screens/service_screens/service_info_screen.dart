@@ -181,7 +181,13 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
+        padding: EdgeInsets.fromLTRB(
+          20,
+          16,
+          20,
+          MediaQuery.of(context).viewPadding.bottom + 16,
+        ),
+
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(

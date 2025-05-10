@@ -222,12 +222,12 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
           ),
           const SizedBox(height: 16),
           const ServiceButtonsGrid(),
+          SizedBox(height: MediaQuery.of(context).viewPadding.bottom + 60),
         ],
       ),
     );
   }
 
-  
   Future<String?> _getAvatarFileImatge() async {
     final prefs = await SharedPreferences.getInstance();
     String? imageUrl = prefs.getString('profileImageUrl');
@@ -249,15 +249,15 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
             await prefs.setString('profileImageUrl', imageUrl);
           }
         } catch (e) {
-          debugPrint('Error getting avatar: $e');
+          debugPrint('Error en el avat: $e');
         }
       }
     }
 
     final connectivity = await Connectivity().checkConnectivity();
-    final hasInternet = connectivity != ConnectivityResult.none;
+    final internetDisponible = connectivity != ConnectivityResult.none;
 
-    if (hasInternet && imageUrl != null && imageUrl.isNotEmpty) {
+    if (internetDisponible && imageUrl != null && imageUrl.isNotEmpty) {
       return imageUrl;
     } else {
       return null;

@@ -126,7 +126,7 @@
   "notasTexto": "Escriu les teues notes ací...",
   "newCategory": "Nova categoria",
   "categoryName": "Nom de la categoria",
-  "items": "articles",
+  "items": "Articles",
   "mudanza": "Mudança ",
   "moveNameSingleWord": "Per favor, escriu només una paraula (sense espais)",
   "chooseBackground": "Tria un fons",
@@ -159,7 +159,9 @@
   "addPhoto": "Afegir foto",
   "peso": "Pes",
   "gotIt": "Confirmat",
-  "descripcion": "Descripció"
+  "descripcion": "Descripció",
+  "updated": "Actualitzat",
+  "created": "Creat"
 
 
 }

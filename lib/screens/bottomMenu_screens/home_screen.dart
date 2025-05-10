@@ -47,11 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
   //cambiar el index del bottom menu
   void _onItemTapped(int index) {
     setState(() {
-       _pageController.jumpToPage(index);
-      
+      _selectedIndex = index;
     });
+    _pageController.jumpToPage(index);
   }
-
 
   //************************************************************
   // CONTROL DE UID
@@ -268,86 +267,81 @@ class _HomeScreenState extends State<HomeScreen> {
       //************************************************************
       // BOTTOM BAR
       //************************************************************
-      bottomNavigationBar:
-          ocultarBottomNav
-              ? null
-              : Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 10,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: BottomNavigationBar(
-                      currentIndex: _selectedIndex,
-                      onTap: _onItemTapped,
-                      backgroundColor: AppColors.primaryColor,
-                      selectedItemColor: Colors.white,
-                      unselectedItemColor: const Color.fromARGB(
-                        255,
-                        133,
-                        155,
-                        192,
-                      ),
-
-                      selectedLabelStyle: TextStyle(
-                        fontFamily: 'Helvetica',
-                        fontWeight: FontWeight.w400,
-                      ),
-
-                      unselectedLabelStyle: TextStyle(
-                        fontFamily: 'Helvetica',
-                        fontWeight: FontWeight.w300,
-                      ),
-
-                      showUnselectedLabels: true,
-                      type: BottomNavigationBarType.fixed,
-                      items: [
-                        BottomNavigationBarItem(
-                          icon: Padding(
-                            padding: EdgeInsets.only(top: 10.0),
-                            child: Icon(Icons.home),
-                          ),
-                          label: 'inicio'.tr(),
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Padding(
-                            padding: EdgeInsets.only(top: 10.0),
-                            child: Icon(Icons.business),
-                          ),
-                          label: 'servicios'.tr(),
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Padding(
-                            padding: EdgeInsets.only(top: 10.0),
-                            child: Icon(Icons.chat),
-                          ),
-                          label: 'chats'.tr(),
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Padding(
-                            padding: EdgeInsets.only(top: 10.0),
-                            child: Icon(Icons.person),
-                          ),
-                          label: 'perfil'.tr(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+      bottomNavigationBar: ocultarBottomNav
+    ? null
+    : Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewPadding.bottom + 12,
+        ),
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: AppColors.primaryColor,
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10,
+                offset: Offset(0, 4),
               ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _itemMenuNav(Icons.home, 'inicio'.tr(), 0),
+              _itemMenuNav(Icons.business, 'servicios'.tr(), 1),
+              _itemMenuNav(Icons.chat, 'chats'.tr(), 2),
+              _itemMenuNav(Icons.person, 'perfil'.tr(), 3),
+            ],
+          ),
+        ),
+      ),
+
+
     );
   }
+
+  Widget _itemMenuNav(IconData icon, String label, int index) {
+    final bool isSelected = _selectedIndex == index;
+
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () => _onItemTapped(index),
+      child: SizedBox(
+        width: 70,
+        height: 60,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              color:
+                  isSelected
+                      ? Colors.white
+                      : const Color.fromARGB(255, 133, 155, 192),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                color:
+                    isSelected
+                        ? Colors.white
+                        : const Color.fromARGB(255, 133, 155, 192),
+                fontFamily: 'Helvetica',
+                fontWeight: isSelected ? FontWeight.w400 : FontWeight.w300,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
 }
 
 //************************************************************

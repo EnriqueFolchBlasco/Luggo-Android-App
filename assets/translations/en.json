@@ -158,7 +158,7 @@
   "notasTexto": "Write your notes here...",
   "newCategory": "New category",
   "categoryName": "Category name",
-  "items": "items",
+  "items": "Items",
   "mudanza": "Move ",
   "moveNameSingleWord": "Please enter only one word (no spaces)",
   "chooseBackground": "Choose a background",
@@ -191,7 +191,9 @@
   "addPhoto": "Add Photo",
   "peso": "Weight",
   "gotIt": "Confirmed",
-    "descripcion": "Description"
+  "descripcion": "Description",
+  "updated": "Updated",
+  "created": "Created"
 
 
 
