@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:luggo/screens/content_screens/mudanza_screens/home_screen_content.dart';
-import 'package:luggo/screens/content_screens/qr_screens/qr_screen.dart';
+import 'package:luggo/screens/bottomMenu_screens/qr_screen.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/notification_manager.dart';
@@ -267,40 +267,39 @@ class _HomeScreenState extends State<HomeScreen> {
       //************************************************************
       // BOTTOM BAR
       //************************************************************
-      bottomNavigationBar: ocultarBottomNav
-    ? null
-    : Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewPadding.bottom + 12,
-        ),
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
-            color: AppColors.primaryColor,
-            borderRadius: BorderRadius.circular(30),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 10,
-                offset: Offset(0, 4),
+      bottomNavigationBar:
+          ocultarBottomNav
+              ? null
+              : Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewPadding.bottom + 12,
+                ),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _itemMenuNav(Icons.home, 'inicio'.tr(), 0),
+                      _itemMenuNav(Icons.business, 'servicios'.tr(), 1),
+                      //Escaner probable
+                      _itemMenuNav(Icons.qr_code_scanner, 'scanner'.tr(), 2),
+                      _itemMenuNav(Icons.person, 'perfil'.tr(), 3),
+                    ],
+                  ),
+                ),
               ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _itemMenuNav(Icons.home, 'inicio'.tr(), 0),
-              _itemMenuNav(Icons.business, 'servicios'.tr(), 1),
-              //Escaner probable
-              _itemMenuNav(Icons.qr_code_scanner, 'scanner'.tr(), 2),
-              _itemMenuNav(Icons.person, 'perfil'.tr(), 3),
-            ],
-          ),
-        ),
-      ),
-
-
     );
   }
 
@@ -349,11 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
 // CUSTOM MENSATGE DE NOTIFICACIONS EN BLAU/BLANC
 //************************************************************
 
-Widget construirNotificacion(
-  String texto,
-  VoidCallback cerrarOverlay,
-  VoidCallback refrescarUI,
-) {
+Widget construirNotificacion(String texto, VoidCallback cerrarOverlay, VoidCallback refrescarUI) {
   return GestureDetector(
     onTap: () {
       NotificationManager.eliminar(texto);

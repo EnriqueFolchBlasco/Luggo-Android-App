@@ -31,48 +31,70 @@ class _IntroLuggoScreenState extends State<IntroLuggoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return IntroductionScreen(
-      key: introKey,
-      globalBackgroundColor: Colors.white,
-      pages: [
-        PageViewModel(
-          title: 'introWelcomeTitle'.tr(),
-          body: 'introWelcomeBody'.tr(),
-          image: Image.asset('assets/images/LuggoIconoColor.png', height: 160),
-          decoration: _getPageDecoration(),
+    return SafeArea(
+      child: IntroductionScreen(
+        key: introKey,
+        globalBackgroundColor: Colors.white,
+        pages: [
+          PageViewModel(
+            title: 'introWelcomeTitle'.tr(),
+            body: 'introWelcomeBody'.tr(),
+            image: Image.asset(
+              'assets/images/LuggoIconoColor.png',
+              height: 160,
+            ),
+            decoration: _getPageDecoration(),
+          ),
+          PageViewModel(
+            title: 'introServicesTitle'.tr(),
+            body: 'introServicesBody'.tr(),
+            image: Image.asset(
+              'assets/images/Luggo_Baseline BN.png',
+              height: 160,
+            ),
+            decoration: _getPageDecoration(),
+          ),
+          PageViewModel(
+            title: 'introStartNowTitle'.tr(),
+            body: 'introStartNowBody'.tr(),
+            image: Image.asset(
+              'assets/images/Luggo_Baseline Color 1.png',
+              height: 160,
+            ),
+            decoration: _getPageDecoration(),
+          ),
+        ],
+        onDone: _onDone,
+        showSkipButton: true,
+        skip: Text(
+          'skip'.tr(),
+          style: TextStyle(
+            fontFamily: 'Helvetica',
+            fontWeight: FontWeight.w600,
+            color: AppColors.primaryColor,
+          ),
         ),
-        PageViewModel(
-          title: 'introServicesTitle'.tr(),
-          
-          body: 'introServicesBody'.tr(),
-          image: Image.asset('assets/images/Luggo_Baseline BN.png', height: 160),
-          decoration: _getPageDecoration(),
+        next: const Icon(Icons.arrow_forward, color: AppColors.primaryColor),
+        done: Text(
+          'done'.tr(),
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+            color: AppColors.primaryColor,
+          ),
         ),
-        PageViewModel(
-          title: 'introStartNowTitle'.tr(),
-          body: 'introStartNowBody'.tr(),
-          image: Image.asset('assets/images/Luggo_Baseline Color 1.png', height: 160),
-          decoration: _getPageDecoration(),
-        ),
-      ],
-      onDone: _onDone,
-      showSkipButton: true,
-      skip: Text('skip'.tr(),
-      style: TextStyle(fontFamily: 'Helvetica',fontWeight: FontWeight.w600,color: AppColors.primaryColor)),
-      next: const Icon(Icons.arrow_forward, color: AppColors.primaryColor),
-
-      done: Text('done'.tr(), style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.primaryColor)),
-      dotsDecorator: const DotsDecorator(
-        size: Size(10.0, 10.0),
-        color: Color.fromARGB(255, 153, 184, 238),
-        activeColor: AppColors.primaryColor,
-        activeSize: Size(22.0, 10.0),
-        activeShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        dotsDecorator: const DotsDecorator(
+          size: Size(10.0, 10.0),
+          color: Color.fromARGB(255, 153, 184, 238),
+          activeColor: AppColors.primaryColor,
+          activeSize: Size(22.0, 10.0),
+          activeShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(25.0)),
+          ),
         ),
       ),
     );
   }
+
 
   PageDecoration _getPageDecoration() {
     return const PageDecoration(
