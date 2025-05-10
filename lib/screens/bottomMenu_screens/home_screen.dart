@@ -1,13 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:luggo/screens/content_screens/mudanza_screens/home_screen_content.dart';
+import 'package:luggo/screens/content_screens/qr_screens/qr_screen.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/notification_manager.dart';
 import 'services_screen.dart';
-import 'chats_screen.dart';
 import 'profile_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -38,7 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       ServicesScreen(),
-      ChatsScreen(),
+      EscaneadorDeItemsScreen(),
+      //ChatsScreen(),
       ProfileScreen(),
     ];
 
@@ -258,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           ServicesScreen(),
-          ChatsScreen(),
+          EscaneadorDeItemsScreen(),
           ProfileScreen(),
         ],
       ),
@@ -292,7 +292,8 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               _itemMenuNav(Icons.home, 'inicio'.tr(), 0),
               _itemMenuNav(Icons.business, 'servicios'.tr(), 1),
-              _itemMenuNav(Icons.chat, 'chats'.tr(), 2),
+              //Escaner probable
+              _itemMenuNav(Icons.qr_code_scanner, 'scanner'.tr(), 2),
               _itemMenuNav(Icons.person, 'perfil'.tr(), 3),
             ],
           ),

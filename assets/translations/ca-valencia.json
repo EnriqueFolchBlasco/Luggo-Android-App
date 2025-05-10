@@ -5,7 +5,7 @@
   "valencian": "Valencià",
   "inicio": "Inici",
   "servicios": "Serveis",
-  "chats": "Xats",
+  "scanner": "Escàner",
   "perfil": "Perfil",
   "user": "Usuari",
   "opciones": "Opcions",
@@ -161,7 +161,11 @@
   "gotIt": "Confirmat",
   "descripcion": "Descripció",
   "updated": "Actualitzat",
-  "created": "Creat"
+  "created": "Creat",
+  "error": "Error",
+  "qrTitle": "Escaneja una etiqueta",
+  "qrInfoHelp": "Escaneja el codi QR de cada etiqueta per marcar els ítems com a rebuts. El codi ha d'estar dins del quadre negre.",
+  "qrIndicaciones": "Col·loca el QR dins del quadre"
 
 
 }

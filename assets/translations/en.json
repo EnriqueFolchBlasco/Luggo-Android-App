@@ -6,7 +6,7 @@
   
   "inicio": "Home",
   "servicios": "Services",
-  "chats": "Chats",
+  "scanner": "Scanner",
   "perfil": "Profile",
 
   "user": "Username",
@@ -24,6 +24,7 @@
   "ourMission": "Our Mission",
   "ourMissionText": "We aim to reduce the stress of moving while promoting sustainability and community connection.",
   "thankYou": "Thank you for choosing Luggo 💙",
+  "error": "Error",
 
   "help": "Help",
   "needHelp": "Need assistance?",
@@ -193,7 +194,11 @@
   "gotIt": "Confirmed",
   "descripcion": "Description",
   "updated": "Updated",
-  "created": "Created"
+  "created": "Created",
+
+  "qrTitle": "Scan a label",
+  "qrInfoHelp": "Scan each labels QR code to mark items as received. Make sure the code is inside the black frame.",
+  "qrIndicaciones": "Place the QR code inside the box"
 
 
 

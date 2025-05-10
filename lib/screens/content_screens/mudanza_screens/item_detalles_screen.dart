@@ -40,10 +40,10 @@ class _ItemDetallesScreenState extends State<ItemDetallesScreen> {
   @override
   void initState() {
     super.initState();
-    _loadItem();
+    _carregarItem();
   }
 
-  Future<void> _loadItem() async {
+  Future<void> _carregarItem() async {
     final db = await DatabaseService.getDatabase();
     final loadedItem = await db.itemDao.obtenerItemPorId(widget.itemId);
 
@@ -91,7 +91,7 @@ class _ItemDetallesScreenState extends State<ItemDetallesScreen> {
     Navigator.pop(context, true);
   }
 
-  Future<void> _pickImage() async {
+  Future<void> _elegirImatge() async {
     final picker = ImagePicker();
     final picked = await picker.pickImage(source: ImageSource.gallery);
     if (picked != null) {
@@ -173,7 +173,7 @@ class _ItemDetallesScreenState extends State<ItemDetallesScreen> {
             ),
             const SizedBox(height: 20),
             GestureDetector(
-              onTap: _pickImage,
+              onTap: _elegirImatge,
               child: Container(
                 width: double.infinity,
                 height: 180,
@@ -281,21 +281,14 @@ class _ItemDetallesScreenState extends State<ItemDetallesScreen> {
 
             LuggoLabel('estado'.tr()),
             DropdownButtonFormField<String>(
-              value:
-                  [
-                        'Normal',
-                        'Frágil',
-                        'Empaquetado',
-                        'Urgente',
-                      ].contains(estado)
-                      ? estado
-                      : 'Normal',
+
+              value: ['Normal','Frágil','Empaquetado','Urgente',].contains(estado) ? estado : 'Normal',
+
               onChanged: (value) => setState(() => estado = value),
-              items:
-                  ['Normal', 'Frágil', 'Empaquetado', 'Urgente']
-                      .map(
-                        (e) => DropdownMenuItem(value: e, child: Text(e.tr())))
-                  .toList(),
+
+              items:['Normal', 'Frágil', 'Empaquetado', 'Urgente'].map(
+                        (e) => DropdownMenuItem(value: e, child: Text(e.tr()))).toList(),
+                        
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
