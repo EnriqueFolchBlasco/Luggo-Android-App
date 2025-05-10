@@ -153,7 +153,7 @@
   "editMode": "EDIT MODE",
   "crearMudanza": "CREATE MOVE",
   "addItem": "Add Item",
-  "enterName": "Enter item name",
+  "enterName": "Item name",
   "save": "Save",
   "notasTexto": "Write your notes here...",
   "newCategory": "New category",
@@ -186,7 +186,14 @@
   "introStartNowTitle": "Ready to simplify your move?",
   "introStartNowBody": "Start planning with Luggo today.",
   "skip": "Skip",
-  "done": "Done"
+  "done": "Done",
+  "detalleItem": "Item Detail",
+  "addPhoto": "Add Photo",
+  "peso": "Weight",
+  "gotIt": "Confirmed",
+    "descripcion": "Description"
+
+
 
   
 

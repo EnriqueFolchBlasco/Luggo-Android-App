@@ -154,7 +154,12 @@
   "introStartNowTitle": "Preparat per simplificar la teua mudança?",
   "introStartNowBody": "Comença a planificar amb Luggo avui mateix.",
   "skip": "Omet",
-  "done": "Fet"
+  "done": "Fet",
+  "detalleItem": "Detall de l'article",
+  "addPhoto": "Afegir foto",
+  "peso": "Pes",
+  "gotIt": "Confirmat",
+  "descripcion": "Descripció"
 
 
 }

@@ -58,6 +58,7 @@ flutter:
     - assets/flags/
     - assets/flags/valencian.png
     - assets/images/LuggoColor_noBackground.png
+    - assets/images/LuggoIconoColorFullBlue.png
 
   fonts:
     - family: ClashDisplay
@@ -91,10 +92,7 @@ flutter:
           weight: 700
 
 
-
-
-
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/LuggoIconoColor.png"
+  image_path: "assets/images/LuggoIconoColorFullBlue.png"

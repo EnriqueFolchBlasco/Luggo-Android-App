@@ -20,8 +20,17 @@ class ItemProveedor with ChangeNotifier {
     await cargarDatos();
   }
 
-  Future<void> eliminar(Item item) async {
-    await repositorio.eliminar(item);
+  Future<void> eliminarPorId(int id) async {
+    await repositorio.eliminarPorId(id);
     await cargarDatos();
+  }
+
+  Future<void> actualizar(Item item) async {
+    await repositorio.actualizar(item);
+    await cargarDatos();
+  }
+
+  Future<Item?> obtenerPorId(int id) async {
+    return await repositorio.obtenerPorId(id);
   }
 }

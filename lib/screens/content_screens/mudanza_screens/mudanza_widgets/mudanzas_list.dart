@@ -18,6 +18,7 @@ class _MudanzasListState extends State<MudanzasList> {
   List<Mudanza> mudanzas = [];
   bool cargando = true;
   Map<int, int> itemCounts = {};
+  Map<int, int> gotItCounts = {};
 
   @override
   void initState() {
@@ -30,17 +31,24 @@ class _MudanzasListState extends State<MudanzasList> {
     final todas = await db.mudanzaDao.obtenerTodos();
 
     final counts = <int, int>{};
+    final gotCounts = <int, int>{};
+
     for (final m in todas) {
-      final count = await db.itemDao.contarItemsDeMudanza(m.mudanzaId!);
-      counts[m.mudanzaId!] = count ?? 0;
+      final total = await db.itemDao.contarItemsDeMudanza(m.mudanzaId!);
+      final gotIt = await db.itemDao.contarItemsGotIt(m.mudanzaId!);
+
+      counts[m.mudanzaId!] = total ?? 0;
+      gotCounts[m.mudanzaId!] = gotIt ?? 0;
     }
 
     setState(() {
       mudanzas = todas;
       itemCounts = counts;
+      gotItCounts = gotCounts;
       cargando = false;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +62,17 @@ class _MudanzasListState extends State<MudanzasList> {
               separatorBuilder: (_, __) => const SizedBox(width: 12),
               itemBuilder: (context, index) {
                 if (index < mudanzas.length) {
-                  final mudanza = mudanzas[index];
-                  final count = itemCounts[mudanza.mudanzaId] ?? 0;
-                  return _mudanzaCard(context, mudanza, count, 0.0);
-                } else {
-                  return _mudanzaCardAnadir(context);
-                }
-              },
+                    final mudanza = mudanzas[index];
+
+                    //Calcul del percentage
+                    final count = itemCounts[mudanza.mudanzaId] ?? 0;
+                    final got = gotItCounts[mudanza.mudanzaId] ?? 0;
+                    final progress = count == 0 ? 0.0 : got / count;
+                    return _mudanzaCard(context, mudanza, count, progress);
+                  } else {
+                    return _mudanzaCardAnadir(context);
+                  }
+                },
             ),
     );
   }
@@ -144,18 +156,22 @@ class _MudanzasListState extends State<MudanzasList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'progressLabel'.tr(),
-                            style: const TextStyle(fontSize: 12),
+                          Expanded(
+                            child: Text(
+                              'progressLabel'.tr(),
+                              style: const TextStyle(fontSize: 10),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
+                          const SizedBox(width: 4),
                           Text(
                             '${(progress * 100).round()}%',
-                            style: const TextStyle(fontSize: 12),
+                            style: const TextStyle(fontSize: 10),
                           ),
                         ],
                       ),
+
                       const SizedBox(height: 4),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),

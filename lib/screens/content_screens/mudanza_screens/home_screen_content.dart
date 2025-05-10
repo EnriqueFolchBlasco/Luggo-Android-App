@@ -4,7 +4,7 @@ import 'package:luggo/models/mudanza.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/services/shared_prefs_service.dart';
 import 'package:luggo/utils/constants.dart';
-import 'package:luggo/utils/mudanzas_list.dart';
+import 'package:luggo/screens/content_screens/mudanza_screens/mudanza_widgets/mudanzas_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';

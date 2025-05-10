@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/screens/login_screens/login_screen.dart';
+import 'package:luggo/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //https://pub.dev/packages/introduction_screen
@@ -42,8 +43,9 @@ class _IntroLuggoScreenState extends State<IntroLuggoScreen> {
         ),
         PageViewModel(
           title: 'introServicesTitle'.tr(),
+          
           body: 'introServicesBody'.tr(),
-          image: Image.asset('assets/images/Luggo_Baseline2.png', height: 160),
+          image: Image.asset('assets/images/Luggo_Baseline BN.png', height: 160),
           decoration: _getPageDecoration(),
         ),
         PageViewModel(
@@ -55,13 +57,15 @@ class _IntroLuggoScreenState extends State<IntroLuggoScreen> {
       ],
       onDone: _onDone,
       showSkipButton: true,
-      skip: Text('skip'.tr()),
-      next: const Icon(Icons.arrow_forward),
-      done: Text('done'.tr(), style: const TextStyle(fontWeight: FontWeight.w600)),
+      skip: Text('skip'.tr(),
+      style: TextStyle(fontFamily: 'Helvetica',fontWeight: FontWeight.w600,color: AppColors.primaryColor)),
+      next: const Icon(Icons.arrow_forward, color: AppColors.primaryColor),
+
+      done: Text('done'.tr(), style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.primaryColor)),
       dotsDecorator: const DotsDecorator(
         size: Size(10.0, 10.0),
-        color: Colors.grey,
-        activeColor: Colors.blueAccent,
+        color: Color.fromARGB(255, 153, 184, 238),
+        activeColor: AppColors.primaryColor,
         activeSize: Size(22.0, 10.0),
         activeShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(25.0)),

@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:luggo/models/item.dart';
+import 'package:luggo/screens/content_screens/mudanza_screens/item_detalles_screen.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
@@ -102,10 +104,11 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
           tab,
         );
 
-        final items = await db.itemDao.obtenerNombresDeItemsPorCategoria(
-          widget.idMudanza,
-          tab,
-        );
+      final items = await db.itemDao.obtenerItemsPorCategoria(
+        widget.idMudanza,
+        tab,
+      );
+
 
         llistaCategoriesTemproals.add({"nombre": tab, "cantidad": count, "items": items});
       }
@@ -270,7 +273,8 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
                     ),
                     itemCount: i["items"].length,
                     itemBuilder: (context, index) {
-                      return _crearItem(i["items"][index]);
+                      final item = i["items"][index];
+                      return _crearItem(item);
                     },
                   );
                 }).toList(),
@@ -382,13 +386,21 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
 
 
   
-
-
-
-  Widget _crearItem(String nombreItem) {
+  Widget _crearItem(Item item) {
     return GestureDetector(
-      onTap: () {
-        print('click');
+      onTap: () async {
+        final refresh = await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => ItemDetallesScreen(
+              itemId: item.itemId!,
+              categorias: categorias.map((categoria) => categoria["nombre"] as String).toList(),
+            ),
+          ),
+        );
+        if (refresh == true) {
+          await _cargarCategorias();
+        }
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 14),
@@ -406,20 +418,22 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
         ),
         child: Row(
           children: [
+            Icon(
+              Icons.check_circle_outline,
+              color: item.gotIt ? Colors.green : Colors.grey,
+            ),
+            const SizedBox(width: 6),
             Expanded(
               child: Text(
-                nombreItem,
+                item.nombre,
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-            const Icon(
-              Icons.check_circle_outline,
-              color: Color(0xFF0066FF),
-              size: 24,
-            ),
+            
+            const Icon(Icons.chevron_right, color: AppColors.primaryColor),
           ],
         ),
       ),

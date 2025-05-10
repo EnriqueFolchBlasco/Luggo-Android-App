@@ -8,10 +8,10 @@ class ModalNuevaCategoria extends StatelessWidget {
   final VoidCallback onCategoriaCreada;
 
   const ModalNuevaCategoria({
-    Key? key,
+    super.key,
     required this.idMudanza,
     required this.onCategoriaCreada,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,45 +50,49 @@ class ModalNuevaCategoria extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Padding(
-  padding: const EdgeInsets.symmetric(horizontal: 16), // margin from sides
-  child: SizedBox(
-    width: double.infinity,
-    child: ElevatedButton(
-      onPressed: () async {
-        final newName = nombreCtrl.text.trim();
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      final newName = nombreCtrl.text.trim();
 
-        if (newName.isEmpty) return;
+                      if (newName.isEmpty) return;
 
-        final db = await DatabaseService.getDatabase();
-        final mudanza = await db.mudanzaDao.obtenerPorId(idMudanza);
+                      final db = await DatabaseService.getDatabase();
+                      final mudanza = await db.mudanzaDao.obtenerPorId(
+                        idMudanza,
+                      );
 
-        if (mudanza == null) return;
+                      if (mudanza == null) return;
 
-        final updatedTabs = (mudanza.tabs?.split('|') ?? []);
+                      final updatedTabs = (mudanza.tabs?.split('|') ?? []);
 
-        if (!updatedTabs.contains(newName)) {
-          updatedTabs.add(newName);
-          await db.mudanzaDao.actualizarTabs(idMudanza, updatedTabs.join('|'));
-        }
+                      if (!updatedTabs.contains(newName)) {
+                        updatedTabs.add(newName);
+                        await db.mudanzaDao.actualizarTabs(
+                          idMudanza,
+                          updatedTabs.join('|'),
+                        );
+                      }
 
-        Navigator.pop(context);
-        onCategoriaCreada();
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primaryColor,
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-      child: Text(
-        'save'.tr(),
-        style: const TextStyle(fontSize: 16, color: Colors.white),
-      ),
-    ),
-  ),
-),
-
+                      Navigator.pop(context);
+                      onCategoriaCreada();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryColor,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: Text(
+                      'save'.tr(),
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 12),

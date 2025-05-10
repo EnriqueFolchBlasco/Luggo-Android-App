@@ -12,12 +12,12 @@ class ModalNuevoItem extends StatefulWidget {
   final VoidCallback onItemGuardado;
 
   const ModalNuevoItem({
-    Key? key,
+    super.key,
     required this.idMudanza,
     required this.categorias,
     required this.categoriaActual,
     required this.onItemGuardado,
-  }) : super(key: key);
+  });
 
   @override
   State<ModalNuevoItem> createState() => _ModalNuevoItemState();
@@ -68,8 +68,8 @@ class _ModalNuevoItemState extends State<ModalNuevoItem> {
               items: widget.categorias.map((x) {
                 return DropdownMenuItem<String>(
                   value: x["nombre"],
-                  child: Text(
-                    x["nombre"],
+                  child: Text(x["nombre"].toString().tr(),
+
                     style: const TextStyle(
                       color: AppColors.primaryColor,
                       fontWeight: FontWeight.w500,
@@ -112,13 +112,13 @@ class _ModalNuevoItemState extends State<ModalNuevoItem> {
                     if (nombre.isEmpty) return;
 
                     final db = await DatabaseService.getDatabase();
-                    await db.itemDao.insertarItem(
+                    await db.itemDao.insertar(
                       Item(
                         mudanzaId: widget.idMudanza,
                         nombre: nombre,
                         gotIt: false,
                         categoria: categoriaSeleccionada,
-                        estado: 'UNREADY',
+                        estado: 'Normal',
                       ),
                     );
 

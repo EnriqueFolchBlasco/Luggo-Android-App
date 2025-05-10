@@ -330,7 +330,7 @@ class _$ItemDao extends ItemDao {
                   'categoria': item.categoria,
                   'estado': item.estado
                 }),
-        _itemDeletionAdapter = DeletionAdapter(
+        _itemUpdateAdapter = UpdateAdapter(
             database,
             'Item',
             ['itemId'],
@@ -354,7 +354,7 @@ class _$ItemDao extends ItemDao {
 
   final InsertionAdapter<Item> _itemInsertionAdapter;
 
-  final DeletionAdapter<Item> _itemDeletionAdapter;
+  final UpdateAdapter<Item> _itemUpdateAdapter;
 
   @override
   Future<List<Item>> obtenerTodos() async {
@@ -390,6 +390,26 @@ class _$ItemDao extends ItemDao {
   }
 
   @override
+  Future<List<Item>> obtenerItemsPorCategoria(
+    int mudanzaId,
+    String categoria,
+  ) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Item WHERE mudanzaId = ?1 AND categoria = ?2',
+        mapper: (Map<String, Object?> row) => Item(
+            itemId: row['itemId'] as int?,
+            mudanzaId: row['mudanzaId'] as int,
+            nombre: row['nombre'] as String,
+            peso: row['peso'] as double?,
+            foto: row['foto'] as String?,
+            descripcion: row['descripcion'] as String?,
+            gotIt: (row['gotIt'] as int) != 0,
+            categoria: row['categoria'] as String?,
+            estado: row['estado'] as String?),
+        arguments: [mudanzaId, categoria]);
+  }
+
+  @override
   Future<int?> contarItemsPorCategoria(
     int mudanzaId,
     String categoria,
@@ -412,18 +432,55 @@ class _$ItemDao extends ItemDao {
   }
 
   @override
+  Future<Item?> obtenerItemPorId(int id) async {
+    return _queryAdapter.query('SELECT * FROM Item WHERE itemId = ?1',
+        mapper: (Map<String, Object?> row) => Item(
+            itemId: row['itemId'] as int?,
+            mudanzaId: row['mudanzaId'] as int,
+            nombre: row['nombre'] as String,
+            peso: row['peso'] as double?,
+            foto: row['foto'] as String?,
+            descripcion: row['descripcion'] as String?,
+            gotIt: (row['gotIt'] as int) != 0,
+            categoria: row['categoria'] as String?,
+            estado: row['estado'] as String?),
+        arguments: [id]);
+  }
+
+  @override
+  Future<void> eliminarItemPorId(int id) async {
+    await _queryAdapter
+        .queryNoReturn('DELETE FROM Item WHERE itemId = ?1', arguments: [id]);
+  }
+
+  @override
+  Future<Item?> obtenerItemPorNombre(
+    int mudanzaId,
+    String categoria,
+    String nombre,
+  ) async {
+    return _queryAdapter.query(
+        'SELECT * FROM Item WHERE mudanzaId = ?1 AND categoria = ?2 AND nombre = ?3 LIMIT 1',
+        mapper: (Map<String, Object?> row) => Item(itemId: row['itemId'] as int?, mudanzaId: row['mudanzaId'] as int, nombre: row['nombre'] as String, peso: row['peso'] as double?, foto: row['foto'] as String?, descripcion: row['descripcion'] as String?, gotIt: (row['gotIt'] as int) != 0, categoria: row['categoria'] as String?, estado: row['estado'] as String?),
+        arguments: [mudanzaId, categoria, nombre]);
+  }
+
+  @override
+  Future<int?> contarItemsGotIt(int id) async {
+    return _queryAdapter.query(
+        'SELECT COUNT(*) FROM Item WHERE mudanzaId = ?1 AND gotIt = 1',
+        mapper: (Map<String, Object?> row) => row.values.first as int,
+        arguments: [id]);
+  }
+
+  @override
   Future<void> insertar(Item item) async {
     await _itemInsertionAdapter.insert(item, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> insertarItem(Item item) async {
-    await _itemInsertionAdapter.insert(item, OnConflictStrategy.abort);
-  }
-
-  @override
-  Future<void> eliminar(Item item) async {
-    await _itemDeletionAdapter.delete(item);
+  Future<void> actualizarItem(Item item) async {
+    await _itemUpdateAdapter.update(item, OnConflictStrategy.abort);
   }
 }
 
