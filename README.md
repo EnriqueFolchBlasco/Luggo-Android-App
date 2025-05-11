@@ -1,6 +1,5 @@
 # Luggo - Android App
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/EnriqueFolchBlasco/Luggo-Android-App)
 ![Language](https://img.shields.io/badge/language-Dart-blue) 
 ![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/license-CC--BY--NC--ND%204.0-blue)
 ## Description
