@@ -5,7 +5,7 @@ import 'package:luggo/models/mudanza.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
-import 'package:luggo/utils/custom_form_widgets.dart';
+import 'package:luggo/utils/utils_widgets/custom_form_widgets.dart';
 
 class EditarMudanzaScreen extends StatefulWidget {
   final Mudanza mudanza;

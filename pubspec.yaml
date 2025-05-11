@@ -27,6 +27,9 @@ dependencies:
   introduction_screen: ^3.1.17
   mobile_scanner: ^3.5.2
   permission_handler: ^11.0.0
+  qr_flutter: ^4.0.0
+  pdf: ^3.10.4
+  printing: ^5.12.0
 
 
 

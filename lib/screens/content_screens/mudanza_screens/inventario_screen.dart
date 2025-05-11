@@ -5,8 +5,8 @@ import 'package:luggo/screens/content_screens/mudanza_screens/item_detalles_scre
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
-import 'package:luggo/utils/modal_nueva_categoria.dart';
-import 'package:luggo/utils/modal_nuevo_item.dart';
+import 'package:luggo/utils/utils_widgets/modal_nueva_categoria.dart';
+import 'package:luggo/utils/utils_widgets/modal_nuevo_item.dart';
 
 class InventarioScreen extends StatefulWidget {
   final int idMudanza;

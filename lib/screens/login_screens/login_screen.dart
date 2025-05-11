@@ -9,7 +9,7 @@ import 'forgotPassword_Screen.dart';
 import 'register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:luggo/utils/custom_text_field.dart';
+import 'package:luggo/utils/utils_widgets/custom_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

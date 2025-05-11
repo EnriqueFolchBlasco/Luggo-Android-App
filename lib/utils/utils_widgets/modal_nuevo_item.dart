@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/models/item.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
-import 'package:luggo/utils/custom_form_widgets.dart';
+import 'package:luggo/utils/utils_widgets/custom_form_widgets.dart';
 
 class ModalNuevoItem extends StatefulWidget {
   final int idMudanza;
@@ -46,6 +46,7 @@ class _ModalNuevoItemState extends State<ModalNuevoItem> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+
             Text(
               'addItem'.tr(),
               style: const TextStyle(
@@ -55,7 +56,12 @@ class _ModalNuevoItemState extends State<ModalNuevoItem> {
               ),
             ),
             const SizedBox(height: 16),
+
+
             LuggoTextField(controller: nombreCtrl, hint: 'enterName'.tr()),
+
+
+
             DropdownButtonFormField<String>(
               value: categoriaSeleccionada,
               onChanged: (value) {
@@ -65,6 +71,7 @@ class _ModalNuevoItemState extends State<ModalNuevoItem> {
                   });
                 }
               },
+              
               items: widget.categorias.map((x) {
                 return DropdownMenuItem<String>(
                   value: x["nombre"],
@@ -77,6 +84,7 @@ class _ModalNuevoItemState extends State<ModalNuevoItem> {
                   ),
                 );
               }).toList(),
+
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
@@ -101,7 +109,12 @@ class _ModalNuevoItemState extends State<ModalNuevoItem> {
                 ),
               ),
             ),
+
+
+
+
             const SizedBox(height: 20),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SizedBox(
@@ -125,6 +138,7 @@ class _ModalNuevoItemState extends State<ModalNuevoItem> {
                     Navigator.pop(context);
                     widget.onItemGuardado();
                   },
+
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -132,11 +146,14 @@ class _ModalNuevoItemState extends State<ModalNuevoItem> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
+
                   child: Text(
                     'save'.tr(),
                     style: const TextStyle(color: Colors.white),
                   ),
+
                 ),
+
               ),
             ),
             const SizedBox(height: 24),

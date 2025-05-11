@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/controllers/firebase_controller.dart';
 import 'package:luggo/services/shared_prefs_service.dart';
 import 'package:luggo/utils/constants.dart';
-import 'package:luggo/utils/custom_text_field.dart'; // Import your custom textfield
+import 'package:luggo/utils/utils_widgets/custom_text_field.dart'; // Import your custom textfield
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {

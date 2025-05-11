@@ -372,21 +372,19 @@ class _$ItemDao extends ItemDao {
   }
 
   @override
-  Future<int?> contarItemsDeMudanza(int mudanzaId) async {
-    return _queryAdapter.query('SELECT COUNT(*) FROM Item WHERE mudanzaId = ?1',
-        mapper: (Map<String, Object?> row) => row.values.first as int,
+  Future<List<Item>> obtenerItemsPorMudanza(int mudanzaId) async {
+    return _queryAdapter.queryList('SELECT * FROM Item WHERE mudanzaId = ?1',
+        mapper: (Map<String, Object?> row) => Item(
+            itemId: row['itemId'] as int?,
+            mudanzaId: row['mudanzaId'] as int,
+            nombre: row['nombre'] as String,
+            peso: row['peso'] as double?,
+            foto: row['foto'] as String?,
+            descripcion: row['descripcion'] as String?,
+            gotIt: (row['gotIt'] as int) != 0,
+            categoria: row['categoria'] as String?,
+            estado: row['estado'] as String?),
         arguments: [mudanzaId]);
-  }
-
-  @override
-  Future<List<String>> obtenerNombresDeItemsPorCategoria(
-    int mudanzaId,
-    String categoria,
-  ) async {
-    return _queryAdapter.queryList(
-        'SELECT nombre FROM Item WHERE mudanzaId = ?1 AND categoria = ?2',
-        mapper: (Map<String, Object?> row) => row.values.first as String,
-        arguments: [mudanzaId, categoria]);
   }
 
   @override
@@ -410,24 +408,13 @@ class _$ItemDao extends ItemDao {
   }
 
   @override
-  Future<int?> contarItemsPorCategoria(
+  Future<List<String>> obtenerNombresDeItemsPorCategoria(
     int mudanzaId,
     String categoria,
   ) async {
-    return _queryAdapter.query(
-        'SELECT COUNT(*) FROM Item WHERE mudanzaId = ?1 AND categoria = ?2',
-        mapper: (Map<String, Object?> row) => row.values.first as int,
-        arguments: [mudanzaId, categoria]);
-  }
-
-  @override
-  Future<bool?> existeItemConCategoria(
-    int mudanzaId,
-    String categoria,
-  ) async {
-    return _queryAdapter.query(
-        'SELECT EXISTS(SELECT 1 FROM Item WHERE mudanzaId = ?1 AND categoria = ?2 LIMIT 1)',
-        mapper: (Map<String, Object?> row) => (row.values.first as int) != 0,
+    return _queryAdapter.queryList(
+        'SELECT nombre FROM Item WHERE mudanzaId = ?1 AND categoria = ?2',
+        mapper: (Map<String, Object?> row) => row.values.first as String,
         arguments: [mudanzaId, categoria]);
   }
 
@@ -448,12 +435,6 @@ class _$ItemDao extends ItemDao {
   }
 
   @override
-  Future<void> eliminarItemPorId(int id) async {
-    await _queryAdapter
-        .queryNoReturn('DELETE FROM Item WHERE itemId = ?1', arguments: [id]);
-  }
-
-  @override
   Future<Item?> obtenerItemPorNombre(
     int mudanzaId,
     String categoria,
@@ -466,11 +447,46 @@ class _$ItemDao extends ItemDao {
   }
 
   @override
+  Future<int?> contarItemsDeMudanza(int mudanzaId) async {
+    return _queryAdapter.query('SELECT COUNT(*) FROM Item WHERE mudanzaId = ?1',
+        mapper: (Map<String, Object?> row) => row.values.first as int,
+        arguments: [mudanzaId]);
+  }
+
+  @override
+  Future<int?> contarItemsPorCategoria(
+    int mudanzaId,
+    String categoria,
+  ) async {
+    return _queryAdapter.query(
+        'SELECT COUNT(*) FROM Item WHERE mudanzaId = ?1 AND categoria = ?2',
+        mapper: (Map<String, Object?> row) => row.values.first as int,
+        arguments: [mudanzaId, categoria]);
+  }
+
+  @override
   Future<int?> contarItemsGotIt(int id) async {
     return _queryAdapter.query(
         'SELECT COUNT(*) FROM Item WHERE mudanzaId = ?1 AND gotIt = 1',
         mapper: (Map<String, Object?> row) => row.values.first as int,
         arguments: [id]);
+  }
+
+  @override
+  Future<bool?> existeItemConCategoria(
+    int mudanzaId,
+    String categoria,
+  ) async {
+    return _queryAdapter.query(
+        'SELECT EXISTS(SELECT 1 FROM Item WHERE mudanzaId = ?1 AND categoria = ?2 LIMIT 1)',
+        mapper: (Map<String, Object?> row) => (row.values.first as int) != 0,
+        arguments: [mudanzaId, categoria]);
+  }
+
+  @override
+  Future<void> eliminarItemPorId(int id) async {
+    await _queryAdapter
+        .queryNoReturn('DELETE FROM Item WHERE itemId = ?1', arguments: [id]);
   }
 
   @override

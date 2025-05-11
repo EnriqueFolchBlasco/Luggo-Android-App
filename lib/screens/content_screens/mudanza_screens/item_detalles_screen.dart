@@ -5,7 +5,7 @@ import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/models/item.dart';
-import 'package:luggo/utils/custom_form_widgets.dart';
+import 'package:luggo/utils/utils_widgets/custom_form_widgets.dart';
 
 class ItemDetallesScreen extends StatefulWidget {
   final int itemId;

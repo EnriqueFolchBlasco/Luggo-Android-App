@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:luggo/models/item.dart';
 import 'package:luggo/models/mudanza.dart';
 import 'package:luggo/screens/content_screens/mudanza_screens/editar_mudanza_screen.dart';
 import 'package:luggo/screens/content_screens/mudanza_screens/inventario_screen.dart';
@@ -7,6 +8,7 @@ import 'package:luggo/screens/content_screens/mudanza_screens/notas_mudanza.dart
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/services/database_service.dart';
 import 'package:luggo/utils/constants.dart';
+import 'package:luggo/utils/generar_pdf.dart';
 
 class MenuMudanzaScreen extends StatefulWidget {
   final int idMudanza;
@@ -210,7 +212,9 @@ class _MenuMudanzaScreenState extends State<MenuMudanzaScreen> {
 
                             },
                           ),
-                          _crearOpcio(Icons.qr_code_2, 'Labeling', () {}),
+                          _crearOpcio(Icons.qr_code_2, 'Labeling', () {
+                            _generarPdfConEtiquetas();
+                          }),
                           _crearOpcio(Icons.share, 'Share', () {}),
                           _crearOpcio(
                             Icons.delete_outline,
@@ -312,4 +316,26 @@ class _MenuMudanzaScreenState extends State<MenuMudanzaScreen> {
       ),
     );
   }
+
+  Future<void> _generarPdfConEtiquetas() async {
+    final db = await DatabaseService.getDatabase();
+    final items = await db.itemDao.obtenerItemsPorMudanza(widget.idMudanza);
+
+    final etiquetas =
+        items
+            .map(
+              (item) => {
+                'mudanzaId': item.mudanzaId.toString(),
+                'itemId': item.itemId.toString(),
+                'itemName': item.nombre,
+                'mudanzaName': mudanza?.nombre ?? '',
+              },
+            )
+            .toList();
+
+    await generarEtiquetasPdf(etiquetas);
+  }
+
+
+
 }

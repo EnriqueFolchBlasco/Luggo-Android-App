@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:luggo/screens/content_screens/service_screens/service_details_screen.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/utils/constants.dart';
-import 'package:luggo/utils/barra_progress.dart';
+import 'package:luggo/utils/utils_widgets/barra_progress.dart';
 
 class ServiceInfoScreen extends StatefulWidget {
   final String serviceType;
