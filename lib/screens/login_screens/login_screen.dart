@@ -43,8 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
 
       if (userCredential.user != null && userCredential.user!.emailVerified) {
         final uid = userCredential.user!.uid;
@@ -65,9 +64,12 @@ class _LoginScreenState extends State<LoginScreen> {
           _errorMensatge = ("errorEmailNotVerified").tr();
         });
       }
+
     } catch (e) {
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool? loggedBefore = prefs.getBool('loggedInBefore');
+      
       if (loggedBefore == true) {
         String? uid = prefs.getString('userUID');
         String? username = prefs.getString('username');

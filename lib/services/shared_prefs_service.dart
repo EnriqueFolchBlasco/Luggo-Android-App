@@ -11,6 +11,11 @@ class SharedPrefsService {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('username');
   }
+
+  Future<String?> getEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('email');
+  }
   
 
   Future<void> saveOfflineLoginData(String uid, String username, String email) async {
@@ -38,7 +43,9 @@ class SharedPrefsService {
           'email': email,
         };
       }
+
     }
+
     return null;
   }
 

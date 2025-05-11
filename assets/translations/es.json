@@ -166,7 +166,9 @@
   "created": "Creado",
   "qrTitle": "Escanea una etiqueta",
   "qrInfoHelp": "Escanea el código QR de cada etiqueta para marcar los ítems como recibidos. El código debe estar dentro del cuadro negro.",
-  "qrIndicaciones": "Coloca el QR dentro del recuadro"
+  "qrIndicaciones": "Coloca el QR dentro del recuadro",
+  "nomItem": "Articulo: ",
+  "mudanzaName": "Mudanza: "
 
 
 

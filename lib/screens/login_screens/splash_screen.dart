@@ -48,14 +48,19 @@ class _SplashScreenState extends State<SplashScreen> {
     Widget nextScreen;
 
     if (introVista == null || !introVista) {
+
       nextScreen = const IntroLuggoScreen();
     } else if (loggedInBefore && savedUID != null) {
+
       nextScreen = HomeScreen();
     } else {
+
       nextScreen = LoginScreen();
     }
 
-    if (!mounted) return;
+    if (!mounted){
+      return;
+    } 
 
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
