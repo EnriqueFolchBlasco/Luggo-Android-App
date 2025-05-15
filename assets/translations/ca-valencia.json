@@ -167,7 +167,8 @@
   "qrInfoHelp": "Escaneja el codi QR de cada etiqueta per marcar els ítems com a rebuts. El codi ha d'estar dins del quadre negre.",
   "qrIndicaciones": "Col·loca el QR dins del quadre",
   "nomItem": "Article: ",
-  "mudanzaName": "Mudança: "
+  "mudanzaName": "Mudança: ",
+  "qrCorrecte": "Codi QR escanejat correctament"
 
 
 }

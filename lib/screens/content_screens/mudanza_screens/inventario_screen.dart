@@ -257,7 +257,7 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
-              children: [_crearFiltro("Estado"), _crearFiltro("Peso")],
+              children: [_crearFiltro("Estado"), _crearFiltro("Peso"), _crearFiltro("+")],
             ),
           ),
           Expanded(
@@ -284,17 +284,20 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
           ),
         ],
       ),
+
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
         child: const Icon(Icons.add, color: Colors.white),
         onPressed: () {
 
-          if (_selectedTabIndex < categorias.length) {
+          final tabIndex = _controladorTabs?.index ?? _selectedTabIndex;
 
-            final currentCategoria = categorias[_selectedTabIndex]["nombre"];
+          if (tabIndex < categorias.length) {
+            final currentCategoria = categorias[tabIndex]["nombre"];
             _mostrarDialogoAgregarItem(currentCategoria);
           }
+
 
         },
 
@@ -373,9 +376,9 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
             await _cargarCategorias();
             setState(() {
 
-              final newIndex = categorias.length - 1;
-              _selectedTabIndex = newIndex;
-              _controladorTabs?.animateTo(newIndex);
+              final indexNou = categorias.length - 1;
+              _selectedTabIndex = indexNou;
+              _controladorTabs?.animateTo(indexNou);
               
             });
           },

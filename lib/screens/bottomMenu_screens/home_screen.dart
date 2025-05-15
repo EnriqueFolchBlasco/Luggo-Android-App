@@ -9,6 +9,8 @@ import 'services_screen.dart';
 import 'profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -18,29 +20,11 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   final GlobalKey _notificacionKey = GlobalKey();
   OverlayEntry? _notificacionOverlay;
-
-  //Llista negra de pantalles sense el bottomMenu
-  List<Type> _screensSinBottomNav = [];
   
-  late List<Widget> _screens;
 
   @override
   void initState() {
     super.initState();
-
-    _screens = <Widget>[
-      HomeScreenContent(
-        onAvatarTap: () {
-          setState(() {
-            _selectedIndex = 3;
-          });
-        },
-      ),
-      ServicesScreen(),
-      EscaneadorDeItemsScreen(),
-      //ChatsScreen(),
-      ProfileScreen(),
-    ];
 
   }
 
@@ -76,8 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //************************************************************
 
   void _mostrarOverlayNotificaciones() {
-    final renderBox =
-        _notificacionKey.currentContext!.findRenderObject() as RenderBox;
+    final renderBox =_notificacionKey.currentContext!.findRenderObject() as RenderBox;
     final position = renderBox.localToGlobal(Offset.zero);
 
     _notificacionOverlay = OverlayEntry(
@@ -142,10 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // (!) Depen de si la pantalla esta en la blacklist enseña el bottombar o no
-    bool ocultarBottomNav = _screensSinBottomNav.contains(
-      _screens[_selectedIndex].runtimeType,
-    );
 
     return Scaffold(
       //************************************************************
@@ -196,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 28,
             ),
             
-          
+        // campaneta de notis
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -267,39 +246,40 @@ class _HomeScreenState extends State<HomeScreen> {
       //************************************************************
       // BOTTOM BAR
       //************************************************************
-      bottomNavigationBar:
-          ocultarBottomNav
-              ? null
-              : Padding(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewPadding.bottom + 12,
-                ),
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 10,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _itemMenuNav(Icons.home, 'inicio'.tr(), 0),
-                      _itemMenuNav(Icons.business, 'servicios'.tr(), 1),
-                      //Escaner probable
-                      _itemMenuNav(Icons.qr_code_scanner, 'scanner'.tr(), 2),
-                      _itemMenuNav(Icons.person, 'perfil'.tr(), 3),
-                    ],
-                  ),
-                ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewPadding.bottom + 12,
+        ),
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: AppColors.primaryColor,
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10,
+                offset: Offset(0, 4),
               ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+
+              _itemMenuNav(Icons.home, 'inicio'.tr(), 0),
+
+              _itemMenuNav(Icons.business, 'servicios'.tr(), 1),
+
+              _itemMenuNav(Icons.qr_code_scanner, 'scanner'.tr(), 2),
+
+              _itemMenuNav(Icons.person, 'perfil'.tr(), 3),
+              
+            ],
+          ),
+        ),
+      ),
     );
   }
 

@@ -200,7 +200,8 @@
   "qrInfoHelp": "Scan each labels QR code to mark items as received. Make sure the code is inside the black frame.",
   "qrIndicaciones": "Place the QR code inside the box",
   "nomItem": "Item: ",
-  "mudanzaName": "Move: "
+  "mudanzaName": "Move: ",
+  "qrCorrecte": "QR code scanned correctly"
 
 
 

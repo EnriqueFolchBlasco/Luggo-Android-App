@@ -31,7 +31,7 @@ class _EscaneadorDeItemsScreenState extends State<EscaneadorDeItemsScreen> {
     print('🤞🧊🧊🧊👌👌💀💀🤓👆: $codeQR');
 
     if (codeQR == null) {
-      _mensatgeErrorPop('error'.tr());
+      _mensatgePop('error'.tr(),2);
       await _cooldownAntiSpamError();
       return;
     }
@@ -39,7 +39,7 @@ class _EscaneadorDeItemsScreenState extends State<EscaneadorDeItemsScreen> {
     final partes = codeQR.split(':');
 
     if (partes.length != 2) {
-      _mensatgeErrorPop('error'.tr());
+      _mensatgePop('error'.tr(),2);
       await _cooldownAntiSpamError();
       return;
     }
@@ -49,7 +49,7 @@ class _EscaneadorDeItemsScreenState extends State<EscaneadorDeItemsScreen> {
     final itemId = int.tryParse(partes[1]);
 
     if (mudanzaId == null || itemId == null) {
-      _mensatgeErrorPop('error'.tr());
+      _mensatgePop('error'.tr(),2);
       await _cooldownAntiSpamError();
       return;
     }
@@ -65,9 +65,10 @@ class _EscaneadorDeItemsScreenState extends State<EscaneadorDeItemsScreen> {
 
       if (mounted) {
         // mensatge o snackbar dse q esta be
+        _mensatgePop('qrCorrecte'.tr(), 1);
       }
     } else {
-      _mensatgeErrorPop('error'.tr());
+      _mensatgePop('error'.tr(),2);
       await _cooldownAntiSpamError();
     }
   }
@@ -83,15 +84,22 @@ class _EscaneadorDeItemsScreenState extends State<EscaneadorDeItemsScreen> {
     }
   }
 
-  void _mensatgeErrorPop(String message) {
-    if (!mounted) return;
+  void _mensatgePop(String message, int tipo) {
+    //1 green
+    //2 red
+
+    if (!mounted){
+      return;
+    }
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
         duration: const Duration(seconds: 2),
         behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: tipo == 1
+            ? const Color.fromARGB(255, 0, 255, 0)
+            : const Color.fromARGB(255, 255, 0, 0)
       ),
     );
   }
@@ -171,12 +179,15 @@ class _EscaneadorDeItemsScreenState extends State<EscaneadorDeItemsScreen> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
+
                 child: MobileScanner(
                   controller: MobileScannerController(
                     facing: CameraFacing.back,
                   ),
+                  
                   onDetect: _qrDetectat,
                 ),
+
               ),
             ),
           ),

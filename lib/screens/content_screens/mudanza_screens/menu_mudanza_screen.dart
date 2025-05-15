@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:luggo/models/item.dart';
 import 'package:luggo/models/mudanza.dart';
 import 'package:luggo/screens/content_screens/mudanza_screens/editar_mudanza_screen.dart';
 import 'package:luggo/screens/content_screens/mudanza_screens/inventario_screen.dart';
@@ -135,8 +134,7 @@ class _MenuMudanzaScreenState extends State<MenuMudanzaScreen> {
                         children: [
                           _crearOpcio(
                             Icons.inventory_2_outlined,
-                            'Inventory',
-                            () {
+                            'Inventory',() {
 
                               final tabs = (mudanza!.tabs ?? '')
                                       .split('|')

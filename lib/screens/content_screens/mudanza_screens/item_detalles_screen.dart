@@ -66,9 +66,12 @@ class _ItemDetallesScreenState extends State<ItemDetallesScreen> {
   }
 
   Future<void> _guardarCambios() async {
-    if (item == null) return;
+    if (item == null){
+      return;
+    }
 
     final db = await DatabaseService.getDatabase();
+    
     final updatedItem = Item(
       itemId: item!.itemId,
       mudanzaId: item!.mudanzaId,
@@ -93,12 +96,14 @@ class _ItemDetallesScreenState extends State<ItemDetallesScreen> {
 
   Future<void> _elegirImatge() async {
     final picker = ImagePicker();
-    final picked = await picker.pickImage(source: ImageSource.gallery);
-    if (picked != null) {
+    final iamtgeDeGaleriaPicked = await picker.pickImage(source: ImageSource.gallery);
+    if (iamtgeDeGaleriaPicked != null) {
+
       setState(() {
-        selectedImage = File(picked.path);
-        fotoController.text = picked.path;
+        selectedImage = File(iamtgeDeGaleriaPicked.path);
+        fotoController.text = iamtgeDeGaleriaPicked.path;
       });
+
     }
   }
 
@@ -129,7 +134,7 @@ class _ItemDetallesScreenState extends State<ItemDetallesScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.delete, color: Colors.black),
+            icon: const Icon(Icons.delete, color: Color.fromARGB(255, 236, 52, 52)),
             onPressed: _eliminarItem,
           )
         ],
@@ -250,8 +255,7 @@ class _ItemDetallesScreenState extends State<ItemDetallesScreen> {
                   widget.categorias
                       .map(
                         (x) =>
-                            DropdownMenuItem(value: x, child: Text(x.tr())),
-                      )
+                            DropdownMenuItem(value: x, child: Text(x.tr())))
                       .toList(),
               decoration: InputDecoration(
                 filled: true,
@@ -286,8 +290,7 @@ class _ItemDetallesScreenState extends State<ItemDetallesScreen> {
 
               onChanged: (value) => setState(() => estado = value),
 
-              items:['Normal', 'Frágil', 'Empaquetado', 'Urgente'].map(
-                        (e) => DropdownMenuItem(value: e, child: Text(e.tr()))).toList(),
+              items:['Normal', 'Frágil', 'Empaquetado', 'Urgente'].map((e) => DropdownMenuItem(value: e, child: Text(e.tr()))).toList(),
                         
               decoration: InputDecoration(
                 filled: true,

@@ -62,14 +62,18 @@ class _MudanzasListState extends State<MudanzasList> {
               separatorBuilder: (_, __) => const SizedBox(width: 12),
               itemBuilder: (context, index) {
                 if (index < mudanzas.length) {
+
                     final mudanza = mudanzas[index];
 
                     //Calcul del percentage
                     final count = itemCounts[mudanza.mudanzaId] ?? 0;
                     final got = gotItCounts[mudanza.mudanzaId] ?? 0;
                     final progress = count == 0 ? 0.0 : got / count;
+
                     return _mudanzaCard(context, mudanza, count, progress);
+
                   } else {
+
                     return _mudanzaCardAnadir(context);
                   }
                 },
@@ -78,8 +82,7 @@ class _MudanzasListState extends State<MudanzasList> {
   }
 
   Widget _mudanzaCard(BuildContext context, Mudanza mudanza, int itemCount, double progress) {
-    String itemsCantidad =
-        '${itemCounts[mudanza.mudanzaId] ?? 0} ${'items'.tr()}';
+    String itemsCantidad = '${itemCounts[mudanza.mudanzaId] ?? 0} ${'items'.tr()}';
 
     return GestureDetector(
       onTap: () async {
@@ -94,7 +97,9 @@ class _MudanzasListState extends State<MudanzasList> {
         if (result == true && mounted) {
           await _cargarMudanzas();
         }
+
       },
+
       child: Container(
         width: 200,
         padding: const EdgeInsets.all(12),
@@ -200,13 +205,16 @@ class _MudanzasListState extends State<MudanzasList> {
           context,
           MaterialPageRoute(builder: (context) => const CrearMudanzaScreen()),
         );
+
         if (result == true && mounted) {
           setState(() {
             cargando = true;
           });
           await _cargarMudanzas();
         }
+
       },
+      
       child: Container(
         width: 200,
         padding: const EdgeInsets.all(16),

@@ -13,7 +13,7 @@ import 'dart:typed_data';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -34,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void loadUserData() async {
     final data = await _prefsService.getOfflineUserData();
+
     if (data == null){
       return;
     }
@@ -44,8 +45,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     if ((imageUrl == null || imageUrl.isEmpty) && uid != null) {
       try {
-        final userDoc =
-            await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+        final userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
         imageUrl = userDoc.data()?['profileImage'];
 
         if (imageUrl != null && imageUrl.isNotEmpty) {
@@ -60,36 +62,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final hasInternet = connectivity != ConnectivityResult.none;
 
     setState(() {
+
       _username = data['username'] ?? '';
       _email = data['email'] ?? '';
       _networkImageUrl = (hasInternet && imageUrl != null && imageUrl.isNotEmpty) ? imageUrl : null;
 
     });
+
   }
 
-  
 
   Future<void> uploadProfileImage(File image) async {
+
     final prefs = await SharedPreferences.getInstance();
     final uid = prefs.getString('userUID');
 
-    if (uid == null) return;
+    if (uid == null){
+      return;
+    }
 
     try {
-      final storageRef = FirebaseStorage.instance.ref().child(
-        'profile_pictures/$uid.jpg',
-      );
+      
+      final storageRef = FirebaseStorage.instance.ref().child('profile_pictures/$uid.jpg');
       await storageRef.putFile(image);
       final downloadUrl = await storageRef.getDownloadURL();
 
-      await FirebaseFirestore.instance.collection('users').doc(uid).set({
-        'profileImage': downloadUrl,
-      }, SetOptions(merge: true));
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({'profileImage': downloadUrl,}, SetOptions(merge: true));
 
       NotificationManager.agregar('noConnection.photoSuccess'.tr());
 
       // pa guardar url
       await prefs.setString('profileImageUrl', downloadUrl);
+
     } catch (e) {
       NotificationManager.agregar('noConnection.photoError'.tr());
       //print("❌ problemaaa no a pujat: $e");
@@ -156,6 +160,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                     const SizedBox(height: 24),
+
                     Text(
                       _username,
                       style: const TextStyle(
@@ -164,11 +169,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     const SizedBox(height: 6),
+
                     Text(
                       _email,
                       style: TextStyle(color: Colors.grey, fontSize: 15),
                     ),
                     const SizedBox(height: 32),
+
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
@@ -177,6 +184,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           width: 1,
                         ),
                       ),
+
                       child: Column(
                         children: [
                           Row(
@@ -234,19 +242,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
 
     if (pickedFile != null) {
+      // 
       final imageFile = File(pickedFile.path);
 
       Navigator.push(
-        context,
+        (context),
         MaterialPageRoute(
           builder:
               (_) => AvatarCropScreen(
                 imageFile: imageFile,
                 onCropped: (Uint8List croppedData) async {
+
                   final tempDir = Directory.systemTemp;
-                  final file = await File(
-                    '${tempDir.path}/avatar_cropped.png',
-                  ).writeAsBytes(croppedData);
+                  final file = await File('${tempDir.path}/avatar_cropped.png').writeAsBytes(croppedData);
+
                   await uploadProfileImage(file);
                 },
               ),
