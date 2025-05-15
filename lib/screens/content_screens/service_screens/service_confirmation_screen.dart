@@ -4,6 +4,7 @@ import 'package:luggo/screens/bottomMenu_screens/home_screen.dart';
 import 'package:luggo/screens/bottomMenu_screens/services_screen.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/utils/constants.dart';
+import 'package:luggo/utils/utils_widgets/barra_progress.dart';
 
 class ServiceConfirmationScreen extends StatefulWidget {
   final String serviceType;
@@ -59,7 +60,66 @@ class _ServiceConfirmationScreenState extends State<ServiceConfirmationScreen> {
               height: 28,
             ),
       ),
-      // body: ...,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.black),
+                    ),
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(Icons.arrow_back, color: Colors.black),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      splashRadius: 20,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                
+                
+
+                Center(
+                  child: Text(
+                    widget.serviceType.tr(),
+                    style: const TextStyle(
+                      fontFamily: 'clashDisplay',
+                      color: AppColors.primaryColor,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w400,
+                      letterSpacing: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                  child: BarraProgressoAmazon(2),
+
+                ),
+
+                const SizedBox(height: 12),
+                
+                
+
+           
+              ],
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.fromLTRB(
           20,
@@ -76,7 +136,7 @@ class _ServiceConfirmationScreenState extends State<ServiceConfirmationScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ServicesScreen(),
+                  builder: (context) => HomeScreen(),
                 ),
               );
               

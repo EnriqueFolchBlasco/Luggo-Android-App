@@ -195,10 +195,15 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
               
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => ServiceDetailsScreen(serviceType: widget.serviceType),
+                PageRouteBuilder(
+                  pageBuilder:
+                      (_, __, ___) => ServiceDetailsScreen(serviceType: widget.serviceType),
+                  transitionsBuilder: (_, animation, __, child) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
                 ),
               );
+
               
             },
             style: ElevatedButton.styleFrom(

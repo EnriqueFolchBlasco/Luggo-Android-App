@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:luggo/screens/content_screens/service_screens/service_confirmation_screen.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/utils/constants.dart';
+import 'package:luggo/utils/utils_widgets/barra_progress.dart';
 
 class ServiceDetailsScreen extends StatefulWidget {
   final String serviceType;
@@ -58,7 +59,66 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
               height: 28,
             ),
       ),
-      // body: ...,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.black),
+                    ),
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(Icons.arrow_back, color: Colors.black),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      splashRadius: 20,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                
+                
+
+                Center(
+                  child: Text(
+                    widget.serviceType.tr(),
+                    style: const TextStyle(
+                      fontFamily: 'clashDisplay',
+                      color: AppColors.primaryColor,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w400,
+                      letterSpacing: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                  child: BarraProgressoAmazon(1),
+
+                ),
+
+                const SizedBox(height: 12),
+                
+                
+
+           
+              ],
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.fromLTRB(
           20,
@@ -74,10 +134,15 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
               
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => ServiceConfirmationScreen(serviceType: widget.serviceType),
+                PageRouteBuilder(
+                  pageBuilder:
+                      (_, __, ___) => ServiceConfirmationScreen(serviceType: widget.serviceType),
+                  transitionsBuilder: (_, animation, __, child) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
                 ),
               );
+
               
             },
             style: ElevatedButton.styleFrom(
