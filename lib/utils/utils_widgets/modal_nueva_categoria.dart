@@ -17,7 +17,8 @@ class ModalNuevaCategoria extends StatelessWidget {
   Widget build(BuildContext context) {
     final nombreCtrl = TextEditingController();
 
-    return Padding(
+    return SafeArea(
+      child: Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
         left: 20,
@@ -95,8 +96,9 @@ class ModalNuevaCategoria extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 24),
         ],
+      ),
       ),
     );
   }

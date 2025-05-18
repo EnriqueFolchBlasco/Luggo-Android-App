@@ -201,7 +201,11 @@
   "qrIndicaciones": "Place the QR code inside the box",
   "nomItem": "Item: ",
   "mudanzaName": "Move: ",
-  "qrCorrecte": "QR code scanned correctly"
+  "qrCorrecte": "QR code scanned correctly",
+  "payment_failed": "Payment failed. Please try again.",
+  "serviceInfo": "Service Information",
+  "userOpinions": "Opinions from our users"
+
 
 
 

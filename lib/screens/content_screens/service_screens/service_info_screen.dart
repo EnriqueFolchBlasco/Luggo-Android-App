@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:luggo/screens/content_screens/service_screens/service_details_screen.dart';
+import 'package:luggo/screens/content_screens/service_screens/services_widgets/service_terms_screen.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/utils/constants.dart';
-import 'package:luggo/utils/utils_widgets/barra_progress.dart';
+import 'package:luggo/utils/utils_widgets/comentari_usuari.dart';
 
 class ServiceInfoScreen extends StatefulWidget {
   final String serviceType;
@@ -59,127 +59,186 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
            
             Image(
               image: AssetImage('assets/images/LuggoColor_noBackground.png'),
-              height: 28,
-            ),
+          height: 28,
+        ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
+            Center(
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.black),
+                ),
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  icon: const Icon(Icons.arrow_back, color: Colors.black),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  splashRadius: 20,
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+
+            Center(
+              child: Text(
+                widget.serviceType.tr(),
+                style: const TextStyle(
+                  fontFamily: 'clashDisplay',
+                  color: AppColors.primaryColor,
+                  fontSize: 28,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  cambiarImage(widget.serviceType),
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+
               children: [
-                Center(
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.black),
-                    ),
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: const Icon(Icons.arrow_back, color: Colors.black),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      splashRadius: 20,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-
-                
-                
-
-                Center(
-                  child: Text(
-                    widget.serviceType.tr(),
-                    style: const TextStyle(
-                      fontFamily: 'clashDisplay',
-                      color: AppColors.primaryColor,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w400,
-                      letterSpacing: 1.5,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-                  child: BarraProgressoAmazon(0),
-
-                ),
-
-                const SizedBox(height: 12),
                 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      cambiarInformacion(widget.serviceType),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Helvetica',
-                        height: 1.4,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  child: 
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.info_outline,
+                        color: AppColors.primaryColor,
                       ),
-                    ),
-                  ),
-                ),
-
-                
-
-                const SizedBox(height: 12),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor.withAlpha((0.1 * 255).round()),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.info_outline,
-                          color: AppColors.primaryColor,
-                          size: 20,
+                      const SizedBox(width: 8),
+                      Text(
+                        'serviceInfo'.tr(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'helvetica',
+                          color: AppColors.primaryColor
                         ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Text(
-                            'offeredService'.tr(),
-                            style: const TextStyle(
-                              fontSize: 10,
-                              color: AppColors.primaryColor,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Helvetica',
-                              height: 1.4,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    ],
+
+                  )
+                  
                 ),
-                
               ],
+            ),
+            const SizedBox(height: 8),
+
+            Text(
+              cambiarInformacion(widget.serviceType),
+              textAlign: TextAlign.justify,
+              style: const TextStyle(fontSize: 12, 
+              height: 1.5, 
+              color: Color.fromARGB(255, 113, 113, 113)),
+            ),
+
+            const SizedBox(height: 20),
+
+            const Divider(thickness: 1, color: AppColors.primaryColor),
+            const SizedBox(height: 8),
+            Center(
+              child: Text(
+                'userOpinions'.tr(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primaryColor,
+                ),
+              ),
             ),
             const SizedBox(height: 14),
 
-           
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 110),
+              child: 
+              Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                children: const [
+                  Text(
+                    '9,1',
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.w400, fontFamily: 'clashDisplay', color: AppColors.primaryColor),
+                  ),
+                  SizedBox(height: 4),
+                  Text('• Excelente •', style: TextStyle(fontSize: 14, fontFamily: 'clashDisplay'),),
+                  SizedBox(height: 2),
+                  Text('10 comentarios', style: TextStyle(fontSize: 12, fontFamily: 'clashDisplay')),
+                ],
+              ),
+            ),
+            ),
+            
+            const SizedBox(height: 20),
+
+            //Padding(
+            //  padding: const EdgeInsets.only(left: 50, right: 50),
+            //  child: Divider(color: Colors.grey.withOpacity(0.5), thickness: 1),
+            //),
+
+            
+            //HARDCODEATTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+            const ComentariUsuari(
+              avatarRuta: 'assets/images/user.png',
+              nombre: 'Cristina Olmos',
+              ubicacion: 'València, València',
+              fecha: '10/05/2025',
+              comentario:
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            ),
+            
+            const ComentariUsuari(
+              avatarRuta: 'assets/images/user.png',
+              nombre: 'Pau Rovira Rosaleny',
+              ubicacion: 'València, Almussafes',
+              fecha: '06/12/2017',
+              comentario:
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            ),
+
+            const ComentariUsuari(
+              avatarRuta: 'assets/images/user.png',
+              nombre: 'Barbara Folch',
+              ubicacion: 'València, València',
+              fecha: '23/04/2024',
+              comentario:
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            ),
           ],
         ),
       ),
+
       bottomNavigationBar: Padding(
         padding: EdgeInsets.fromLTRB(
           20,
@@ -197,7 +256,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                 context,
                 PageRouteBuilder(
                   pageBuilder:
-                      (_, __, ___) => ServiceDetailsScreen(serviceType: widget.serviceType),
+                      (_, __, ___) => ServiceTermsScreen(serviceType: widget.serviceType),
                   transitionsBuilder: (_, animation, __, child) {
                     return FadeTransition(opacity: animation, child: child);
                   },
@@ -245,6 +304,28 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
         return 'transportServiceInfo'.tr();
     }
   }
+
+  String cambiarImage(String serviceType) {
+    switch (serviceType) {
+      case 'transportService':
+        return 'assets/images/TransporteBackground.png';
+      case 'laborService':
+        return 'assets/images/LaborBackground.png';
+      case 'smallMoveService':
+        return 'assets/images/SmallMoveBackground.png';
+      case 'storePickupService':
+        return 'assets/images/StorePickupBackground.png';
+      case 'recyclingService':
+        return 'assets/images/RecyclingBackground.png';
+      case 'donateService':
+        return 'assets/images/DonateBackground.png';
+      default:
+        return 'assets/images/LuggoColor.png';
+    }
+  }
+
+
+
 }
 
   

@@ -169,7 +169,11 @@
   "qrIndicaciones": "Coloca el QR dentro del recuadro",
   "nomItem": "Articulo: ",
   "mudanzaName": "Mudanza: ",
-  "qrCorrecte": "Codigo QR escaneado correctamente."
+  "qrCorrecte": "Codigo QR escaneado correctamente.",
+  "payment_failed": "El pago a fallado. Intentalo de nuevo.",
+  "serviceInfo": "Sobre el servicio",
+  "userOpinions": "Opiniones de nuestros usuarios"
+
 
 
 

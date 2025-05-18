@@ -102,7 +102,7 @@ class BarraProgressoAmazon extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'Info',
+                  'Terms and Conditions',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 12,
@@ -120,7 +120,7 @@ class BarraProgressoAmazon extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'Details',
+                  'Details & Payment',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 12,
@@ -138,7 +138,7 @@ class BarraProgressoAmazon extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'Confirm',
+                  'Purchase Details',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 12,

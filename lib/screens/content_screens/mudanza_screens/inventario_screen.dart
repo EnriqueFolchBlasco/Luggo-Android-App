@@ -115,6 +115,7 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
 
       setState(() {
         categorias = llistaCategoriesTemproals;
+
         if (categorias.isNotEmpty) {
           
           _controladorTabs = TabController(
@@ -128,7 +129,7 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
 
             if (!_controladorTabs!.indexIsChanging &&
                 index == categorias.length) {
-              //ANTI PLUS EFECTE
+              //ANTI PLUS EFECTE, fa q no es puga ficar el tab damunt del plus i tire caparrere
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 _controladorTabs!.animateTo(_selectedTabIndex);
               });
@@ -257,9 +258,10 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
-              children: [_crearFiltro("Estado"), _crearFiltro("Peso"), _crearFiltro("+")],
+              children: [_crearFiltro("Estado"), _crearFiltro("Peso")],
             ),
           ),
+          
           Expanded(
             child: TabBarView(
               controller: _controladorTabs,
@@ -310,6 +312,7 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
   Widget _crearFiltro(String texto) {
     return GestureDetector(
       onTap: () {
+        //TO DO filtros
         print('filtro');
       },
       child: Container(
@@ -329,16 +332,16 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
         ),
         child: Row(
           children: [
-            const Icon(
-              Icons.filter_alt_outlined,
-              size: 16,
-              color: Colors.black54,
-            ),
-            const SizedBox(width: 6),
+            
+              
+            const Icon(Icons.filter_alt_outlined, size: 16, color: Colors.black54 ),
+            const SizedBox(width: 2),
             Text(
               texto,
               style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
             ),
+            
+            
           ],
         ),
       ),

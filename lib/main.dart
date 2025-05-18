@@ -4,13 +4,19 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:luggo/utils/constants.dart';
 import 'utils/firebase_options.dart';
 import 'screens/login_screens/splash_screen.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 //02052025_2023_1925
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await EasyLocalization.ensureInitialized();
-
+  
+  await dotenv.load(fileName: ".env");
+  Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY']!;
   runApp(
     EasyLocalization(
       supportedLocales: const [

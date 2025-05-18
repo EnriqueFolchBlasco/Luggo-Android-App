@@ -168,7 +168,11 @@
   "qrIndicaciones": "Col·loca el QR dins del quadre",
   "nomItem": "Article: ",
   "mudanzaName": "Mudança: ",
-  "qrCorrecte": "Codi QR escanejat correctament"
+  "qrCorrecte": "Codi QR escanejat correctament",
+  "payment_failed": "El pagament ha fallat. Torna-ho a intentar.",
+  "serviceInfo": "Informació del servei",
+  "userOpinions": "Opinions dels nostres usuaris"
+
 
 
 }

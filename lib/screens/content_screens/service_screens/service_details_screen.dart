@@ -1,7 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:luggo/screens/content_screens/service_screens/service_confirmation_screen.dart';
+import 'package:luggo/screens/content_screens/service_screens/service_purchasedetails_screen.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
+import 'package:luggo/services/stripe_service.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/utils_widgets/barra_progress.dart';
 
@@ -130,21 +131,41 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () {
-              
-              Navigator.push(
+            onPressed: () async {
+              bool paymentSuccess = await StripeService.instance.makePayment(
                 context,
-                PageRouteBuilder(
-                  pageBuilder:
-                      (_, __, ___) => ServiceConfirmationScreen(serviceType: widget.serviceType),
-                  transitionsBuilder: (_, animation, __, child) {
-                    return FadeTransition(opacity: animation, child: child);
-                  },
-                ),
+                10,
+                'eur',
               );
 
-              
+              if (paymentSuccess) {
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder:
+                        (_, __, ___) => ServicePurchaseDetailsScreen(
+                          serviceType: widget.serviceType,
+                        ),
+                    transitionsBuilder: (_, animation, __, child) {
+                      return FadeTransition(opacity: animation, child: child);
+                    },
+                  ),
+                );
+              } else {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'payment_failed'.tr(),
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                    backgroundColor: const Color(0xFFF4F6FA),
+                  ),
+                );
+              }
             },
+
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryColor,
               padding: const EdgeInsets.symmetric(vertical: 14),

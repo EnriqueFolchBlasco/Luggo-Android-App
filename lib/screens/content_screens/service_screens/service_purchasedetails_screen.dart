@@ -1,23 +1,21 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:luggo/screens/bottomMenu_screens/home_screen.dart';
-import 'package:luggo/screens/bottomMenu_screens/services_screen.dart';
+
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/utils_widgets/barra_progress.dart';
 
-class ServiceConfirmationScreen extends StatefulWidget {
+class ServicePurchaseDetailsScreen extends StatefulWidget {
   final String serviceType;
 
-  const ServiceConfirmationScreen({super.key, required this.serviceType});
+  const ServicePurchaseDetailsScreen({required this.serviceType});
 
   @override
-  State<ServiceConfirmationScreen> createState() => _ServiceConfirmationScreenState();
-
-  
+  State<ServicePurchaseDetailsScreen> createState() => _ServicePurchaseDetailsScreenState();
 }
 
-class _ServiceConfirmationScreenState extends State<ServiceConfirmationScreen> {
+class _ServicePurchaseDetailsScreenState extends State<ServicePurchaseDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,12 +51,10 @@ class _ServiceConfirmationScreenState extends State<ServiceConfirmationScreen> {
             }
           },
         ),
-        title: 
-           
-            Image(
-              image: AssetImage('assets/images/LuggoColor_noBackground.png'),
-              height: 28,
-            ),
+        title: Image(
+          image: AssetImage('assets/images/LuggoColor_noBackground.png'),
+          height: 28,
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
@@ -86,10 +82,6 @@ class _ServiceConfirmationScreenState extends State<ServiceConfirmationScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
-
-                
-                
-
                 Center(
                   child: Text(
                     widget.serviceType.tr(),
@@ -103,18 +95,11 @@ class _ServiceConfirmationScreenState extends State<ServiceConfirmationScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
                   child: BarraProgressoAmazon(2),
-
                 ),
-
                 const SizedBox(height: 12),
-                
-                
-
-           
               ],
             ),
           ],
@@ -127,19 +112,16 @@ class _ServiceConfirmationScreenState extends State<ServiceConfirmationScreen> {
           20,
           MediaQuery.of(context).viewPadding.bottom + 16,
         ),
-
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () {
-              
+            onPressed: () async {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => HomeScreen(),
                 ),
               );
-              
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryColor,

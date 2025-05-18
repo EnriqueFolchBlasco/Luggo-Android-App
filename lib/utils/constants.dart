@@ -16,4 +16,5 @@ class AppColors {
 class Strings {
   static const String appName = "Luggo";
   static const String welcomeMessage = "Welcome to Luggo!";
+
 }

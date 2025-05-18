@@ -48,19 +48,21 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
     );
 
     mudanza = refreshed!;
+    
+    final defaultTabs = ['kitchen', 'diningRoom', 'bathroom'];
 
 
     _nombreCtrl = TextEditingController(text: refreshed!.nombre);
     _origenCtrl = TextEditingController(text: refreshed.direccionOrigen);
     _destinoCtrl = TextEditingController(text: refreshed.direccionDestino);
     _estado = refreshed.estado;
+
     _categories =
-        (refreshed.tabs ?? '')
-            .split('|')
+        (refreshed.tabs?.isNotEmpty == true ? refreshed.tabs : defaultTabs.join('|'))
+            ?.split('|')
             .map((e) => e.trim())
             .where((e) => e.isNotEmpty)
-            .toList();
-
+            .toList() ?? <String>[];
 
     _nombreCtrl.addListener(_autoGuardado);
     _origenCtrl.addListener(_autoGuardado);
@@ -89,13 +91,15 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
 
   Future<void> _guardarEstadoActual() async {
     final db = await DatabaseService.getDatabase();
+    final joinedTabs = _categories.where((e) => e.trim().isNotEmpty).toList();
+    final tabsFinal = joinedTabs.isEmpty ? 'kitchen' : joinedTabs.join('|');
 
     final updated = mudanza.copyWith(
       nombre: _nombreCtrl.text.trim(),
       direccionOrigen: _origenCtrl.text.trim(),
       direccionDestino: _destinoCtrl.text.trim(),
       estado: _estado,
-      tabs: _categories.where((e) => e.trim().isNotEmpty).join('|'),
+        tabs: tabsFinal,
 
       updatedAt: DateTime.now().toIso8601String(),
     );
