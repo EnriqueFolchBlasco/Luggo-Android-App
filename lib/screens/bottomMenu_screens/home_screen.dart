@@ -5,6 +5,7 @@ import 'package:luggo/screens/bottomMenu_screens/qr_screen.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/notification_manager.dart';
+import 'package:luggo/utils/utils_widgets/notificaciones_overlay.dart';
 import 'services_screen.dart';
 import 'profile_screen.dart';
 
@@ -60,59 +61,20 @@ class _HomeScreenState extends State<HomeScreen> {
   //************************************************************
 
   void _mostrarOverlayNotificaciones() {
-    final renderBox =_notificacionKey.currentContext!.findRenderObject() as RenderBox;
+    final renderBox = _notificacionKey.currentContext!.findRenderObject() as RenderBox;
     final position = renderBox.localToGlobal(Offset.zero);
 
     _notificacionOverlay = OverlayEntry(
-      builder:
-          (context) => Stack(
-            children: [
-              GestureDetector(
-                onTap: _cerrarOverlayNotificaciones,
-                child: Container(color: Colors.transparent),
-              ),
-              Positioned(
-                top: position.dy + 45,
-                right: 16,
-                child: Material(
-                  color: Colors.transparent,
-                  child: Container(
-                    width: 280,
-                    constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.5,
-                    ),
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(color: Colors.black26, blurRadius: 10),
-                      ],
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children:
-                            NotificationManager.notificaciones.value
-                                .map(
-                                  (texto) => construirNotificacion(
-                                    texto,
-                                    _cerrarOverlayNotificaciones,
-                                    () => setState(() {}),
-                                  ),
-                                )
-                                .toList(),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+      builder: (context) => NotificacionesOverlay(
+        posicion: position,
+        cerrarOverlay: _cerrarOverlayNotificaciones,
+        refrescarUI: () => setState(() {}),
+      ),
     );
 
     Overlay.of(context).insert(_notificacionOverlay!);
   }
+
 
   void _cerrarOverlayNotificaciones() {
     _notificacionOverlay?.remove();
@@ -327,30 +289,3 @@ class _HomeScreenState extends State<HomeScreen> {
 //************************************************************
 // CUSTOM MENSATGE DE NOTIFICACIONS EN BLAU/BLANC
 //************************************************************
-
-Widget construirNotificacion(String texto, VoidCallback cerrarOverlay, VoidCallback refrescarUI) {
-  return GestureDetector(
-    onTap: () {
-      NotificationManager.eliminar(texto);
-      cerrarOverlay();
-      refrescarUI();
-    },
-    child: Container(
-      margin: const EdgeInsets.symmetric(vertical: 6),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.notifications_none, color: Colors.black, size: 20),
-          SizedBox(width: 8),
-          Expanded(
-            child: Text(texto, style: const TextStyle(color: Colors.black)),
-          ),
-        ],
-      ),
-    ),
-  );
-}

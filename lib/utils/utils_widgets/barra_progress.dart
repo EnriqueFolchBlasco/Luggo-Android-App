@@ -102,12 +102,13 @@ class BarraProgressoAmazon extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'Terms and Conditions',
+                  'Terms & Conditions',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontFamily: "clashDisplay",
+                    fontSize: 10,
                     fontWeight:
-                        currentStep == 0 ? FontWeight.bold : FontWeight.normal,
+                        currentStep == 0 ? FontWeight.w600 : FontWeight.w300,
                     color:
                         currentStep == 0
                             ? AppColors.primaryColor
@@ -123,9 +124,10 @@ class BarraProgressoAmazon extends StatelessWidget {
                   'Details & Payment',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontFamily: "clashDisplay",
+                    fontSize: 10,
                     fontWeight:
-                        currentStep == 1 ? FontWeight.bold : FontWeight.normal,
+                        currentStep == 1 ? FontWeight.w600 : FontWeight.w300,
                     color:
                         currentStep == 1
                             ? AppColors.primaryColor
@@ -141,9 +143,10 @@ class BarraProgressoAmazon extends StatelessWidget {
                   'Purchase Details',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontFamily: "clashDisplay",
+                    fontSize: 10,
                     fontWeight:
-                        currentStep == 2 ? FontWeight.bold : FontWeight.normal,
+                        currentStep == 2 ? FontWeight.w600 : FontWeight.w300,
                     color:
                         currentStep == 2
                             ? AppColors.primaryColor

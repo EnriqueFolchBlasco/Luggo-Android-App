@@ -17,7 +17,6 @@ class _EscaneadorDeItemsScreenState extends State<EscaneadorDeItemsScreen> {
 
   
   void _qrDetectat(BarcodeCapture capture) async {
-
     if (escaneado || capture.barcodes.isEmpty) {
       return;
     }
@@ -31,51 +30,46 @@ class _EscaneadorDeItemsScreenState extends State<EscaneadorDeItemsScreen> {
     print('🤞🧊🧊🧊👌👌💀💀🤓👆: $codeQR');
 
     if (codeQR == null) {
-      _mensatgePop('error'.tr(),2);
+      _mensatgePop('error'.tr(), 2);
       await _cooldownAntiSpamError();
       return;
     }
 
     final partes = codeQR.split(':');
-
     if (partes.length != 2) {
-      _mensatgePop('error'.tr(),2);
+      _mensatgePop('error'.tr(), 2);
       await _cooldownAntiSpamError();
       return;
     }
 
-  
     final mudanzaId = int.tryParse(partes[0]);
     final itemId = int.tryParse(partes[1]);
 
     if (mudanzaId == null || itemId == null) {
-      _mensatgePop('error'.tr(),2);
+      _mensatgePop('error'.tr(), 2);
       await _cooldownAntiSpamError();
       return;
     }
 
     final db = await DatabaseService.getDatabase();
-
-    //  final int? itemId;
-
     final item = await db.itemDao.obtenerItemPorId(itemId);
 
     if (item != null && item.mudanzaId == mudanzaId) {
       await db.itemDao.actualizarItem(item.copyWith(gotIt: true));
-
       if (mounted) {
-        // mensatge o snackbar dse q esta be
         _mensatgePop('qrCorrecte'.tr(), 1);
       }
+      await _cooldownAntiSpamError();
     } else {
-      _mensatgePop('error'.tr(),2);
+      _mensatgePop('error'.tr(), 2);
       await _cooldownAntiSpamError();
     }
   }
 
 
+
   Future<void> _cooldownAntiSpamError() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
 
     if (mounted) {
       setState(() {

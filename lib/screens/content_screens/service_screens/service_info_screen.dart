@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:luggo/screens/content_screens/service_screens/services_widgets/service_terms_screen.dart';
+import 'package:luggo/screens/content_screens/service_screens/service_terms_screen.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/utils_widgets/comentari_usuari.dart';
@@ -56,7 +56,6 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
           },
         ),
         title: 
-           
             Image(
               image: AssetImage('assets/images/LuggoColor_noBackground.png'),
           height: 28,
@@ -114,7 +113,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 8),
 
 
             Row(
@@ -138,8 +137,8 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                         'serviceInfo'.tr(),
                         style: const TextStyle(
                           fontSize: 20,
+                          fontFamily: "clashDisplay",
                           fontWeight: FontWeight.w400,
-                          fontFamily: 'helvetica',
                           color: AppColors.primaryColor
                         ),
                       ),
@@ -168,7 +167,9 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
               child: Text(
                 'userOpinions'.tr(),
                 style: const TextStyle(
-                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                  fontFamily: "clashDisplay",
+                  fontWeight: FontWeight.w400,
                   color: AppColors.primaryColor,
                 ),
               ),

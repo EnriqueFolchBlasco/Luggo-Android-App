@@ -119,7 +119,7 @@ class _ServiceTermsScreenState extends State<ServiceTermsScreen> {
                   ),
                   child: BarraProgressoAmazon(0),
                 ),
-                const SizedBox(height: 12),
+                
               ],
             ),
             Padding(
@@ -133,7 +133,7 @@ class _ServiceTermsScreenState extends State<ServiceTermsScreen> {
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: AppColors.primaryColor.withOpacity(0.1),
+                          color: AppColors.primaryColor,
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
@@ -148,9 +148,11 @@ class _ServiceTermsScreenState extends State<ServiceTermsScreen> {
                           texte,
                           textAlign: TextAlign.justify,
                           style: const TextStyle(
+                            fontFamily: "clashDisplay",
+                            fontWeight: FontWeight.w400,
                             fontSize: 14,
                             height: 1.5,
-                            color: Colors.black87,
+                            color: Color.fromARGB(221, 255, 255, 255),
                           ),
                         ),
                       ),
