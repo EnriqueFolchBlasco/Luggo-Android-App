@@ -113,3 +113,48 @@ class LuggoTextArea extends StatelessWidget {
     );
   }
 }
+
+class LuggoReadOnlyField extends StatelessWidget {
+  final TextEditingController controller;
+  final String hint;
+  final VoidCallback onTap;
+
+  const LuggoReadOnlyField({
+    super.key,
+    required this.controller,
+    required this.hint,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: TextFormField(
+        controller: controller,
+        readOnly: true,
+        onTap: onTap,
+        style: const TextStyle(fontSize: 15),
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: TextStyle(color: AppColors.primaryColor.withOpacity(0.5)),
+          fillColor: Colors.white,
+          filled: true,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(34),
+            borderSide: BorderSide(color: Colors.grey.shade300),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(34),
+            borderSide: BorderSide(color: Colors.grey.shade300),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(34),
+            borderSide: const BorderSide(color: AppColors.primaryColor, width: 1.5),
+          ),
+        ),
+      ),
+    );
+  }
+}

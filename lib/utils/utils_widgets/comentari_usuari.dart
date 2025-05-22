@@ -19,57 +19,57 @@ class ComentariUsuari extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    
-    Padding(
+    return Padding(
       padding: const EdgeInsets.only(bottom: 8, top: 8),
-      child: 
-      Column(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+
         children: [
           Column(
-        children: [
-          
-      
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundImage: AssetImage(avatarRuta),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  nombre,
-                  style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.primaryColor),
-                ),
 
-                Text(
-                  ubicacion,
-                  style: const TextStyle(fontSize: 12, color: Colors.black),
-                ),
-                const SizedBox(height: 4),
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundImage: AssetImage(avatarRuta),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          nombre,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
 
-                
+                        Text(
+                          ubicacion,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                      ],
+                    ),
+                  ),
 
-                
-              ],
-            ),
-          ),
-          
-          const SizedBox(width: 8),
+                  const SizedBox(width: 8),
 
-          Text(
-            fecha,
-            style: const TextStyle(fontSize: 10, color: AppColors.primaryColor),
-          ),
-          
-
-        ],
-        
+                  Text(
+                    fecha,
+                    style: const TextStyle(
+                      fontSize: 10,
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -4,7 +4,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-//https://docs.stripe.com/testing 4242 4242 4242 4242 targeta
+//https://docs.stripe.com/testing 4242 4242 4242 4242 targeta FAKE
 //https://dashboard.stripe.com/test/dashboard
 
 class StripeService {
@@ -37,7 +37,7 @@ class StripeService {
       return await _confirmPayment();
   
     } catch (e) {
-      print('error $e');
+      //print('error $e');
       return false;
     }
   } 
@@ -69,10 +69,10 @@ class StripeService {
         return null;
       }
     } on DioException catch (e) {
-      print('error: ${e.response?.statusCode}');
-      print('response: ${e.response?.data}');
+      //print('🧊🧊🧊🧊🧊error: ${e.response?.statusCode}');
+      //print('🧊🧊🧊response: ${e.response?.data}');
     } catch (e) {
-      print('eror $e');
+      //print('🧊🧊🧊eror $e');
     }
 
     return null;
@@ -87,10 +87,10 @@ class StripeService {
       await Stripe.instance.presentPaymentSheet();
       return true;
     } on StripeException catch (e) {
-      print('error ${e.error.localizedMessage}');
+      //print('🧊error ${e.error.localizedMessage}');
       return false;
     } catch (e) {
-      print('error $e');
+      //print('🧊🧊error $e');
       return false;
     }
   }

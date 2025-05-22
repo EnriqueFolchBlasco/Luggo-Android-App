@@ -8,7 +8,7 @@ import 'package:luggo/screens/content_screens/mudanza_screens/mudanza_widgets/mu
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import '../service_screens/services_widgets/service_buttons.dart';
+import 'service_screens/services_widgets/service_buttons.dart';
 
 //************************************************************
 // TO DO fer la db local q almacena mudances (items count)
@@ -104,24 +104,24 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                     FutureBuilder<String?>(
                       future: SharedPrefsService().getUsername(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Text("...");
-                        } else if (snapshot.hasError) {
-                          return const Text("Error");
-                        } else {
-                          return Text(
-                            snapshot.data ?? 'userName',
-                            style: const TextStyle(
-                              fontFamily: 'ClashDisplay',
-                              height: 1.1,
-                              fontSize: 30,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.primaryColor,
-                              letterSpacing: 2,
-                            ),
-                          );
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Text("...");
                         }
+
+                        if (snapshot.hasError) {
+                          return Text("Something went wrong");
+                        }
+
+                        String name = snapshot.data ?? 'userName';
+
+                        return Text(
+                          name,
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primaryColor,
+                          ),
+                        );
                       },
                     ),
                   ],
@@ -138,7 +138,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircleAvatar(
-                        radius: 35,
+                        radius: 40,
                         backgroundColor: Colors.grey,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       );
@@ -150,7 +150,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                       onTap: widget.onAvatarTap,
                       child: CircleAvatar(
                         backgroundColor: Colors.transparent,
-                        radius: 35,
+                        radius: 40,
                         backgroundImage:
                             (url != null && url.isNotEmpty)
                                 ? NetworkImage(url)
@@ -249,7 +249,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
             await prefs.setString('profileImageUrl', imageUrl);
           }
         } catch (e) {
-          debugPrint('Error en el avat: $e');
+          debugPrint('rrror en el avat: $e');
         }
       }
     }

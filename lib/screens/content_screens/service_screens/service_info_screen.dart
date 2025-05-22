@@ -13,7 +13,6 @@ class ServiceInfoScreen extends StatefulWidget {
   @override
   State<ServiceInfoScreen> createState() => _ServiceInfoScreenState();
 
-
 }
 
 class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
@@ -57,15 +56,16 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
         ),
         title: 
             Image(
-              image: AssetImage('assets/images/LuggoColor_noBackground.png'),
+          image: AssetImage('assets/images/LuggoColor_noBackground.png'),
           height: 28,
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 12),
+
             Center(
               child: Container(
                 width: 40,
@@ -100,141 +100,141 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
               ),
             ),
 
-            const SizedBox(height: 12),
             Padding(
-              padding: const EdgeInsets.all(10),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  cambiarImage(widget.serviceType),
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 8),
-
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-
-              children: [
-                
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset(
+                      cambiarImage(widget.serviceType),
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  child: 
+                  const SizedBox(height: 8),
+
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(
-                        Icons.info_outline,
-                        color: AppColors.primaryColor,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'serviceInfo'.tr(),
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontFamily: "clashDisplay",
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.primaryColor
-                        ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.info_outline,
+                            color: AppColors.primaryColor,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'serviceInfo'.tr(),
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontFamily: "clashDisplay",
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
-
-                  )
-                  
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-
-            Text(
-              cambiarInformacion(widget.serviceType),
-              textAlign: TextAlign.justify,
-              style: const TextStyle(fontSize: 12, 
-              height: 1.5, 
-              color: Color.fromARGB(255, 113, 113, 113)),
-            ),
-
-            const SizedBox(height: 20),
-
-            const Divider(thickness: 1, color: AppColors.primaryColor),
-            const SizedBox(height: 8),
-            Center(
-              child: Text(
-                'userOpinions'.tr(),
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontFamily: "clashDisplay",
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.primaryColor,
-                ),
-              ),
-            ),
-            const SizedBox(height: 14),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 110),
-              child: 
-              Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                children: const [
-                  Text(
-                    '9,1',
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.w400, fontFamily: 'clashDisplay', color: AppColors.primaryColor),
                   ),
-                  SizedBox(height: 4),
-                  Text('• Excelente •', style: TextStyle(fontSize: 14, fontFamily: 'clashDisplay'),),
-                  SizedBox(height: 2),
-                  Text('10 comentarios', style: TextStyle(fontSize: 12, fontFamily: 'clashDisplay')),
+                  const SizedBox(height: 8),
+                  Text(
+                    cambiarInformacion(widget.serviceType),
+                    textAlign: TextAlign.justify,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      height: 1.5,
+                      color: Color.fromARGB(255, 113, 113, 113),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const Divider(thickness: 1, color: AppColors.primaryColor),
+                  const SizedBox(height: 8),
+                  Center(
+                    child: Text(
+                      'userOpinions'.tr(),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontFamily: "clashDisplay",
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 110),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Column(
+                        children: const [
+                          Text(
+                            '9,1',
+                            style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'clashDisplay',
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            '• Excelente •',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'clashDisplay',
+                            ),
+                          ),
+                          SizedBox(height: 2),
+                          Text(
+                            '10 comentarios',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'clashDisplay',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 20),
+
+                  const ComentariUsuari(
+                    avatarRuta: 'assets/images/user.png',
+                    nombre: 'Cristina Olmos',
+                    ubicacion: 'Madrid, Madrid',
+                    fecha: '10/05/2025',
+                    comentario: 'Muy puntuales y profesionales. Recogieron todo con mucho cuidado y se aseguraron de no dejar nada atrás. ¡Repetiré sin duda!',
+                  ),
+
+                  const ComentariUsuari(
+                    avatarRuta: 'assets/images/user.png',
+                    nombre: 'Pau Rovira Rosaleny',
+                    ubicacion: 'València, Almussafes',
+                    fecha: '06/12/2017',
+                    comentario: 'El proceso fue muy sencillo desde la app. Me contactaron rápido y el servicio fue tal como lo describieron. Todo genial.',
+                  ),
+
+                  const ComentariUsuari(
+                    avatarRuta: 'assets/images/user.png',
+                    nombre: 'Barbara Folch',
+                    ubicacion: 'València, València',
+                    fecha: '23/04/2024',
+                    comentario: 'Tenía dudas al principio, pero fueron súper amables. Llegaron a tiempo y se encargaron de todo. Muy recomendable',
+                  ),
+
                 ],
               ),
-            ),
-            ),
-            
-            const SizedBox(height: 20),
-
-            //Padding(
-            //  padding: const EdgeInsets.only(left: 50, right: 50),
-            //  child: Divider(color: Colors.grey.withOpacity(0.5), thickness: 1),
-            //),
-
-            
-            //HARDCODEATTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-            const ComentariUsuari(
-              avatarRuta: 'assets/images/user.png',
-              nombre: 'Cristina Olmos',
-              ubicacion: 'València, València',
-              fecha: '10/05/2025',
-              comentario:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            ),
-            
-            const ComentariUsuari(
-              avatarRuta: 'assets/images/user.png',
-              nombre: 'Pau Rovira Rosaleny',
-              ubicacion: 'València, Almussafes',
-              fecha: '06/12/2017',
-              comentario:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            ),
-
-            const ComentariUsuari(
-              avatarRuta: 'assets/images/user.png',
-              nombre: 'Barbara Folch',
-              ubicacion: 'València, València',
-              fecha: '23/04/2024',
-              comentario:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             ),
           ],
         ),

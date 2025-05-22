@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:luggo/screens/content_screens/mudanza_screens/home_screen_content.dart';
+import 'package:luggo/screens/content_screens/home_screen_content.dart';
 import 'package:luggo/screens/bottomMenu_screens/qr_screen.dart';
 import 'package:luggo/screens/sideBar_screens/sidebar_screen.dart';
 import 'package:luggo/utils/constants.dart';
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_notificacionOverlay == null) {
       _mostrarOverlayNotificaciones();
     } else {
-      _cerrarOverlayNotificaciones();
+      _tancarOverlayNotificaciones();
     }
   }
 
@@ -66,8 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _notificacionOverlay = OverlayEntry(
       builder: (context) => NotificacionesOverlay(
-        posicion: position,
-        cerrarOverlay: _cerrarOverlayNotificaciones,
+        posicio: position,
+        tancarOverlay: _tancarOverlayNotificaciones,
         refrescarUI: () => setState(() {}),
       ),
     );
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 
-  void _cerrarOverlayNotificaciones() {
+  void _tancarOverlayNotificaciones() {
     _notificacionOverlay?.remove();
     _notificacionOverlay = null;
   }

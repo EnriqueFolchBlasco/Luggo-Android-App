@@ -319,7 +319,8 @@ class _ItemDetallesScreenState extends State<ItemDetallesScreen> {
                 Text('gotIt'.tr()),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: MediaQuery.of(context).viewPadding.bottom + 16),
+
 
           ],
         ),

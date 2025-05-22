@@ -9,7 +9,7 @@ import 'package:luggo/utils/utils_widgets/barra_progress.dart';
 class ServicePurchaseDetailsScreen extends StatefulWidget {
   final String serviceType;
 
-  const ServicePurchaseDetailsScreen({required this.serviceType});
+  const ServicePurchaseDetailsScreen({super.key, required this.serviceType});
 
   @override
   State<ServicePurchaseDetailsScreen> createState() => _ServicePurchaseDetailsScreenState();
@@ -73,9 +73,15 @@ class _ServicePurchaseDetailsScreenState extends State<ServicePurchaseDetailsScr
                     ),
                     child: IconButton(
                       padding: EdgeInsets.zero,
-                      icon: const Icon(Icons.arrow_back, color: Colors.black),
+                      icon: const Icon(
+                        Icons.arrow_forward,
+                        color: Colors.black,
+                      ),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                        );
                       },
                       splashRadius: 20,
                     ),

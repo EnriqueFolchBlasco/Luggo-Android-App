@@ -3,24 +3,24 @@ import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/notification_manager.dart';
 
 class NotificacionesOverlay extends StatelessWidget {
-  final Offset posicion;
-  final VoidCallback cerrarOverlay;
+  final Offset posicio;
+  final VoidCallback tancarOverlay;
   final VoidCallback refrescarUI;
 
-  const NotificacionesOverlay({super.key, required this.posicion, required this.cerrarOverlay, required this.refrescarUI});
+  const NotificacionesOverlay({super.key, required this.posicio, required this.tancarOverlay, required this.refrescarUI});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         GestureDetector(
-          onTap: cerrarOverlay,
+          onTap: tancarOverlay,
           child: Container(
             color: Colors.black.withOpacity(0.2),
           ),
         ),
         Positioned(
-          top: posicion.dy + 45,
+          top: posicio.dy + 45,
           right: 16,
           child: AnimatedSlide(
             offset: const Offset(0, -0.03),
@@ -71,7 +71,7 @@ class NotificacionesOverlay extends StatelessWidget {
                                     children: [
                                       _NotificacionItem(
                                         texto: texto,
-                                        cerrarOverlay: cerrarOverlay,
+                                        tancarOverlay: tancarOverlay,
                                         refrescarUI: refrescarUI,
                                       ),
                                       const Divider(height: 14, thickness: 0.6),
@@ -91,21 +91,20 @@ class NotificacionesOverlay extends StatelessWidget {
   }
 }
 
-//Items clase + construccio
-
+//items de clase + construccio
 class _NotificacionItem extends StatelessWidget {
   final String texto;
-  final VoidCallback cerrarOverlay;
+  final VoidCallback tancarOverlay;
   final VoidCallback refrescarUI;
 
-  const _NotificacionItem({required this.texto, required this.cerrarOverlay, required this.refrescarUI});
+  const _NotificacionItem({required this.texto, required this.tancarOverlay, required this.refrescarUI});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         NotificationManager.eliminar(texto);
-        cerrarOverlay();
+        tancarOverlay();
         refrescarUI();
       },
       child: Row(

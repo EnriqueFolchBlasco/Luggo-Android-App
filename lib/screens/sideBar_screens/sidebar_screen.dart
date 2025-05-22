@@ -38,7 +38,7 @@ class _SideBarScreenState extends State<SideBarScreen> {
       //print('❌  error: $e');
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error during logout')),
+          SnackBar(content: Text('Error en logout')),
         );
       }
     }

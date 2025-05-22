@@ -9,7 +9,7 @@ import 'package:luggo/utils/utils_widgets/barra_progress.dart';
 class ServiceTermsScreen extends StatefulWidget {
   final String serviceType;
 
-  const ServiceTermsScreen({required this.serviceType});
+  const ServiceTermsScreen({super.key, required this.serviceType});
 
   @override
   State<ServiceTermsScreen> createState() => _ServiceTermsScreenState();
@@ -18,17 +18,18 @@ class ServiceTermsScreen extends StatefulWidget {
 class _ServiceTermsScreenState extends State<ServiceTermsScreen> {
   
   List<String> terms = [
-    "1. All services are subject to availability and confirmation.",
-    "2. The customer is responsible for ensuring accurate information is provided.",
-    "3. Bookings must be made at least 24 hours in advance.",
-    "4. Cancellations within 12 hours of the scheduled time may incur a fee.",
-    "5. Prices include applicable taxes unless stated otherwise.",
-    "6. Payment is processed securely through a third-party provider.",
-    "7. In case of delay or no-show, no refunds will be issued.",
-    "8. The company reserves the right to refuse service in cases of misconduct.",
-    "9. Customer data is handled in accordance with our privacy policy.",
-    "10. By continuing, you agree to our full terms and conditions.",
+    'term1'.tr(),
+    'term2'.tr(),
+    'term3'.tr(),
+    'term4'.tr(),
+    'term5'.tr(),
+    'term6'.tr(),
+    'term7'.tr(),
+    'term8'.tr(),
+    'term9'.tr(),
+    'term10'.tr(),
   ];
+
 
 
   @override
@@ -74,19 +75,19 @@ class _ServiceTermsScreenState extends State<ServiceTermsScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
-  crossAxisAlignment: CrossAxisAlignment.start,
-  children: [
-    Column(
-      children: [
-        Center(
-          child: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.black),
-            ),
-            child: IconButton(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.black),
+                    ),
+                    child: IconButton(
                       padding: EdgeInsets.zero,
                       icon: const Icon(Icons.arrow_back, color: Colors.black),
                       onPressed: () {
@@ -173,11 +174,14 @@ class _ServiceTermsScreenState extends State<ServiceTermsScreen> {
 
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => ServiceDetailsScreen(serviceType: widget.serviceType),
+                PageRouteBuilder(
+                  pageBuilder:
+                      (_, __, ___) => ServiceDetailsScreen(serviceType: widget.serviceType),
+                  transitionsBuilder: (_, animation, __, child) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
                 ),
               );
-
 
             },
 
@@ -189,7 +193,7 @@ class _ServiceTermsScreenState extends State<ServiceTermsScreen> {
               ),
             ),
             child: Text(
-              'next'.tr(),
+              'agree'.tr(),
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
