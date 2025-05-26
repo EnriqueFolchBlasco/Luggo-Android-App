@@ -44,24 +44,25 @@ class _NotasMudanzaScreenState extends State<NotasMudanzaScreen> {
 
     _guardadoAutomatico = Timer(const Duration(seconds: 1), () async {
       final db = await DatabaseService.getDatabase();
-      final updated = Mudanza(
-        mudanzaId: _mudanza.mudanzaId,
-        userId: _mudanza.userId,
-        fecha: _mudanza.fecha,
-        nombre: _mudanza.nombre,
-        direccionOrigen: _mudanza.direccionOrigen,
-        direccionDestino: _mudanza.direccionDestino,
-        estado: _mudanza.estado,
-        createdAt: _mudanza.createdAt,
-        updatedAt: DateTime.now().toIso8601String(),
-        notas: _controller.text,
-        isArchived: _mudanza.isArchived,
-        imatge: _mudanza.imatge,
+
+      final ultimsTabs = (await db.mudanzaDao.obtenerPorId(_mudanza.mudanzaId!))?.tabs ?? '';
+
+      await db.mudanzaDao.actualizar(
+        _mudanza.copyWith(
+          notas: _controller.text,
+          updatedAt: DateTime.now().toIso8601String(),
+          tabs: ultimsTabs,
+        ),
       );
 
-      await db.mudanzaDao.actualizar(updated);
+      _mudanza = _mudanza.copyWith(
+        notas: _controller.text,
+        updatedAt: DateTime.now().toIso8601String(),
+        tabs: ultimsTabs,
+      );
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

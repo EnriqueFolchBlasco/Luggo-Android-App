@@ -21,7 +21,7 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
   TabController? _controladorTabs;
   List<Map<String, dynamic>> categorias = [];
   bool cargando = true;
-  int _selectedTabIndex = 0;
+  int indexSeleccionat = 0;
 
   @override
   void initState() {
@@ -67,7 +67,7 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
         child: GestureDetector(
           onTap: () {
             if (_controladorTabs != null) {
-              _controladorTabs!.index = _selectedTabIndex;
+              _controladorTabs!.index = indexSeleccionat;
               _mostrarDialogoCrearCategoria();
             }
           },
@@ -104,52 +104,51 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
           tab,
         );
 
-      final items = await db.itemDao.obtenerItemsPorCategoria(
-        widget.idMudanza,
-        tab,
-      );
+        final items = await db.itemDao.obtenerItemsPorCategoria(
+          widget.idMudanza,
+          tab,
+        );
 
-
-        llistaCategoriesTemproals.add({"nombre": tab, "cantidad": count, "items": items});
+        llistaCategoriesTemproals.add({
+          "nombre": tab,
+          "cantidad": count,
+          "items": items,
+        });
       }
 
       setState(() {
         categorias = llistaCategoriesTemproals;
 
-        if (categorias.isNotEmpty) {
-          
-          _controladorTabs = TabController(
-            length: categorias.length + 1,
-            vsync: this,
-            initialIndex: _selectedTabIndex < categorias.length + 1 ? _selectedTabIndex : 0,
-          );
+        _controladorTabs?.dispose();
+        _controladorTabs = TabController(
+          length: categorias.length + 1,
+          vsync: this,
+          initialIndex: indexSeleccionat < categorias.length + 1 ? indexSeleccionat : 0,
+        );
 
-          _controladorTabs!.addListener(() {
-            final index = _controladorTabs!.index;
+        _controladorTabs!.addListener(() {
+          final index = _controladorTabs!.index;
 
-            if (!_controladorTabs!.indexIsChanging &&
-                index == categorias.length) {
-              //ANTI PLUS EFECTE, fa q no es puga ficar el tab damunt del plus i tire caparrere
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                _controladorTabs!.animateTo(_selectedTabIndex);
-              });
+          if (!_controladorTabs!.indexIsChanging &&
+              index == categorias.length) {
 
-              _mostrarDialogoCrearCategoria();
-              return;
-            }
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _controladorTabs!.animateTo(indexSeleccionat);
+            });
 
-            if (!_controladorTabs!.indexIsChanging &&
-                index < categorias.length) {
-              setState(() {
-                _selectedTabIndex = index;
-              });
-            }
-          });
-        }
+            _mostrarDialogoCrearCategoria();
+            return;
+          }
+
+          if (!_controladorTabs!.indexIsChanging && index < categorias.length) {
+            indexSeleccionat = index;
+          }
+        });
+
         cargando = false;
       });
     } catch (e) {
-      print("Error en les categos");
+      //print("Error en les categos");
     }
   }
 
@@ -161,9 +160,10 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
 
   @override
   Widget build(BuildContext context) {
-    if (cargando || _controladorTabs == null) {
+    if (cargando) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
+
 
     return Scaffold(
       backgroundColor: const Color(0xFFF4F6FA),
@@ -293,7 +293,7 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
         child: const Icon(Icons.add, color: Colors.white),
         onPressed: () {
 
-          final tabIndex = _controladorTabs?.index ?? _selectedTabIndex;
+          final tabIndex = _controladorTabs?.index ?? indexSeleccionat;
 
           if (tabIndex < categorias.length) {
             final currentCategoria = categorias[tabIndex]["nombre"];
@@ -380,7 +380,7 @@ class _InventarioScreenState extends State<InventarioScreen> with TickerProvider
             setState(() {
 
               final indexNou = categorias.length - 1;
-              _selectedTabIndex = indexNou;
+              indexSeleccionat = indexNou;
               _controladorTabs?.animateTo(indexNou);
               
             });

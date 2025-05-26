@@ -49,7 +49,6 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
 
     mudanza = refreshed!;
     
-    final defaultTabs = ['kitchen', 'diningRoom', 'bathroom'];
 
 
     _nombreCtrl = TextEditingController(text: refreshed!.nombre);
@@ -58,11 +57,12 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
     _estado = refreshed.estado;
 
     _categories =
-        (refreshed.tabs?.isNotEmpty == true ? refreshed.tabs : defaultTabs.join('|'))
-            ?.split('|')
+        (refreshed.tabs ?? '')
+            .split('|')
             .map((e) => e.trim())
             .where((e) => e.isNotEmpty)
-            .toList() ?? <String>[];
+            .toList();
+
 
     _nombreCtrl.addListener(_autoGuardado);
     _origenCtrl.addListener(_autoGuardado);
@@ -91,21 +91,25 @@ class _EditarMudanzaScreenState extends State<EditarMudanzaScreen> {
 
   Future<void> _guardarEstadoActual() async {
     final db = await DatabaseService.getDatabase();
-    final joinedTabs = _categories.where((e) => e.trim().isNotEmpty).toList();
-    final tabsFinal = joinedTabs.isEmpty ? 'kitchen' : joinedTabs.join('|');
+
+    final latestTabs = (await db.mudanzaDao.obtenerPorId(mudanza.mudanzaId!))?.tabs ?? '';
+
+    final joinedTabs = _categories.where((e) => e.trim().isNotEmpty).join('|');
+
+    final tabsFinal = joinedTabs.isEmpty ? latestTabs : joinedTabs;
 
     final updated = mudanza.copyWith(
       nombre: _nombreCtrl.text.trim(),
       direccionOrigen: _origenCtrl.text.trim(),
       direccionDestino: _destinoCtrl.text.trim(),
       estado: _estado,
-        tabs: tabsFinal,
-
+      tabs: tabsFinal,
       updatedAt: DateTime.now().toIso8601String(),
     );
 
     await db.mudanzaDao.actualizar(updated);
   }
+
 
   @override
   void dispose() {
