@@ -41,38 +41,61 @@ class TransportForm extends StatelessWidget {
 
 
 
-          LuggoLabel('date'.tr()),
-          LuggoReadOnlyField(
-            controller: dateController,
-            hint: 'selectDate'.tr(),
-            onTap: () async {
-              final picked = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime.now(),
-                lastDate: DateTime.now().add(const Duration(days: 365)),
-              );
-              if (picked != null) {
-                dateController.text = DateFormat('dd/MM/yyyy').format(picked);
-              }
-            },
-          ),
-
-
-
-          LuggoLabel('time'.tr()),
-          LuggoReadOnlyField(
-            controller: timeController,
-            hint: 'selectTime'.tr(),
-            onTap: () async {
-              final picked = await showTimePicker(
-                context: context,
-                initialTime: TimeOfDay.now(),
-              );
-              if (picked != null) {
-                timeController.text = picked.format(context);
-              }
-            },
+          Row(
+            children: [
+              Expanded(child: 
+              Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: LuggoLabel('date'.tr()),
+                  ),
+                  LuggoReadOnlyField(
+                    controller: dateController,
+                    hint: 'selectDate'.tr(),
+                    onTap: () async {
+                      final picked = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.now().add(const Duration(days: 365)),
+                      );
+                      if (picked != null) {
+                        dateController.text = DateFormat(
+                          'dd/MM/yyyy',
+                        ).format(picked);
+                      }
+                    },
+                  ),
+                ],
+              ),
+              ),
+              SizedBox(width: 12),
+              Expanded(child: 
+              Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: LuggoLabel('time'.tr()),
+                  ),
+                  
+                  LuggoReadOnlyField(
+                    controller: timeController,
+                    hint: 'selectTime'.tr(),
+                    onTap: () async {
+                      final picked = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                      );
+                      if (picked != null) {
+                        timeController.text = picked.format(context);
+                      }
+                    },
+                  ),
+                ],
+              ),
+              ),
+            ],
           ),
         ],
       ),

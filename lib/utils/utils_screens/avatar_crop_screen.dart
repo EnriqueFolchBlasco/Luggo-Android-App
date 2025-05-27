@@ -10,7 +10,7 @@ class AvatarCropScreen extends StatefulWidget {
   final File imageFile;
   final Function(Uint8List croppedBytes) onCropped;
 
-  const AvatarCropScreen({required this.imageFile, required this.onCropped, Key? key}) : super(key: key);
+  const AvatarCropScreen({required this.imageFile, required this.onCropped, super.key});
 
   @override
   State<AvatarCropScreen> createState() => _AvatarCropScreenState();
@@ -22,7 +22,8 @@ class _AvatarCropScreenState extends State<AvatarCropScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: Colors.white,
@@ -41,7 +42,9 @@ class _AvatarCropScreenState extends State<AvatarCropScreen> {
           ],
         ),
       ),
-      body: Column(
+      body: 
+        
+      Column(
         children: [
           const SizedBox(height: 16),
           

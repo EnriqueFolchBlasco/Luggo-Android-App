@@ -21,6 +21,8 @@ class ServicesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+
       body: FutureBuilder<String?>(
         future: SharedPrefsService().getUserUUID(),
         builder: (context, userdatos) {

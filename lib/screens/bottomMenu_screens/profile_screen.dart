@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:luggo/services/shared_prefs_service.dart';
+import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/utils_screens/avatar_crop_screen.dart';
 import 'package:luggo/utils/notification_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -102,7 +103,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const Color luggoBlue = Color(0xFF2B68FF);
 
     return Scaffold(
       backgroundColor: Color.fromRGBO(255, 255, 255, 1),
@@ -138,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           onTap: pickImage,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: luggoBlue,
+                              color: AppColors.primaryColor,
                               shape: BoxShape.circle,
                               border: Border.all(color: Colors.white, width: 2),
                               boxShadow: [
@@ -189,6 +189,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Row(
                             children: [
+                              //hardcodeat
                               _buildGridCell('Followers', 1, rightBorder: true),
                               _buildGridCell('Mudanzas', 2),
                             ],
