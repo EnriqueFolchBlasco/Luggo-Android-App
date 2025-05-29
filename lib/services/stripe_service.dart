@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:luggo/utils/constants.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 //https://docs.stripe.com/testing 4242 4242 4242 4242 targeta FAKE

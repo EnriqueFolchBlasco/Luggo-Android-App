@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:luggo/services/auth_manager.dart';
 import 'package:luggo/screens/login_screens/login_screen.dart';
 import 'about_us_screen.dart';
 import 'help_screen.dart';
@@ -18,31 +19,29 @@ class SideBarScreen extends StatefulWidget {
 
 class _SideBarScreenState extends State<SideBarScreen> {
   bool showLanguageMenu = false;
+  late final AuthManager authManager = AuthManager();
 
-  
   Future<void> _logout(BuildContext context) async {
+
     try {
-      final prefs = await SharedPreferences.getInstance();
-      //final uid = prefs.getString('userUID');
-  
+      await authManager.logout();
 
-      await FirebaseAuth.instance.signOut();
-      await prefs.clear();
-
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-        (Route<dynamic> route) => false,
-      );
-    } catch (e) {
-      //print('❌  error: $e');
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error en logout')),
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+          (Route<dynamic> route) => false,
         );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error en logout')));
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

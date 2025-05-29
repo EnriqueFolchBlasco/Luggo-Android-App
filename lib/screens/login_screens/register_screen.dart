@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:luggo/controllers/firebase_controller.dart';
+import 'package:luggo/services/auth_manager.dart';
 import 'package:luggo/services/shared_prefs_service.dart';
 import 'package:luggo/utils/constants.dart';
 import 'package:luggo/utils/utils_widgets/custom_text_field.dart'; // Import your custom textfield
@@ -64,7 +64,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         await userCredential.user!.sendEmailVerification();
 
         final uid = userCredential.user!.uid;
-        final firebaseController = FirebaseController();
+        final firebaseController = AuthManager();
         await firebaseController.saveUserToFirestore(uid, email, username);
 
         final sharedPrefs = SharedPrefsService();

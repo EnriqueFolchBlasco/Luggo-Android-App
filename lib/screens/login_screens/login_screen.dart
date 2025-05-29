@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:luggo/controllers/firebase_controller.dart';
+import 'package:luggo/services/auth_manager.dart';
 import 'package:luggo/screens/bottomMenu_screens/home_screen.dart';
 import 'package:luggo/services/shared_prefs_service.dart';
 import 'package:luggo/utils/constants.dart';
@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (userCredential.user != null && userCredential.user!.emailVerified) {
         final uid = userCredential.user!.uid;
-        final firebaseController = FirebaseController();
+        final firebaseController = AuthManager();
         final username = await firebaseController.fetchUsername(uid);
 
         if (username != null) {
