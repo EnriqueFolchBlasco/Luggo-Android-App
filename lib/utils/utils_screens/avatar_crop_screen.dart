@@ -17,7 +17,7 @@ class AvatarCropScreen extends StatefulWidget {
 }
 
 class _AvatarCropScreenState extends State<AvatarCropScreen> {
-  final GlobalKey _cropKey = GlobalKey();
+  final GlobalKey _cropClau = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class _AvatarCropScreenState extends State<AvatarCropScreen> {
           Center(
             child: ClipOval(
               child: RepaintBoundary(
-                key: _cropKey,
+                key: _cropClau,
                 child: Container(
                   width: 250,
                   height: 250,
@@ -108,7 +108,7 @@ class _AvatarCropScreenState extends State<AvatarCropScreen> {
       // declaras els borders y retalles
       //print('entra');
 
-      final boundary = _cropKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      final boundary = _cropClau.currentContext!.findRenderObject() as RenderRepaintBoundary;
       final image = await boundary.toImage(pixelRatio: 3.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final Uint8List bytes = byteData!.buffer.asUint8List();

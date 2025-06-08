@@ -125,13 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         CircleAvatar(
                           radius: 60,
                           backgroundImage:
-                              _networkImageUrl != null
-                                  ? NetworkImage(_networkImageUrl!)
-                                  : const AssetImage(
-                                        'assets/images/LuggoIconoColor.png',
-                                      )
-                                      as ImageProvider,
-
+                              _networkImageUrl != null ? NetworkImage(_networkImageUrl!) : const AssetImage('assets/images/LuggoIconoColor.png') as ImageProvider,
                           backgroundColor: Colors.grey[300],
                         ),
                         GestureDetector(
@@ -185,17 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
 
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              //hardcodeat
-                              _buildGridCell('Followers', 1, rightBorder: true),
-                              _buildGridCell('Mudanzas', 2),
-                            ],
-                          ),
-                        ],
-                      ),
+                      
                     ),
                   ],
                 ),
@@ -208,33 +192,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   // datoCurioso {} = optional parameter !!!
-  Widget _buildGridCell(String label, int count, {bool rightBorder = false}) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        decoration: BoxDecoration(
-          border: Border(
-            right:
-                rightBorder ? BorderSide(color: Colors.grey.shade300, width: 1) : BorderSide.none,
-          ),
-        ),
-        child: Column(
-          children: [
-            Text(
-              count.toString(),
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: const TextStyle(fontSize: 14, color: Colors.grey),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
+  
 
   Future<void> pickImage() async {
     final pickedFile = await ImagePicker().pickImage(
