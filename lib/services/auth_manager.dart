@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthManager {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -35,6 +34,4 @@ class AuthManager {
     await _auth.signOut();
     await prefs.clear();
   }
-
-
 }

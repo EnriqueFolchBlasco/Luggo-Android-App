@@ -73,33 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
 
-  Future<void> uploadProfileImage(File image) async {
-
-    final prefs = await SharedPreferences.getInstance();
-    final uid = prefs.getString('userUID');
-
-    if (uid == null){
-      return;
-    }
-
-    try {
-      
-      final storageRef = FirebaseStorage.instance.ref().child('profile_pictures/$uid.jpg');
-      await storageRef.putFile(image);
-      final downloadUrl = await storageRef.getDownloadURL();
-
-      await FirebaseFirestore.instance.collection('users').doc(uid).set({'profileImage': downloadUrl,}, SetOptions(merge: true));
-
-      NotificationManager.agregar('noConnection.photoSuccess'.tr());
-
-      // pa guardar url
-      await prefs.setString('profileImageUrl', downloadUrl);
-
-    } catch (e) {
-      NotificationManager.agregar('noConnection.photoError'.tr());
-      //print("❌ problemaaa no a pujat: $e");
-    }
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -220,6 +194,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
         ),
       );
+    }
+  }
+
+  Future<void> uploadProfileImage(File image) async {
+
+    final prefs = await SharedPreferences.getInstance();
+    final uid = prefs.getString('userUID');
+
+    if (uid == null){
+      return;
+    }
+
+    try {
+      
+      final storageRef = FirebaseStorage.instance.ref().child('profile_pictures/$uid.jpg');
+      await storageRef.putFile(image);
+      final downloadUrl = await storageRef.getDownloadURL();
+
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({'profileImage': downloadUrl,}, SetOptions(merge: true));
+
+      NotificationManager.agregar('noConnection.photoSuccess'.tr());
+
+      // pa guardar url
+      await prefs.setString('profileImageUrl', downloadUrl);
+
+    } catch (e) {
+      NotificationManager.agregar('noConnection.photoError'.tr());
+      //print("❌ problemaaa no a pujat: $e");
     }
   }
 }

@@ -74,9 +74,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           _errorMessage = "registerSuccess".tr();
         });
 
-        await Future.delayed(const Duration(milliseconds: 3000));
+        await Future.delayed(Duration.zero);
+        await Future.delayed(const Duration(seconds: 3));
 
-
+        if (!mounted) return;
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => const LoginScreen()),

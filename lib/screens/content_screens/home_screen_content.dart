@@ -40,6 +40,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     final todas = await db.mudanzaDao.obtenerTodos();
 
     final counts = <int, int>{};
+    
     for (final m in todas) {
       final count = await db.itemDao.contarItemsDeMudanza(m.mudanzaId!);
       counts[m.mudanzaId!] = count ?? 0;
