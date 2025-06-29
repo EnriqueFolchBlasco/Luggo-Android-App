@@ -10,7 +10,7 @@
 
 **Luggo** is a final project (TFC) Android application developed using **Flutter**. This app aims to provide a smooth, user-friendly experience for managing moving services, incorporating modern design patterns and best practices in mobile development. The repository contains the full source code, including UI, backend logic, and integrations.
 
-Built with scalability and maintainability in mind, Luggo leverages a clean architecture with separation of concerns, making it ideal as both a production-ready app and a learning resource.
+Built with scalability and maintainability in mind, Luggo is a project I developed while learning, so it’s not perfect and may contain errors. Please keep this in mind.
 
 ---
 
