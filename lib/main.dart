@@ -6,7 +6,7 @@ import 'utils/firebase_options.dart';
 import 'screens/login_screens/splash_screen.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-//25052025_2023_1851Finishedd
+//25052025_2023_1851Finisheddd
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
