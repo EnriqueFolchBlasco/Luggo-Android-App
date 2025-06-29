@@ -1,24 +1,58 @@
 # Luggo - Android App
 
-![Language](https://img.shields.io/badge/language-Dart-blue) 
-![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/license-CC--BY--NC--ND%204.0-blue)
-## Description
-Luggo is the final DAM project, an Android application developed using Flutter for a end of course project (TFC). This repository contains the source code and project files for the Luggo Android App. The app is designed to provide a seamless user experience while adhering to modern Android app development practices.
+![Dart](https://img.shields.io/badge/language-Dart-blue?logo=dart&logoColor=white)  
+![Flutter](https://img.shields.io/badge/framework-Flutter-blue?logo=flutter&logoColor=white)  
+![License: MIT](https://img.shields.io/badge/license-MIT-green)  
+
+---
+
+## Overview
+
+**Luggo** is a final project (TFC) Android application developed using **Flutter**. This app aims to provide a smooth, user-friendly experience for managing moving services, incorporating modern design patterns and best practices in mobile development. The repository contains the full source code, including UI, backend logic, and integrations.
+
+Built with scalability and maintainability in mind, Luggo leverages a clean architecture with separation of concerns, making it ideal as both a production-ready app and a learning resource.
 
 ---
 
 ## Table of Contents
-- [Project Structure](#project-structure)
-- [Features](#features)
-- [Setup & Installation](#setup--installation)
-- [Contributing](#contributing)
-- [License](#license)
+
+- 📋 [Features](#features)  
+- 🗂️ [Project Structure](#project-structure)  
+- ⚙️ [Setup & Installation](#setup--installation)  
+- 🤝 [Contributing](#contributing)  
+- 📄 [License](#license)  
+
+---
+
+## Features
+
+- ⚡ Clean, modular **Flutter** architecture with a clear folder structure  
+- 🧩 Robust **state management** using Provider package  
+- 💾 Database integration with DAO and repository pattern  
+- 🌐 Multi-language support (English, Spanish, Valencian)  
+- 👤 User authentication and profile management  
+- 📦 Moving services management with inventory, checklist, chat, and notifications  
+- 🔍 QR code generation and scanning for inventory items  
+- 📴 Offline support with local database caching  
+- 📱 Responsive UI designed for Android devices
+
+---
+
+![Frame 1](https://github.com/user-attachments/assets/066d0422-e923-448f-b62a-bdcf61b84319)
+
+---
+
+## Demo YouTube Video
+
+[Watch the Luggo Android App Demo on YouTube](https://www.youtube.com/watch?v=df71vWR_-OQ)
 
 ---
 
 ## Project Structure
 
-The project follows a structured folder organization to ensure maintainability and scalability:
+The app is organized for clarity and extensibility. The project follows a structured folder organization to ensure maintainability and scalability:
+
+
 
 ```
 lib/
@@ -34,14 +68,6 @@ lib/
 ├── widgets/         # Reusable widgets
 └── main.dart        # Application's entry point
 ```
-
----
-
-## Features
-- **Modern Flutter Architecture**: Designed following Flutter's best practices.
-- **Scalable Folder Structure**: Easy to maintain and expand.
-- **State Management**: Using `providers` for state handling.
-- **Database Integration**: Built-in DAO and repository patterns for smooth database operations.
 
 ---
 
