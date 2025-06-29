@@ -1,0 +1,117 @@
+name: luggo
+description: "You're favourite movings app."
+publish_to: 'none'
+
+version: 1.0.4+2
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  firebase_core: ^3.12.1
+  firebase_auth: ^5.0.0
+  cloud_firestore: ^5.6.5
+  firebase_storage: ^12.4.4
+  email_validator: ^2.0.1
+  shared_preferences: ^2.0.6 
+  easy_localization: ^3.0.3
+  image_picker: ^1.0.7
+  path_provider: ^2.0.15
+  http: 1.3.0 
+  connectivity_plus: ^5.0.2
+  provider: ^6.1.4
+  floor: ^1.5.0
+  introduction_screen: ^3.1.17
+  mobile_scanner: ^3.5.2
+  permission_handler: ^11.0.0
+  qr_flutter: ^4.0.0
+  pdf: ^3.10.4
+  printing: ^5.12.0
+  flutter_stripe: ^11.5.0
+  flutter_dotenv: ^5.0.2
+  dio: ^5.3.2
+
+
+
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.13.1
+  floor_generator: ^1.5.0
+  build_runner: ^2.4.15
+
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/images/Luggo BN.png
+    - assets/images/LuggoColor.png
+    - assets/images/Luggo Icono BN.png
+    - assets/images/LuggoIconoColor.png
+    - assets/images/Luggo_Baseline BN 1.png
+    - assets/images/Luggo_Baseline BN.png
+    - assets/images/Luggo_Baseline Color 1.png
+    - assets/images/Luggo_Baseline Color 1_2.png
+    - assets/images/Luggo_Baseline Color.png
+    - assets/images/Luggo_Baseline2.PNG
+    - assets/images/mudanza_background1.png
+    - assets/images/mudanza_background2.png
+    - assets/translations/
+    - assets/flags/
+    - assets/flags/valencian.png
+    - assets/images/LuggoColor_noBackground.png
+    - assets/images/LuggoIconoColorFullBlue.png
+    - assets/images/TransporteBackground.png
+    - assets/images/DonateBackground.png
+    - assets/images/LaborBackground.png
+    - assets/images/RecyclingBackground.png
+    - assets/images/SmallMoveBackground.png
+    - assets/images/StorePickupBackground.png
+    - assets/images/user.png
+    - .env
+
+  fonts:
+    - family: ClashDisplay
+      fonts:
+        - asset: assets/fonts/clashDisplay/ClashDisplay-Extralight.otf
+          weight: 200
+        - asset: assets/fonts/clashDisplay/ClashDisplay-Light.otf
+          weight: 300
+        - asset: assets/fonts/clashDisplay/ClashDisplay-Regular.otf
+          weight: 400
+        - asset: assets/fonts/clashDisplay/ClashDisplay-Medium.otf
+          weight: 500
+        - asset: assets/fonts/clashDisplay/ClashDisplay-Semibold.otf
+          weight: 600
+        - asset: assets/fonts/clashDisplay/ClashDisplay-Bold.otf
+          weight: 700
+
+    - family: Helvetica
+      fonts:
+        - asset: assets/fonts/helvetica/Helvetica.ttf
+          weight: 400
+        - asset: assets/fonts/helvetica/Helvetica-Light.ttf
+          weight: 300
+        - asset: assets/fonts/helvetica/Helvetica-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/helvetica/Helvetica-Oblique.ttf
+          style: italic
+          weight: 400
+        - asset: assets/fonts/helvetica/Helvetica-BoldOblique.ttf
+          style: italic
+          weight: 700
+
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/LuggoIconoColorFullBlue.png"
